@@ -38,13 +38,35 @@ a:hover {
   text-decoration: none;
 }
 
+.main {
+  color: var(--color-main);
+}
+
 .negative {
   color: var(--color-main-neg);
   background-color: var(--bg-main-neg);
 }
 
+.sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.bg-main {
+  background-color: var(--bg-main);
+}
+
 .bg-elevated {
   background-color: var(--bg-elevated);
+}
+
+.bg-passive-negative {
+  background-color: var(--bg-elevated);
+}
+
+.bg-negative {
+  background-color: var(--bg-main-neg);
 }
 
 .link-negative {
@@ -75,8 +97,4 @@ a:hover {
 
 .b--negative {
   border-color: var(--color-main-neg);
-}
-
-.hover-bg-main:hover {
-  background-color: var(--bg-main);
 }

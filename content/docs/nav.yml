@@ -1,0 +1,7 @@
+- title: Get Started
+  items:
+    - slug: installation
+    - slug: tutorial
+- title: Concepts
+  items:
+    - slug: glossary

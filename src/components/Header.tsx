@@ -11,7 +11,7 @@ const Header = ({location}: Props) => {
   return (
     <header className="flex-ns justify-between items-center mw8 center">
       <h1 className="ttu w-100 w-40-ns pa2">
-        <Link className="nowrap ma2 b hover-bg-main" to="/">
+        <Link className="nowrap ma2 b hover-bg-transparent" to="/">
           SugarCube Tools
         </Link>
       </h1>
@@ -20,12 +20,12 @@ const Header = ({location}: Props) => {
           <MenuItem
             isActive={/^\/get-started/.test(location.pathname)}
             menuText="Get Started"
-            toPath="/get-started"
+            toPath="/docs/installation"
           />
           <MenuItem
             isActive={/^\/guides/.test(location.pathname)}
             menuText="Docs"
-            toPath="/guides"
+            toPath="/docs/"
           />
           <MenuItem
             isActive={/^\/plugins/.test(location.pathname)}

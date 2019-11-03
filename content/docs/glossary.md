@@ -1,6 +1,8 @@
 ---
-path: "/sugarcube/glossary"
-title: "SugarCube Glossary"
+root: "/docs"
+title: "Glossary"
+parents: ["Get Started"]
+prev: "tutorial"
 ---
 
 # Glossary

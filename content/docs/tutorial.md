@@ -1,6 +1,9 @@
 ---
-path: "/sugarcube/tutorial"
-title: "SugarCube Tutorial"
+root: "/docs"
+title: "Tutorial"
+parents: ["Get Started"]
+prev: "installation"
+next: "glossary"
 ---
 # Ultimately SugarCube
 

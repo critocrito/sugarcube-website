@@ -53,15 +53,21 @@
     "typescript-language-server": "^0.4.0"
   },
   "dependencies": {
+    "@mdx-js/mdx": "^1.5.1",
+    "@mdx-js/react": "^1.5.1",
+    "@mdx-js/tag": "^0.20.3",
     "classname": "^0.0.0",
     "feather-icons": "^4.24.1",
     "gatsby": "^2.17.7",
+    "gatsby-plugin-mdx": "^1.0.55",
     "gatsby-plugin-typescript": "^2.1.15",
+    "gatsby-remark-autolink-headers": "^2.1.16",
     "gatsby-source-filesystem": "^2.1.35",
     "gatsby-transformer-remark": "^2.6.32",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-feather": "^2.0.3",
+    "react-media": "^1.10.0",
     "tachyons": "^4.11.1"
   }
 }
