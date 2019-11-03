@@ -1,0 +1,82 @@
+@import "./nord.css";
+@import "tachyons";
+
+:root {
+  --bg-main: var(--nord6);
+  --bg-main-neg: var(--nord0);
+  --bg-elevated: var(--nord4);
+  --bg-elevated-neg: var(--nord0);
+
+  --color-main: var(--nord0);
+  --color-main-neg: var(--nord4);
+  --color-passive: var(--nord3);
+  --color-passive-neg: var(--nord3);
+  --color-elevated: var(--nord10);
+  --color-elevated-neg: var(--nord9);
+}
+
+body {
+  @insert .avenir .lh-copy;
+  color: var(--color-main);
+  background-color: var(--bg-main);
+}
+
+pre {
+  @insert .ba .pa2 .b--gray .bg-light-gray;
+  overflow: auto;
+}
+
+a {
+  @insert .pa1 .br2;
+  color: var(--color-elevated);
+  text-decoration: none;
+}
+
+a:hover {
+  /* color: var(--color-elevated-neg); */
+  background-color: var(--bg-elevated);
+  text-decoration: none;
+}
+
+.negative {
+  color: var(--color-main-neg);
+  background-color: var(--bg-main-neg);
+}
+
+.bg-elevated {
+  background-color: var(--bg-elevated);
+}
+
+.link-negative {
+  @insert .link .pa1;
+  color: var(--color-elevated-neg);
+}
+
+.link-negative:hover {
+  @insert .link;
+  color: var(--color-elevated);
+  background-color: var(--bg-main);
+}
+
+.link-reset-negative {
+  @insert .link .pa0;
+  color: var(--color-elevated-neg);
+}
+
+.link-reset-negative:hover {
+  @insert .link;
+  color: var(--color-elevated-neg);
+  background-color: var(--bg-main-neg);
+}
+
+.b--main {
+  border-color: var(--color-main);
+}
+
+.b--negative {
+  border-color: var(--color-main-neg);
+}
+
+.hover-bg-main:hover {
+  background-color: var(--bg-main);
+}
