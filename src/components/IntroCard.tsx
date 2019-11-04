@@ -1,12 +1,12 @@
 import React from "react";
 
-interface Props {
+interface IntroCardProps {
   title: string;
   description: string;
   path?: string;
 }
 
-const IntroCard = ({title, description, path}: Props) => {
+const IntroCard = ({title, description, path}: IntroCardProps) => {
   return (
     <div className="flex flex-column justify-around ma3-ns mh4-ns pa2-ns">
       <h3 className="center">{title}</h3>

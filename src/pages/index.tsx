@@ -22,7 +22,7 @@ Imrpove the discovery process of an investigation using this browser extension.
 const Index = () => {
   return (
     <div>
-      <Location>{({location}) => <Header className="mw8 center" location={location} />}</Location>
+      <Location>{({location}) => <Header location={location} />}</Location>
       <section className="cf ph2-ns pt5 pb5 w-100 flex flex-column items-center justify-around negative">
         <div className="w-80-ns tc center">
           <h1 className="w-100 center">Data pipelines for human rights.</h1>

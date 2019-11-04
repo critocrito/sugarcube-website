@@ -1,16 +1,15 @@
 import React, {Fragment} from "react";
 import {useStaticQuery, graphql} from "gatsby"
-import {Location} from "@reach/router";
 import Media from "react-media";
 
 import SidebarSection from "./SidebarSection";
 import {sectionListDocs} from "../utils/sectionList";
 
-interface Props {
-  location: Location;
+interface SidebarContentProps {
+  location: WindowLocation;
 }
 
-const SidebarContent = ({location}: Props) => {
+const SidebarContent = ({location}: SidebarContentProps) => {
   const data = useStaticQuery(graphql`
     query sidebarContentQuery {
       allMdx(sort: { order: ASC, fields: [fields___slug] }) {

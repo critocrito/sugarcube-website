@@ -1,22 +1,22 @@
 import React, {useState} from "react";
 import {ChevronUp, ChevronDown} from "react-feather";
-import classname from "classname";
+import classNames from "classnames";
 
-interface Props {
+interface SidebarSectionProps {
   title: string;
   items: Array<{title: string, slug: string, isCurrent: boolean}>;
   expanded: boolean;
 }
 
-const SidebarSection = ({title, items, expanded}: Props) => {
+const SidebarSection = ({title, items, expanded}: SidebarSectionProps) => {
   const [isExpanded, setIsExpanded] = useState(expanded);
 
   const clickHandler = () => setIsExpanded(!isExpanded);
 
   const sections = isExpanded ? items.map(({title, slug, isCurrent}) => {
-    const className = classname("pl2", isCurrent ? "bl bw2 br0 b--main" : "bl bw2 b--transparent");
+    const style = classNames("pl2", isCurrent ? "bl bw2 br0 b--main" : "bl bw2 b--transparent");
     return (
-      <li key={title} className={className}>
+      <li key={title} className={style}>
         <a className="hover-bg-transparent main" href={slug}>{title}</a>
       </li>
     );

@@ -3,11 +3,11 @@ import React from "react";
 
 import MenuItem from "./MenuItem";
 
-interface Props {
+interface HeaderProps {
   location: Location;
 }
 
-const Header = ({location}: Props) => {
+const Header = ({location}: HeaderProps) => {
   return (
     <header className="flex-ns justify-between items-center mw8 center">
       <h1 className="ttu w-100 w-40-ns pa2">

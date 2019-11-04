@@ -1,0 +1,82 @@
+---
+root: "/docs"
+title: "Installation"
+parents: ["Get Started"]
+next: "tutorial"
+---
+
+# Installing Sugarcube
+
+## Requirements
+
+Sugarcube is developed in [NodeJS](https://https://nodejs.org). Currently version 10 and 12 are supported.
+
+The following instructions are for Debian 10 (Buster). They should work on any Ubuntu as well.
+
+```shell
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+sudo apt install nodejs
+```
+
+Note: If you get an error that `curl` can't be found, you have to install it. On Debian this can be done using `apt install curl`.
+
+Some plugins run a browser in headless mode to browse websites. Sugarcube automatically sets the browser up but requires some dependencies preinstalled to make this work.
+
+On Debian install `libxss1` and `libgconf-2-4`.
+
+```shell
+sudo apt install libxss1 libgconf-2-4
+```
+
+On Ubuntu install the `libxss1`, `libxcursor1` and `libgtk-3-0`.
+
+```shell
+sudo apt install libxss1 libxcursor1 libgtk-3-0
+```
+
+Sugarcube uses [Apache Tika](https://tika.apache.org/) to extract text and meta data from websites and documents. Sugarcube installs Tika, but in order to run it you need the JAVA Runtime. Tika can use [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) to extract content from images. To enable Tika to do so install it as well. Tesseract supports many languages but each language requires an additional language pack to make use of it. Install any language pack that might be needed. The example below installs the language pack for German, English and Arabic.
+
+```shell
+sudo apt install default-jre tesseract-ocr tesseract-ocr-deu tesseract-ocr-ara tesseract-ocr-eng
+```
+
+The following command shows you all available language packs for Tesseract.
+
+```shell
+apt search tesseract-ocr
+```
+
+## Set up Sugarcube
+
+The preferred way to use Sugarcube is to create a project directory for each data project. This approach will be used throughout this documentation.
+
+```shell
+mkdir sugarcube-project
+cd sugarcube-project
+npm init -y
+npm install @sugarcube/sugarcube
+```
+
+Note: Alternatively it's possible to install Sugarcube globally using the `-g` argument for `npm install`, or to use the [`npx`](https://www.npmjs.com/package/npx) command, which is a tool to execute a npm package without first installing it.
+
+Sugarcube is now installed and ready to go.
+
+```shell
+$(npm bin)/sugarcube -h
+```
+
+Note: `npm` places the `sugarcube` application into the `node_modules/.bin` folder of your project directory. Using the `$(npm bin)/sugarcube` syntax makes sure to resolve to the correct path. Alternatively specify the path to the application manually: `./node_modules/bin/sugarcube`. See [`npm`'s documentation](https://docs.npmjs.com/cli/bin.html) for more information.
+
+## Optional Requirements
+
+Some plugins have additional requirements. Unless those plugins are needed, there is no need to install those requirements:
+
+- The `media_youtubedl` plugin uses [`youtube-dl`](https://ytdl-org.github.io/youtube-dl/index.html) to download videos from a variety of sources.
+- The `media_mosaic` plugin uses [`ffmpeg`](https://www.ffmpeg.org/) to generate mosaic images from videos.
+
+
+```shell
+sudo apt install youtube-dl ffmpeg
+```
+
+In order to persist data at least one of the following databases are required. Sugarcube supports [MongoDB](https://www.mongodb.com/) and [Elasticsearch](https://www.elastic.co/products/elasticsearch). More information can be found in the [guide about data persistency](/docs/data-persistence).

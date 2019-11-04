@@ -1,12 +1,22 @@
 import React from "react";
 import {graphql} from "gatsby";
 import {MDXRenderer} from "gatsby-plugin-mdx";
+import { MDXProvider } from "@mdx-js/react";
+
 import Layout from "../components/Layout";
+import CodeBlock from "../components/CodeBlock";
+
+const components = {
+  pre: props => <div {...props} />,
+  code: props => <CodeBlock {...props} />
+}
 
 const PageTemplate = ({data: {mdx}}: any) => {
   return (
-    <Layout sidebarRoot={mdx.frontmatter.root}>
-      <MDXRenderer>{mdx.body}</MDXRenderer>
+    <Layout>
+      <MDXProvider components={components}>
+        <MDXRenderer>{mdx.body}</MDXRenderer>
+      </MDXProvider>
     </Layout>
   )
 };

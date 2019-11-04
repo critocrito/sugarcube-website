@@ -7,7 +7,11 @@ import Header from "./Header";
 import SidebarContent from "./SidebarContent";
 import SidebarMobile from "./SidebarMobile";
 
-const Layout = ({children}) => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+const Layout = ({children}: LayoutProps) => {
   return (
     <div>
       <Location>{({location}) => <Header location={location} />}</Location>

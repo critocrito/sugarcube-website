@@ -45,13 +45,13 @@ this writing the latest LTS release is v8.9.4 named Carbon.
 Follow the
 [installation instructions](https://github.com/creationix/nvm#install-script) to install nvm. Check in your terminal that 'node' has been installed by entering in the following command:
 
-```
+```shell
 $ node --version
 v8.9.4
 ```
 You will also need npm, which is a package manager for NodeJS packages. This will have also been installed when you installed nvm. Check by typing the following in your terminal window:
 
-```
+```shell
 $ npm --version
 3.10.8
 ```
@@ -63,17 +63,17 @@ directory with some files. Through the terminal you will create a new directory,
 
 Firtly create a new folder by typing in 'mkdir', shorthand for 'make directories', and your chosen name for this directory:
 
-```
+```shell
 $ mkdir sugarcubetest
 ```
 
 Next enter into that directory by typing in 'cd', shorthand for change directory, into your terminal:
-```
+```shell
 $ cd sugarcubetest
 ```
 
 Lastly add a file to your new directory by asking your newly installed node package manager to get your node packages started through the 'init' command. Enter in the following:
-```
+```shell
 $ npm init -y
 ```
 
@@ -81,12 +81,12 @@ You should end up with a single file in the `sugarcubetest` directory named
 `package.json`. This file is used by to manage versions and dependencies of
 SugarCube. Test that this file is there by typing:
 
-```
+```shell
 $ ls
 ```
 This lists all the files in your directory. If your terminal window shows you this response then you are on the right track:
 
-```
+```shell
 $ package.json
 ```
 
@@ -95,7 +95,7 @@ plugin and the tap plugin.  The `ddg_search` plugin queries the search engine Du
 configuration to the screen. Type in the following command:
 
 
-```
+```shell
 $ npm install -S @sugarcube/cli @sugarcube/plugin-ddg @sugarcube/plugin-tap
 ```
 
@@ -105,12 +105,12 @@ To check that node_modules is installed, type in the command 'ls' to list the co
 
 Install the 'sugarcube' command by typing into your terminal:
 
-```
+```shell
 $ $(npm bin)/sugarcube -h
 ```
 Note that you will be entering in the dollar symbol ($) for this command. You should see the following in your terminal window:
 
-```
+```shell
 $ $(npm bin)/sugarcube -h
 tap_printf: Print the envelope to the screen.
   --tap.limit  Limit the output to <n> data units.                      [number]
@@ -129,7 +129,7 @@ Options:
 We will run SugarCube now. We want to make a search on DuckDuckGo for the
 term `Keith Johnstone` and print the results on the screen.
 
-```
+```shell
 $ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -p ddg_search,tap_printf
 ```
 
@@ -149,7 +149,7 @@ their behaviour. If you look at the output of `$(npm bin)/sugarcube -h`, you
 will see the `--tap.limit` argument. We can use it to print less results on
 the screen.
 
-```
+```shell
 $ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone \
                         -p ddg_search,tap_printf \
                         --tap.limit 1
@@ -162,7 +162,7 @@ command will grow. To make life easier, but also to make pipeline runs
 repeatable, is it possible, to store configuration in text files. The
 format of those files is JSON. The previous example would look like this:
 
-```
+```json
 $ cat <<EOF > searches.json
 {
   "plugins": "ddg_search,tap_printf",
@@ -175,7 +175,7 @@ EOF
 
 Use the `-c` argument to specify the file location:
 
-```
+```shell
 $ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json
 ```
 
@@ -183,14 +183,14 @@ Options provided by the command line will take precedence over the
 configuration file. This allows it to override options for a one off pipeline
 run.
 
-```
+```shell
 $ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json --tap.limit 10
 ```
 
 It is also possible to store queries in files, similar to configuration
 options.
 
-```
+```shell
 $ cat <<EOF > queries.json
 [{
   "type": "ddg_search",
@@ -201,14 +201,14 @@ EOF
 
 We can use the `-q` argument to tell SugarCube to look for queries in a file.
 
-```
+```shell
 $ $(npm bin)/sugarcube -q queries.json -c searches.json
 ```
 
 It is possible to maintain multiple queries and of different type in one
 file. Query files like the following are not uncommon:
 
-```
+```json
 [{
   "type": "ddg_search",
   "term": "Keith Johnstone"
@@ -233,7 +233,7 @@ Using the CSV plugin, we can convert our data to CSV and write it to a
 file. Edit your `searches.json` and add another plugin. The file should look
 like this:
 
-```
+```json
 {
   "plugins": "ddg_search,tap_printf,csv_export",
   "tap": {
@@ -242,7 +242,7 @@ like this:
 }
 ```
 
-```
+```shell
 $ npm install -S @sugarcube/plugin-csv
 $ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json
 ```
@@ -264,13 +264,13 @@ instructions [here](https://gitlab.com/sugarcube/@sugarcube/plugin-guardian).
 
 Install the guardian plugin into your project.
 
-```
+```shell
 $ npm install -S @sugarcube/plugin-guardian
 ```
 
 Lets do a quick search:
 
-```
+```shell
 $ $(npm bin)/sugarcube -Q guardian_search:Aleppo \
                         -p guardian_content,tap_printf \
                         --guardian.key <your API key>
@@ -278,7 +278,7 @@ $ $(npm bin)/sugarcube -Q guardian_search:Aleppo \
 
 ### Download videos from Youtube
 
-```
+```shell
 $ npm install -S @sugarcube/plugin-youtube
 ```
 
@@ -292,7 +292,7 @@ videos. The `youtube_download` plugin uses
 custom download target with the `--youtube.download_dir` option. The default
 download target is in `downloads` of the project directory.
 
-```
+```shell
 $ $(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
                         -p youtube_channel,youtube_download \
                         --youtube.api_key <your API key>
@@ -313,13 +313,13 @@ First create a new Twitter account. Then go to
 In this example we will use the plugin for twitter, the HTTP plugin to
 download images and the media plugin to extract EXIF data.
 
-```
+```shell
 $ npm install -S @sugarcube/plugin-twitter \
                  @sugarcube/plugin-http \
                  @sugarcube/plugin-media
 ```
 
-```
+```shell
 $ $(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro -Q twitter_query:Jair\ Bolsonaro \
                         -p twitter_search,twitter_feed,http_get,media_exif \
                         --twitter.consumer_key <your key here> \
@@ -330,7 +330,7 @@ $ $(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro -Q twitter_query:Jair\ Bol
 
 Or use a config file:
 
-```
+```json
 {
   "plugins": "twitter_search,twitter_feed,http_get,media_exif",
   "twitter": {
@@ -347,7 +347,7 @@ Or use a config file:
 
 Start off by installing the Telegram plugin:
 
-```
+```shell
 $ npm install -S @sugarcube/plugin-telegram
 ```
 
@@ -359,7 +359,7 @@ The Telegram packages has one plugin, which can send units of data to a chat
 channel. It will construct a string out of the fields listed in
 `_sc_content_fields`. Using it is quite simple:
 
-```
+```shell
 $  $(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro \
                          -p twitter_feed,telegram_send_message \
                          --twitter.consumer_key <your key here> \
@@ -382,11 +382,11 @@ worked.
 There is a `tor_check` plugin, that allows to test if requests are made over
 TOR.
 
-```
+```shell
 npm install -S @sugarcube/plugin-tor
 ```
 
-```
+```shell
 $ $(npm bin)/sugarcube -p tor_check
 $ torsocks $(npm bin)/sugarcube -p tor_check
 $ torsocks $(npm bin)/sugarcube -Q guardian_search:Aleppo \
@@ -407,7 +407,7 @@ the
 [SugarCube project boilerplate](https://gitlab.com/sugarcube/sugarcube-boilerplate-project).
 It provides a scaffold with an initial structure.
 
-```
+```shell
 git clone https://gitlab.com/sugarcube/sugarcube-boilerplate-project dev-project
 cd dev-project
 rm -rf .git && git init && git add -A && git commit -m "Initial commit"
@@ -442,7 +442,7 @@ anything about the specific plugin that generate the data in the first place.
 
 This is an example, how such a unit of data looks like.
 
-```
+```json
 {
 	"_sc_media" : [{
 	  "type" : "url",
@@ -451,7 +451,7 @@ This is an example, how such a unit of data looks like.
 	}],
 	"_sc_pubdates" : {
 		"fetch" : "2017-03-21T23:22:35.426Z",
-		"source" : "2016-08-14T12:00:35Z)
+		"source" : "2016-08-14T12:00:35Z",
 	},
 	"_sc_relations" : [{
 	  "type" : "url",
@@ -519,7 +519,7 @@ that hashtag becomes a relation between those two tweets.
 
 ## Look at this, look at that ...
 
-```
+```shell
 $ $(npm bin)/sugarcube -q queries.json
                         -p youtube_channel,twitter_search,twitter_feed,youtube_download,http_get,media_exif,mongodb_store,csv_export,tap_printf \
                         -c config.json

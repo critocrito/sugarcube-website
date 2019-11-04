@@ -13,6 +13,11 @@ module.exports = exports.createPages = ({ actions, graphql }) => {
         edges {
           node {
             id
+body
+frontmatter {
+title
+root
+}
             fields {
               slug
             }

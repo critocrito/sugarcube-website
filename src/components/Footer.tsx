@@ -29,20 +29,20 @@ const Footer = () => {
             <div className="flex justify-between">
               <div className="w-third-ns">
                 <h3 className="bb b--negative pb1">
-                  <Link className="link-negative" to="/get-started">Get Started</Link>
+                  Get Started
                 </h3>
                 <ul className="list pl0">
                   <li className="pt2">
-                    <Link className="link-negative" to="/installation">Installation</Link>
+                    <Link className="link-negative" to="/docs/installation">Installation</Link>
                   </li>
                   <li className="pt2">
-                    <Link className="link-negative" to="/tutorial">Tutorial</Link>
+                    <Link className="link-negative" to="/docs/tutorial">Tutorial</Link>
                   </li>
                 </ul>
               </div>
               <div className="w-third-ns">
                 <h3 className="bb b--negative pb1">
-                  <Link className="link-negative" to="/docs">Docs</Link>
+                  Docs
                 </h3>
                 <ul className="list pl0">
                   <li className="pt2">
@@ -58,7 +58,7 @@ const Footer = () => {
               </div>
               <div className="w-third-ns">
                 <h3 className="bb b--negative pb1">
-                  <Link className="link-negative" to="/plugins">Plugins</Link>
+                  Plugins
                 </h3>
               </div>
             </div>

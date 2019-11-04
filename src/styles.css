@@ -53,6 +53,14 @@ a:hover {
   top: 0;
 }
 
+.color-main {
+  color: var(--color-main);
+}
+
+.color-main-negative {
+  color: var(--color-main-neg);
+}
+
 .bg-main {
   background-color: var(--bg-main);
 }
@@ -97,4 +105,15 @@ a:hover {
 
 .b--negative {
   border-color: var(--color-main-neg);
+}
+
+.fade-in {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+.fade-out {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s ease;
 }

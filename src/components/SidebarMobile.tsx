@@ -1,14 +1,13 @@
 import React, {Fragment, useState} from "react";
-import {Location} from "@reach/router";
 import {Menu, X} from "react-feather";
 
 import SidebarContent from "./SidebarContent";
 
-interface Props {
-  locatrion: Location;
+interface SidebarMobileProps {
+  location: WindowLocation;
 }
 
-const SidebarMobile = ({location}: Props) => {
+const SidebarMobile = ({location}: SidebarMobileProps) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
   const clickHandler = () => setSidebarExpanded(!sidebarExpanded);
