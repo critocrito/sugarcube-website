@@ -6,7 +6,7 @@ import SidebarSection from "./SidebarSection";
 import {sectionListDocs} from "../utils/sectionList";
 
 interface SidebarContentProps {
-  location: WindowLocation;
+  location: Location;
 }
 
 const SidebarContent = ({location}: SidebarContentProps) => {
@@ -36,10 +36,13 @@ const SidebarContent = ({location}: SidebarContentProps) => {
         const path = `/docs/${slug}`;
         return node.node.fields.slug === path;
       });
+      console.log(location.pathname, node.node.fields.slug);
       return {
         title: node.node.frontmatter.title,
         slug: node.node.fields.slug,
-        isCurrent: location.pathname === node.node.fields.slug,
+        // FIXME: Find a more robust way to determine if the current page is
+        // active.
+        isCurrent: location.pathname.startsWith(node.node.fields.slug),
       };
     });
     return [title, subSections];

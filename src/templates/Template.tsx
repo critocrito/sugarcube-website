@@ -12,10 +12,19 @@ const components = {
 }
 
 const PageTemplate = ({data: {mdx}}: any) => {
+  const {body, frontmatter} = mdx;
+
+  const next = frontmatter.next == null
+             ? null
+             : `${frontmatter.root}/${frontmatter.next}`;
+  const prev = frontmatter.prev == null
+             ? null
+             : `${frontmatter.root}/${frontmatter.prev}`;
+
   return (
-    <Layout>
+    <Layout next={next} prev={prev}>
       <MDXProvider components={components}>
-        <MDXRenderer>{mdx.body}</MDXRenderer>
+        <MDXRenderer>{body}</MDXRenderer>
       </MDXProvider>
     </Layout>
   )
@@ -27,6 +36,8 @@ export const pageQuery = graphql`
       frontmatter {
         title
         root
+        prev
+        next
       }
       body
     }

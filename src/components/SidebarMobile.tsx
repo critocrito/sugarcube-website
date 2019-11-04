@@ -4,7 +4,7 @@ import {Menu, X} from "react-feather";
 import SidebarContent from "./SidebarContent";
 
 interface SidebarMobileProps {
-  location: WindowLocation;
+  location: Location;
 }
 
 const SidebarMobile = ({location}: SidebarMobileProps) => {
