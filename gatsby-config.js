@@ -9,6 +9,8 @@ module.exports = {
   plugins: [
     "gatsby-plugin-typescript",
     "gatsby-plugin-postcss",
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -25,26 +27,22 @@ module.exports = {
         },
         extensions: ['.mdx', '.md'],
         // workaround: https://github.com/gatsbyjs/gatsby/issues/16422#issuecomment-518985316
-        plugins: [`gatsby-remark-autolink-headers`],
-        // gatsbyRemarkPlugins: [
-        //   `gatsby-remark-katex`,
-        //   {
-        //     resolve: `gatsby-remark-images`,
-        //     options: {
-        //       maxWidth: 1035,
-        //     },
-        //   },
-        //   `gatsby-remark-autolink-headers`,
-        //   {
-        //     resolve: `gatsby-remark-prismjs`,
-        //     options: {
-        //       classPrefix: 'language-',
-        //       inlineCodeMarker: null,
-        //       showLineNumbers: true,
-        //       noInlineHighlight: false,
-        //     },
-        //   },
-        // ],
+        plugins: [
+          "gatsby-remark-autolink-headers",
+          "gatsby-remark-images",
+          "gatsby-remark-copy-linked-files",
+        ],
+        gatsbyRemarkPlugins: [
+          {
+          resolve: "gatsby-remark-images",
+          options: {
+            maxWidth: 590,
+            linkImagesToOriginal: true,
+            },
+        },
+          "gatsby-remark-copy-linked-files",
+          "gatsby-remark-autolink-headers",
+        ],
       },
     },
   ],

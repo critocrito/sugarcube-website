@@ -36,7 +36,7 @@ const SidebarContent = ({location}: SidebarContentProps) => {
         const path = `/docs/${slug}`;
         return node.node.fields.slug === path;
       });
-      console.log(location.pathname, node.node.fields.slug);
+
       return {
         title: node.node.frontmatter.title,
         slug: node.node.fields.slug,

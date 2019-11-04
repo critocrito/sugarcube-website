@@ -37,8 +37,6 @@ const Layout = ({next, prev, children}: LayoutProps) => {
   const nextDoc = next == null ? null : edges.find(({node}) => new RegExp(next, "i").test(node.fields.slug));
   const prevDoc = prev == null ? null : edges.find(({node}) => new RegExp(prev, "i").test(node.fields.slug));
 
-  console.log(nextDoc, prevDoc);
-
   return (
     <div>
       <div className="bg-elevated h4">

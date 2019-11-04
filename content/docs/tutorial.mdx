@@ -5,18 +5,19 @@ parents: ["Get Started"]
 prev: "installation"
 next: "glossary"
 ---
-# Ultimately SugarCube
 
-Commands, that can be typed in a shell, have in this tutorial the `$` symbol
-as prefix. It stands for your prompt in your terminal. You don't have to write
-it when typing your commands. When you read examples like `$ node --version`
-you only have to type `node --version`.
+import Warning from "../../src/components/Warning";
+
+<Warning>
+This tutorial is currently under development. The content in here might be outdated. Please check back in soon to see any updates.
+</Warning>
+
+# Ultimately SugarCube
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Requirements](#requirements)
 - [Simply SugarCube](#simply-sugarcube)
 - [Intermezzo 1: Using files](#intermezzo-1-using-files)
 - [Plugins](#plugins)
@@ -35,102 +36,13 @@ you only have to type `node --version`.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Requirements
-
-To run `sugarcube` you have to install [NodeJS](https://nodejs.org/en/). The
-easiest way to do this, is to use [nvm](https://github.com/creationix/nvm). Node Version Manager (nvm) is a script written to manage multiple active NodeJS versions.
-SugarCube works with the latest LTS release of NodeJS or newer. At the time of
-this writing the latest LTS release is v8.9.4 named Carbon.
-
-Follow the
-[installation instructions](https://github.com/creationix/nvm#install-script) to install nvm. Check in your terminal that 'node' has been installed by entering in the following command:
-
-```shell
-$ node --version
-v8.9.4
-```
-You will also need npm, which is a package manager for NodeJS packages. This will have also been installed when you installed nvm. Check by typing the following in your terminal window:
-
-```shell
-$ npm --version
-3.10.8
-```
-
 ## Simply SugarCube
-
-We start by creating a new SugarCube project. This is nothing more than a
-directory with some files. Through the terminal you will create a new directory, in this example we have called it 'sugarcubetest', enter into that directory and add a file to it.
-
-Firtly create a new folder by typing in 'mkdir', shorthand for 'make directories', and your chosen name for this directory:
-
-```shell
-$ mkdir sugarcubetest
-```
-
-Next enter into that directory by typing in 'cd', shorthand for change directory, into your terminal:
-```shell
-$ cd sugarcubetest
-```
-
-Lastly add a file to your new directory by asking your newly installed node package manager to get your node packages started through the 'init' command. Enter in the following:
-```shell
-$ npm init -y
-```
-
-You should end up with a single file in the `sugarcubetest` directory named
-`package.json`. This file is used by to manage versions and dependencies of
-SugarCube. Test that this file is there by typing:
-
-```shell
-$ ls
-```
-This lists all the files in your directory. If your terminal window shows you this response then you are on the right track:
-
-```shell
-$ package.json
-```
-
-Next on we install the `sugarcube` command line interface, the DuckDuckGo search
-plugin and the tap plugin.  The `ddg_search` plugin queries the search engine DuckDuckGo and the `tap_printf` plugin prints the results, queries and
-configuration to the screen. Type in the following command:
-
-
-```shell
-$ npm install -S @sugarcube/cli @sugarcube/plugin-ddg @sugarcube/plugin-tap
-```
-
-If all went fine, you should have a folder named `node_modules`, within your 'sugarcubetest' directory. This 'node_modules' folder should contain `sugarcube` and all it's dependencies.
-
-To check that node_modules is installed, type in the command 'ls' to list the contents of the directory.
-
-Install the 'sugarcube' command by typing into your terminal:
-
-```shell
-$ $(npm bin)/sugarcube -h
-```
-Note that you will be entering in the dollar symbol ($) for this command. You should see the following in your terminal window:
-
-```shell
-$ $(npm bin)/sugarcube -h
-tap_printf: Print the envelope to the screen.
-  --tap.limit  Limit the output to <n> data units.                      [number]
-
-Options:
-  -p, --plugins  A list of plugins                                      [string]
-  -q             Path to JSON queries file
-  -Q             Queries in the form: <type>:<term>. Note that spaces
-                 have to be escaped, e.g.: twitter_search:Keith\ Johnstone
-  -d, --debug    Enable debug logging                                  [boolean]
-  -c             Path to JSON config file
-  -h, --help     Show help                                             [boolean]
-  --version      Show version number                                   [boolean]
-```
 
 We will run SugarCube now. We want to make a search on DuckDuckGo for the
 term `Keith Johnstone` and print the results on the screen.
 
 ```shell
-$ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -p ddg_search,tap_printf
+$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -p ddg_search,tap_printf
 ```
 
 This prints up to 30 search results on the screen.
@@ -150,9 +62,9 @@ will see the `--tap.limit` argument. We can use it to print less results on
 the screen.
 
 ```shell
-$ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone \
-                        -p ddg_search,tap_printf \
-                        --tap.limit 1
+$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone \
+                     -p ddg_search,tap_printf \
+                     --tap.limit 1
 ```
 
 ## Intermezzo 1: Using files
@@ -163,20 +75,18 @@ repeatable, is it possible, to store configuration in text files. The
 format of those files is JSON. The previous example would look like this:
 
 ```json
-$ cat <<EOF > searches.json
 {
   "plugins": "ddg_search,tap_printf",
   "tap": {
     "limit": 1
   }
 }
-EOF
 ```
 
 Use the `-c` argument to specify the file location:
 
 ```shell
-$ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json
+$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json
 ```
 
 Options provided by the command line will take precedence over the
@@ -184,25 +94,23 @@ configuration file. This allows it to override options for a one off pipeline
 run.
 
 ```shell
-$ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json --tap.limit 10
+$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json --tap.limit 10
 ```
 
 It is also possible to store queries in files, similar to configuration
 options.
 
-```shell
-$ cat <<EOF > queries.json
+```json
 [{
   "type": "ddg_search",
   "term": "Keith Johnstone"
 }]
-EOF
 ```
 
 We can use the `-q` argument to tell SugarCube to look for queries in a file.
 
 ```shell
-$ $(npm bin)/sugarcube -q queries.json -c searches.json
+$(npm bin)/sugarcube -q queries.json -c searches.json
 ```
 
 It is possible to maintain multiple queries and of different type in one
@@ -243,8 +151,8 @@ like this:
 ```
 
 ```shell
-$ npm install -S @sugarcube/plugin-csv
-$ $(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json
+npm install -S @sugarcube/plugin-csv
+$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json
 ```
 
 Our pipeline consists now of three plugins. The `csv_export` plugin
@@ -265,21 +173,21 @@ instructions [here](https://gitlab.com/sugarcube/@sugarcube/plugin-guardian).
 Install the guardian plugin into your project.
 
 ```shell
-$ npm install -S @sugarcube/plugin-guardian
+npm install -S @sugarcube/plugin-guardian
 ```
 
 Lets do a quick search:
 
 ```shell
-$ $(npm bin)/sugarcube -Q guardian_search:Aleppo \
-                        -p guardian_content,tap_printf \
-                        --guardian.key <your API key>
+$(npm bin)/sugarcube -Q guardian_search:Aleppo \
+                     -p guardian_content,tap_printf \
+                     --guardian.key <your API key>
 ```
 
 ### Download videos from Youtube
 
 ```shell
-$ npm install -S @sugarcube/plugin-youtube
+npm install -S @sugarcube/plugin-youtube
 ```
 
 This plugin requires an API key.
@@ -293,9 +201,9 @@ custom download target with the `--youtube.download_dir` option. The default
 download target is in `downloads` of the project directory.
 
 ```shell
-$ $(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
-                        -p youtube_channel,youtube_download \
-                        --youtube.api_key <your API key>
+$(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
+                     -p youtube_channel,youtube_download \
+                     --youtube.api_key <your API key>
 ```
 
 ### Query Twitter and deal with media
@@ -314,18 +222,18 @@ In this example we will use the plugin for twitter, the HTTP plugin to
 download images and the media plugin to extract EXIF data.
 
 ```shell
-$ npm install -S @sugarcube/plugin-twitter \
-                 @sugarcube/plugin-http \
-                 @sugarcube/plugin-media
+npm install -S @sugarcube/plugin-twitter \
+               @sugarcube/plugin-http \
+               @sugarcube/plugin-media
 ```
 
 ```shell
-$ $(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro -Q twitter_query:Jair\ Bolsonaro \
-                        -p twitter_search,twitter_feed,http_get,media_exif \
-                        --twitter.consumer_key <your key here> \
-                        --twitter.consumer_secret <your key here> \
-                        --twitter.access_token_key <your key here> \
-                        --twitter.access_token_secret <your key here>
+$(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro -Q twitter_query:Jair\ Bolsonaro \
+                     -p twitter_search,twitter_feed,http_get,media_exif \
+                     --twitter.consumer_key <your key here> \
+                     --twitter.consumer_secret <your key here> \
+                     --twitter.access_token_key <your key here> \
+                     --twitter.access_token_secret <your key here>
 ```
 
 Or use a config file:
@@ -348,7 +256,7 @@ Or use a config file:
 Start off by installing the Telegram plugin:
 
 ```shell
-$ npm install -S @sugarcube/plugin-telegram
+npm install -S @sugarcube/plugin-telegram
 ```
 
 We will need a bot key and channel ID to use the Telegram
@@ -360,14 +268,14 @@ channel. It will construct a string out of the fields listed in
 `_sc_content_fields`. Using it is quite simple:
 
 ```shell
-$  $(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro \
-                         -p twitter_feed,telegram_send_message \
-                         --twitter.consumer_key <your key here> \
-                         --twitter.consumer_secret <your key here> \
-                         --twitter.access_token_key <your key here> \
-                         --twitter.access_token_secret <your key here> \
-                         --telegram.bot_key <your key here> \
-                         --telegram.chat_id <your id here>
+$(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro \
+                     -p twitter_feed,telegram_send_message \
+                     --twitter.consumer_key <your key here> \
+                     --twitter.consumer_secret <your key here> \
+                     --twitter.access_token_key <your key here> \
+                     --twitter.access_token_secret <your key here> \
+                     --telegram.bot_key <your key here> \
+                     --telegram.chat_id <your id here>
 ```
 
 ## Advancedly SugarCube
@@ -387,14 +295,14 @@ npm install -S @sugarcube/plugin-tor
 ```
 
 ```shell
-$ $(npm bin)/sugarcube -p tor_check
-$ torsocks $(npm bin)/sugarcube -p tor_check
-$ torsocks $(npm bin)/sugarcube -Q guardian_search:Aleppo \
-                                 -p tor_check,guardian_content,tap_printf \
-                                 --guardian.key <your API key>
-$ torsocks $(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
-                                 -p tor_check,youtube_channel,youtube_download \
-                                 --youtube.api_key <your API key>
+$(npm bin)/sugarcube -p tor_check
+torsocks $(npm bin)/sugarcube -p tor_check
+torsocks $(npm bin)/sugarcube -Q guardian_search:Aleppo \
+                              -p tor_check,guardian_content,tap_printf \
+                              --guardian.key <your API key>
+torsocks $(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
+                              -p tor_check,youtube_channel,youtube_download \
+                              --youtube.api_key <your API key>
 
 ```
 
@@ -402,18 +310,6 @@ $ torsocks $(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
 
 #### SugarCube projects
 
-The simplest way to start a new project is to use
-the
-[SugarCube project boilerplate](https://gitlab.com/sugarcube/sugarcube-boilerplate-project).
-It provides a scaffold with an initial structure.
-
-```shell
-git clone https://gitlab.com/sugarcube/sugarcube-boilerplate-project dev-project
-cd dev-project
-rm -rf .git && git init && git add -A && git commit -m "Initial commit"
-npm install
-$(npm bin)/sugarcube -h
-```
 
 #### TODO: Group queries and configs in files
 
@@ -444,47 +340,47 @@ This is an example, how such a unit of data looks like.
 
 ```json
 {
-	"_sc_media" : [{
-	  "type" : "url",
-      "href" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-      "_sc_id_hash" : "3e4ec721a206f46c1b1d30c958be6355e8f3665fe26ec51302dad565c5449096"
-	}],
-	"_sc_pubdates" : {
-		"fetch" : "2017-03-21T23:22:35.426Z",
-		"source" : "2016-08-14T12:00:35Z",
-	},
-	"_sc_relations" : [{
-	  "type" : "url",
-      "term" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-      "_sc_id_hash" : "ed7a6bc7c6694fa4879e4e1f956db03d61fb327ab1a70a9dbe1c5020f8291245"
-    }, {
-      "type" : "url",
-      "term" : "https://content.guardianapis.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-      "_sc_id_hash" : "e3895a0e1ce5a3d44f23fc759d34c9da96e859604b30713817c40bb99314d6f1"
-	}],
-	"_sc_downloads" : [{
-	  "type" : "url",
-      "term" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-      "_sc_id_hash" : "172f6d9f96f85f976267f4ceeebd48e9049ee1427ca4b1a7d80026b40ce04211"
-    }, {
-	  "type" : "json",
-      "term" : "https://content.guardianapis.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-      "_sc_id_hash" : "eda10207ffe39ce48c4883c2cd982c98275fafa6bddcdd2aa0fb4e9f37baa254"
-    }],
-	"id" : "us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-	"type" : "article",
-	"sectionId" : "us-news",
-	"sectionName" : "US news",
-	"webPublicationDate" : "2016-08-14T12:00:35Z",
-	"webTitle" : "Third-party presidential candidates fight for 15% in polls – and a spot in debates",
-	"webUrl" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-	"apiUrl" : "https://content.guardianapis.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-	"isHosted" : false,
-	"_sc_id_fields" : ["id"],
-	"_sc_content_fields" : ["webTitle"],
-	"_sc_id_hash" : "7c4e094182ad5369dec90910463c587a50e2c5125b1685c784488c05b2a3f2c8",
-	"_sc_content_hash" : "1306025b72901b844a134a9bd7eb9f76d4d4aa3909fddccbb7b131260da71367",
-	"_sc_markers" : ["B1QarNJ2x", "S1l0B41nx"]
+  "_sc_media" : [{
+    "type" : "url",
+    "href" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
+    "_sc_id_hash" : "3e4ec721a206f46c1b1d30c958be6355e8f3665fe26ec51302dad565c5449096"
+  }],
+  "_sc_pubdates" : {
+    "fetch" : "2017-03-21T23:22:35.426Z",
+    "source" : "2016-08-14T12:00:35Z",
+  },
+  "_sc_relations" : [{
+    "type" : "url",
+    "term" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
+    "_sc_id_hash" : "ed7a6bc7c6694fa4879e4e1f956db03d61fb327ab1a70a9dbe1c5020f8291245"
+  }, {
+    "type" : "url",
+    "term" : "https://content.guardianapis.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
+    "_sc_id_hash" : "e3895a0e1ce5a3d44f23fc759d34c9da96e859604b30713817c40bb99314d6f1"
+  }],
+  "_sc_downloads" : [{
+    "type" : "url",
+    "term" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
+    "_sc_id_hash" : "172f6d9f96f85f976267f4ceeebd48e9049ee1427ca4b1a7d80026b40ce04211"
+  }, {
+    "type" : "json",
+    "term" : "https://content.guardianapis.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
+    "_sc_id_hash" : "eda10207ffe39ce48c4883c2cd982c98275fafa6bddcdd2aa0fb4e9f37baa254"
+  }],
+  "id" : "us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
+  "type" : "article",
+  "sectionId" : "us-news",
+  "sectionName" : "US news",
+  "webPublicationDate" : "2016-08-14T12:00:35Z",
+  "webTitle" : "Third-party presidential candidates fight for 15% in polls – and a spot in debates",
+  "webUrl" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
+  "apiUrl" : "https://content.guardianapis.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
+  "isHosted" : false,
+  "_sc_id_fields" : ["id"],
+  "_sc_content_fields" : ["webTitle"],
+  "_sc_id_hash" : "7c4e094182ad5369dec90910463c587a50e2c5125b1685c784488c05b2a3f2c8",
+  "_sc_content_hash" : "1306025b72901b844a134a9bd7eb9f76d4d4aa3909fddccbb7b131260da71367",
+  "_sc_markers" : ["B1QarNJ2x", "S1l0B41nx"]
 }
 
 ```
@@ -520,7 +416,7 @@ that hashtag becomes a relation between those two tweets.
 ## Look at this, look at that ...
 
 ```shell
-$ $(npm bin)/sugarcube -q queries.json
-                        -p youtube_channel,twitter_search,twitter_feed,youtube_download,http_get,media_exif,mongodb_store,csv_export,tap_printf \
-                        -c config.json
+$(npm bin)/sugarcube -q queries.json
+                     -p youtube_channel,twitter_search,twitter_feed,youtube_download,http_get,media_exif,mongodb_store,csv_export,tap_printf \
+                     -c config.json
 ```

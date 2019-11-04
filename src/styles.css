@@ -13,6 +13,9 @@
   --color-passive-neg: var(--nord3);
   --color-elevated: var(--nord10);
   --color-elevated-neg: var(--nord9);
+  --color-warning: var(--nord11);
+  --color-notify: var(--nord13);
+  --color-synopsis: var(--nord15);
 }
 
 body {
@@ -61,6 +64,18 @@ a:hover {
   color: var(--color-main-neg);
 }
 
+.synopsis {
+  color: var(--color-synopsis);
+}
+
+.notification {
+  color: var(--color-notify);
+}
+
+.warning {
+  color: var(--color-warning);
+}
+
 .bg-main {
   background-color: var(--bg-main);
 }
@@ -105,6 +120,14 @@ a:hover {
 
 .b--negative {
   border-color: var(--color-main-neg);
+}
+
+.b--notification {
+  border-color: var(--color-notify);
+}
+
+.b--warning {
+  border-color: var(--color-warning);
 }
 
 .fade-in {

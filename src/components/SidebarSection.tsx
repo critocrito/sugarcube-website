@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Link} from "gatsby";
 import {ChevronUp, ChevronDown} from "react-feather";
 import classNames from "classnames";
 
@@ -17,7 +18,7 @@ const SidebarSection = ({title, items, expanded}: SidebarSectionProps) => {
     const style = classNames("pl2", isCurrent ? "bl bw2 br0 b--main" : "bl bw2 b--transparent");
     return (
       <li key={title} className={style}>
-        <a className="hover-bg-transparent main" href={slug}>{title}</a>
+        <Link className="hover-bg-transparent main" to={slug}>{title}</Link>
       </li>
     );
   }) : "";

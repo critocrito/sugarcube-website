@@ -30,7 +30,7 @@ const CodeBlock = ({className, children}) => {
   const copyLabelStyle = classNames("ttu f7", isCopied ? "visible" : "fade-out");
 
   return (
-    <div className="">
+    <div>
       <div className="flex flex-column">
         <div className="pa1 ba br--top br3 b--negative bg-main ">
           <div className="flex items-center justify-between color-main mr1 ml1 pr2 pl2">
