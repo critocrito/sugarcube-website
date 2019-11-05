@@ -21,7 +21,7 @@ Units and queries are grouped together in an envelope. Every use of Sugarcube pr
 
 ## plugin
 
-Functionality in Sugarcube is collected in a variety of plugins. Each plugin is responsible to provide one type of feature. Plugins are responsible to fetch data from different sources, transform them and export them again, e.g. by storing data in a database. Some plugins operate just on queries, e.g. to expand a path to a directory that is provided as a query into one query for every file that this directory contains.
+Functionalities in Sugarcube are provided in a variety of plugins. Each plugin is responsible to provide one type of feature. Plugins are responsible to fetch data from different sources, transform them and export them again, e.g. by storing data in a database. Some plugins operate just on queries, e.g. to expand a path to a directory that is provided as a query into one query for every file that this directory contains.
 
 See the [list of available plugins](/plugins) for details on functionality provided.
 
@@ -31,7 +31,7 @@ Complex data processes are created by combining different plugins into a pipelin
 
 ## instrument
 
-While plugins are used to create complex data process in form of pipelines, instruments are responsible operate an meta data of the pipeline and to react to events emitted at different stages of the pipeline run. This meta data are failures during a plugin, statistics about units fetched, etc. Instruments hook into the lifecycle of a pipeline and can are used for logging, storing metrics about the performance of a Sugarcube pipeline or writing failure statistics to a CSV file.
+While plugins are used to create complex data process in form of pipelines, instruments are responsible to operate on meta data of the pipeline and to react to events emitted at different stages of the pipeline run. This meta data can be failures during a plugin, statistics about units fetched, etc. Instruments hook into the lifecycle of a pipeline and can be used for logging, storing metrics about the performance of a Sugarcube pipeline or writing failure statistics to a CSV file.
 
 Read more about [events](/events) to understand how instruments can hook into a pipeline run.
 
