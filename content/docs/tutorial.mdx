@@ -12,13 +12,13 @@ import Warning from "../../src/components/Warning";
 This tutorial is currently under development. The content in here might be outdated. Please check back in soon to see any updates.
 </Warning>
 
-# Ultimately SugarCube
+# Ultimately Sugarcube
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Simply SugarCube](#simply-sugarcube)
+- [Simply Sugarcube](#simply-sugarcube)
 - [Intermezzo 1: Using files](#intermezzo-1-using-files)
 - [Plugins](#plugins)
 - [Intermezzo 2: Examples](#intermezzo-2-examples)
@@ -26,19 +26,19 @@ This tutorial is currently under development. The content in here might be outda
   - [Download videos from Youtube](#download-videos-from-youtube)
   - [Query Twitter and deal with media](#query-twitter-and-deal-with-media)
   - [Read tweets in Telegram](#read-tweets-in-telegram)
-- [Advancedly SugarCube](#advancedly-sugarcube)
-  - [Use SugarCube on the TOR network](#use-sugarcube-on-the-tor-network)
+- [Advancedly Sugarcube](#advancedly-sugarcube)
+  - [Use Sugarcube on the TOR network](#use-sugarcube-on-the-tor-network)
   - [Best practices](#best-practices)
 - [Intermezzo 3: Data](#intermezzo-3-data)
 - [TODO: Persist data with MongoDB](#todo-persist-data-with-mongodb)
-- [TODO: SugarCube on UNIX](#todo-sugarcube-on-unix)
+- [TODO: Sugarcube on UNIX](#todo-sugarcube-on-unix)
 - [Look at this, look at that ...](#look-at-this-look-at-that-)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Simply SugarCube
+## Simply Sugarcube
 
-We will run SugarCube now. We want to make a search on DuckDuckGo for the
+We will run Sugarcube now. We want to make a search on DuckDuckGo for the
 term `Keith Johnstone` and print the results on the screen.
 
 ```shell
@@ -54,7 +54,7 @@ first the `ddg_search` plugin, which queries the search engine, and after that
 we run the `tap_printf` plugin, which prints the results, queries and
 configuration to the screen.
 
-There is not much more to SugarCube than that.
+There is not much more to Sugarcube than that.
 
 Some plugins offer configuration options, that allow to control aspects of
 their behaviour. If you look at the output of `$(npm bin)/sugarcube -h`, you
@@ -107,7 +107,7 @@ options.
 }]
 ```
 
-We can use the `-q` argument to tell SugarCube to look for queries in a file.
+We can use the `-q` argument to tell Sugarcube to look for queries in a file.
 
 ```shell
 $(npm bin)/sugarcube -q queries.json -c searches.json
@@ -278,9 +278,9 @@ $(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro \
                      --telegram.chat_id <your id here>
 ```
 
-## Advancedly SugarCube
+## Advancedly Sugarcube
 
-### Use SugarCube on the TOR network
+### Use Sugarcube on the TOR network
 
 It is possible to anonymize sugarcube using
 [torsock](https://github.com/dgoulet/torsocks). But since torsocks prevents
@@ -308,7 +308,7 @@ torsocks $(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
 
 ### Best practices
 
-#### SugarCube projects
+#### Sugarcube projects
 
 
 #### TODO: Group queries and configs in files
@@ -317,10 +317,10 @@ torsocks $(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
 
 ## Intermezzo 3: Data
 
-SugarCube organizes data as a set of units. A unit is an atomic piece of
+Sugarcube organizes data as a set of units. A unit is an atomic piece of
 data, such as a single tweet or a single article from the guardian. Every
 plugin can decide what constitutes an unit. Every plugin receives the complete
-set of data at once. SugarCube cares about the form of data, not the
+set of data at once. Sugarcube cares about the form of data, not the
 content. This allows to treat Youtube videos and search engine results the
 same.
 
@@ -329,7 +329,7 @@ would be such keys, and the values are the actual tweet, and the time when the
 tweet occurred.
 
 There is a series of extra fields that are added to every unit by
-SugarCube. Their keys usually start with `_sc`. These extra fields often
+Sugarcube. Their keys usually start with `_sc`. These extra fields often
 convey an additional semantic meaning in a plugin independent manner. It
 allows plugins to operate on data in an independent manner, e.g. `_sc_media`
 holds all links, that a data unit might contain. Now any plugin that wants to
@@ -386,13 +386,13 @@ This is an example, how such a unit of data looks like.
 ```
 
 The `_sc_id_hash` is the unique identifier of that unit of data. It is a
-SHA256 hash sum of the identifying fields of the unit. If SugarCube fetches a
+SHA256 hash sum of the identifying fields of the unit. If Sugarcube fetches a
 unit of data, it calculates the `_sc_id_hash` and can so determine if a unit
 is new or already known.
 
 Similar the `_sc_content_hash` is a hash sum of the content of a unit of
 data. This can be the actual tweet, or the contents of an article. If a unit
-is already know to SugarCube (same `_sc_id_hash`) but the content changed
+is already know to Sugarcube (same `_sc_id_hash`) but the content changed
 (different `_sc_content_hash`), then we have a revision of a unit of data.
 
 Units can form relations. If two separate articles link to the same image,
@@ -405,9 +405,9 @@ that hashtag becomes a relation between those two tweets.
 - `mongodb_fetch_*`
 - `mongodb_query`
 
-## TODO: SugarCube on UNIX
+## TODO: Sugarcube on UNIX
 
-- Use pipes to connect SugarCube to other UNIX tools
+- Use pipes to connect Sugarcube to other UNIX tools
 - Quiet mode to redirect output on stdout
 - pipe csv into awk
 - post json data to a web service
