@@ -3,7 +3,7 @@ import {graphql} from "gatsby";
 import {MDXRenderer} from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 
-import Layout from "../components/Layout";
+import LayoutSimple from "../components/LayoutSimple";
 import CodeBlock from "../components/CodeBlock";
 
 const components = {
@@ -11,36 +11,27 @@ const components = {
   code: props => <CodeBlock {...props} />
 }
 
-const PageTemplate = ({data: {mdx}}: any) => {
+const TemplateSimple = ({data: {mdx}}: any) => {
   const {body, frontmatter} = mdx;
 
-  const next = frontmatter.next == null
-             ? null
-             : `${frontmatter.root}/${frontmatter.next}`;
-  const prev = frontmatter.prev == null
-             ? null
-             : `${frontmatter.root}/${frontmatter.prev}`;
-
   return (
-    <Layout next={next} prev={prev}>
+    <LayoutSimple>
       <MDXProvider components={components}>
         <MDXRenderer>{body}</MDXRenderer>
       </MDXProvider>
-    </Layout>
+    </LayoutSimple>
   )
 };
 export const pageQuery = graphql`
-  query DocsQuery($id: String) {
+  query SimplePostQuery($id: String) {
     mdx(id: { eq: $id }) {
       id
       frontmatter {
         title
         root
-        prev
-        next
       }
       body
     }
   }
 `
-export default PageTemplate
+export default TemplateSimple;

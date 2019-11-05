@@ -46,13 +46,13 @@ const Footer = () => {
                 </h3>
                 <ul className="list pl0">
                   <li className="pt2">
-                    <Link className="link-negative" to="/guides">Guides</Link>
+                    Guides
                   </li>
                   <li className="pt2">
-                    <Link className="link-negative" to="/development">Development</Link>
+                    Development
                   </li>
                   <li className="pt2">
-                    <Link className="link-negative" to="/glossary">Glossary</Link>
+                    Glossary
                   </li>
                 </ul>
               </div>
