@@ -49,7 +49,7 @@ const Footer = () => {
                     Guides
                   </li>
                   <li className="pt2">
-                    Development
+                    <Link className="link-negative" to="/docs/plugin-development">Development</Link>
                   </li>
                   <li className="pt2">
                     Glossary

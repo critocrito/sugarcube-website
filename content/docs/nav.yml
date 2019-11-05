@@ -5,3 +5,6 @@
 - title: Concepts
   items:
     - slug: glossary
+- title: Development
+  items:
+    - slug: plugin-development
