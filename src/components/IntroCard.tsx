@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "gatsby";
 
 interface IntroCardProps {
   title: string;
@@ -15,9 +16,7 @@ const IntroCard = ({title, description, path}: IntroCardProps) => {
         {path == null ? (
           "Coming Soon."
         ) : (
-          <a href={path}>
-            Find out more ...
-          </a>
+          <Link to={path}>Find out more ...</Link>
         )}
       </p>
     </div>
