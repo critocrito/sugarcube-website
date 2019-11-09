@@ -1,8 +1,8 @@
 ---
 root: "/docs"
 title: "Glossary"
-parents: ["Get Started"]
-prev: "tutorial"
+parents: ["Guides"]
+prev: "data-format"
 ---
 
 # Glossary

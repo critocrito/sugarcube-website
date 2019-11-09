@@ -2,8 +2,9 @@
   items:
     - slug: installation
     - slug: tutorial
-- title: Concepts
+- title: Guides
   items:
+    - slug: data-format
     - slug: glossary
 - title: Development
   items:

@@ -42,14 +42,17 @@ const Footer = () => {
               </div>
               <div className="w-third-ns">
                 <h3 className="bb b--negative pb1">
-                  Docs
+                  Guides
                 </h3>
                 <ul className="list pl0">
                   <li className="pt2">
-                    <Link className="link-negative" to="/docs/prerequisites">Development</Link>
+                    <Link className="link-negative" to="/docs/data-format">Data Format</Link>
                   </li>
                   <li className="pt2">
                     <Link className="link-negative" to="/docs/glossary">Glossary</Link>
+                  </li>
+                  <li className="pt2">
+                    <Link className="link-negative" to="/docs/prerequisites">Development</Link>
                   </li>
                 </ul>
               </div>
