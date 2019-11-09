@@ -2,6 +2,7 @@
 root: "/docs"
 title: Writing a plugin
 parents: ["Development"]
+prev: "prerequisites"
 ---
 
 import Synopsis from "../../src/components/Synopsis"
@@ -14,8 +15,349 @@ import Note from "../../src/components/Note"
 
 # Writing a new Plugin
 
-Functionalities of Sugarcube are stored and distributed using plugins. Without any plugin, Sugarcube doesn't really do much. When installing `@sugarcube/sugarcube` a whole bunch of plugins are getting installed already. But often you need additional functionality that doesn't come out of the box. Writing your own plugin is the way to go here.
+Functionalities of Sugarcube are stored and distributed using plugins. Without its plugins, Sugarcube doesn't really do much. When installing `@sugarcube/sugarcube` a whole bunch of plugins are getting installed already. But often you need additional functionality that doesn't come out of the box. Writing your own plugin is the way to go here.
 
-<Note>
-In order to write a plugin you need to write code. If you have never done so, you can ask someone else to write it for you or learn enough coding yourself to write the functionality you require. See <a href="https://github.com/vioan/nodejs-learning-resources">this website</a> for various ressources on learning coding and NodeJS.
-</Note>
+In this guide we will be building several plugins around the [Time Travel API](https://timetravel.mementoweb.org/guide/api/). It allows us to obtain representations of prior states of a given web URI.
+
+All code in this guide can be found on [Github](https://github.com/critocrito/sugarcube-plugin-development-guide).
+
+## Setup for this Guide
+
+We start by setting up a NodeJS project.
+
+```shell
+mkdir sugarcube-plugin-memento
+cd sugarcube-plugin-memento
+npm init -y
+mkdir -p src/plugins
+touch src/index.js
+```
+
+We create a new directory named `sugarcube-plugin-memento` and change into it. This will be the project directory and all commands that follow are executed from it.
+
+We initialize an empty NodeJS package with `npm init -y`. This will create a new `package.json` file which is used to define the package and any dependencies your package might have. Edit the `package.json` file and replace the `main` field to point to `src/index.js`. Feel free to edit any other field in `package.json` such as `author` or `license` to your liking. You can find details about it in its [documentation](https://docs.npmjs.com/files/package.json). Our `package.json` looks the following:
+
+```json
+{
+  "name": "sugarcube-plugin-memento",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+```
+
+We will put the code for our plugins into `src/plugins`. Each package requires a main entry point which is configured in the `main` field of the `package.json`. Using the `touch` command we create an empty `src/index.js` to serve as our entry point for this package.
+
+To make it easier for us to test our plugin during development we additionally install the Sugarcube CLI command as a development dependency. This will allow us to run our new plugin right away.
+
+```shell
+npm install -D @sugarcube/cli
+```
+
+We can verify that Sugarcube is working and that no plugins are available.
+
+```shell
+$(npm bin)/sugarcube --list-plugins
+```
+
+## `hello_world`
+
+Before we dive into more complex examples let's make a very simple plugin, the *Hello World* of Sugarcube.
+
+A Sugarcube plugin has to fulfill the following requirements:
+
+- Each plugin is a function that receives the Sugarcube envelope and the environment of the Sugarcube run as it's input and returns a Sugarcube envelope again.
+- Plugins have to be distributed in NodeJS packages that start with the name `sugarcube-plugin`, e.g.
+
+  `sugarcube-plugin-memento`
+
+- Inside the NodeJS package, each plugin has to be exported on the `plugins` object.
+
+In your project directory edit a file called `src/plugins/hello.js` and add the following code.
+
+```js
+const plugin = (envelope, {log}) => {
+  log.info("Hello World");
+
+  return envelope;
+};
+
+plugin.argv = {};
+plugin.desc = "The 'Hello World' of Sugarcube.";
+
+module.exports = plugin;
+```
+
+In line 4 to 5 we define a function that is our plugin. The function takes two arguments:
+
+- `envelope` contains the data and queries that are available in the current pipeline. As
+- `env` is an object that is supplied by the Sugarcube runner. It allows plugins to access the runtime of the current pipeline. We will look at the runtime in more details later on, for now we only use the logger which you can use to print log messages during a pipeline run. `{log}` is a way to destructure the environment and directly access fields.
+
+Each plugin can define it's own configuration options and provide a short description what it does. In line 7 we set the `argv` field on the plugin that defines the configuration options. In this example it is empty which means this plugin has no configuration options. In line 8 we set the `desc` field on the plugin which contains the description string.
+
+And finally in line 10 we export the plugin as the default export for this file.
+
+Before we can use our `hello_world` plugin we need to export it on the package level. In our main entry point `src/index.js` we export the plugin on the `plugins` object of the package. The key sets the name of the plugin, and the value is the plugin function itself. One package can export multiple plugins.
+
+```js
+const helloWorld = require("./plugins/hello");
+
+module.exports.plugins = {
+  hello_world: helloWorld
+};
+```
+
+We can now run our `hello_world` plugin.
+
+```shell
+$(npm bin)/sugarcube -p hello_world
+```
+
+<br />
+
+<img src="../assets/plugin-dev-hello-world.svg" alt="terminal sugarcube hello world plugin" />
+
+You can also list all available plugins to verify that the description is set.
+
+```shell
+$(npm bin)/sugarcube --list-plugins
+```
+
+## `memento_timemap`
+
+Let's start with a more complete example. Our first plugin will look up a TimeMap for a resource with a given URI. A TimeMap provides an overview of all Mementos. A TimeMap for a given URI can be queried by making a HTTP `GET` request to `http://labs.mementoweb.org/timemap/json/<URI>`. If the request succeeds and any mementos are found it will return a JSON object containing a list of the mementos in `{mementos: {list: []}}`.
+
+The plugin will require to make HTTP requests against the API of `https://labs.mementoweb.org` and parse the time stamps the API returns into proper JavaScript [Date objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date). To make HTTP requests we will be using the [`node-fetch`](https://www.npmjs.com/package/node-fetch) package and to handle the date parsing we will be using the [`date-fns`](https://www.npmjs.com/package/date-fns) package. The [`dashp`](https://www.npmjs.com/package/dashp) package is tiny utility belt to work with promises and asynchronous code.
+
+To help us debug our plugin we will additionally install the `@sugarcube/plugin-tap` package as a development dependency.
+
+```shell
+npm install dashp node-fetch date-fns
+npm install -D @sugarcube/plugin-tap
+```
+
+Edit a file in `src/plugins/timemap.js` and add the following code.
+
+```js
+const {flatmapP} = require("dashp");
+const fetch = require("node-fetch");
+const {parseISO} = require("date-fns");
+const {envelope: env} = require("@sugarcube/core");
+
+const querySource = "http_url";
+
+const plugin = async (envelope, {log, stats}) => {
+  const queries = env.queriesByType(querySource, envelope);
+
+  const data = await flatmapP(async (query) => {
+    stats.count("total");
+
+    const url = `http://labs.mementoweb.org/timemap/json/${query}`;
+
+    let resp;
+    let json;
+
+    try {
+      resp = await fetch(url);
+    } catch (e) {
+      stats.fail({term: query, reason: e.message});
+      return [];
+    }
+
+    try {
+      json = await resp.json();
+    } catch (e) {
+      stats.fail({term: query, reason: "No Mementos found."});
+      return [];
+    }
+
+    if (
+      json.mementos == null ||
+        json.mementos.list == null ||
+        !Array.isArray(json.mementos.list)
+    ) {
+      stats.fail({term: query, reason: "TimeMap data format mismatch."});
+      return [];
+    }
+
+    stats.count("success");
+
+    log.info(`Expanding ${query} into ${json.mementos.list.length} Mementos.`);
+
+    return json.mementos.list.map(({datetime, uri}) => {
+      const createdAt = parseISO(datetime);
+
+      return {
+        _sc_id_fields: ["uri"],
+        _sc_media: [{type: "url", term: uri}],
+        _sc_pubdates: {source: createdAt},
+        _sc_queries: [{type: querySource, term: query}],
+        created_at: createdAt,
+        uri,
+      };
+    });
+  }, queries);
+
+  return env.concatData(data, envelope);
+};
+
+plugin.argv = {};
+plugin.desc = "Lookup the TimeMap for a resource URI.";
+
+module.exports = plugin;
+```
+
+- **Line 1-4:**
+
+  We import the various dependencies we will be using. The [`flatmapP`](https://www.npmjs.com/package/dashp#flatmap) function from `dashp` allows us to asynchronously map a function over a list and concatenate the results into a single array. In this case we will be iterating over the list of queries that we want to look up the TimeMaps for. We use `fetch` to make HTTP requests and `parseISO` to parse the datetime into a `Date` object. We import the `envelope` API from `@sugarcube/core` which gives us helper functions to easier work with the envelope of the pipeline. To avoid name clashes we import the `envelope` API as `env`.
+
+- **Line 8:**
+
+  We define our plugin. Note that a plugin can asynchronous and return a promise as well. To simplify programming with Promises in JavaScript we use [`async/await`](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await). Compared to the `hello_world` plugin we additionally import the `stats` object from the `environment`. This objects allows us to track metrics using counters and track failures during our plugin operation. You can see the use of counters in line12 and 42. Examples to track failures can be found in line 22, 29 and 38.
+
+- **Line 9:**
+
+  We decided that this plugin should only operate on queries of type `http_url` (see line 6). The `env.queriesByType` is a helper to extract the relevant queries from the current `envelope`. It takes the name of the query type as its first argument and the envelope as its second argument.
+
+- **Line 11-58:**
+
+  This is the main logic of our plugin. It iterates over the queries and for each query makes a request to the TimeMap API to retrieve any available mementos. Each query can yield many Mementos, therefore we use `flatmapP` to then flatten the results.
+
+- **Line 46-57:**
+
+  We turn each Memento into its own unit of data. There are certain fields that must be set in order for Sugarcube to understand the data.
+
+  - Fields that start with `_sc` are special fields used by Sugarcube. We describe them below. Every plugin can choose whatever data format makes sense. In this case we simply set the parsed date time as creation date and the uri. The TimeMap api doesn't yield that much data.
+  - To determine uniqueness of a piece of data Sugarcube calculates the `_sc_id_hash` for each unit of data. It uses any fields specified in `_sc_id_fields` as the input to calculate the hash. In this example each Memento has a unique URI which we can use as the input to calculate the id hash. More than one field can be specified to form uniqueness of a piece of data.
+  - Any media, like websites, images or videos are stored in the `_sc_media` field. It allows other plugins to operate on those media sources, e.g. the `media_youtubedl` plugin looks up all medias of type `video` and downloads them, while the `media_screenshot` plugin takes a screenshot of every media of type `url`.
+  - If the plugin can reliably determine a creation date for the data add it to `_sc_pubdates` using the `source` key.
+  - We store the query that yielded this unit of data in the `_sc_queries` field. It allows us to later on map data back to the query that generated the data.
+
+- **Line 60:**
+
+  Every plugin needs to return a valid Sugarcube envelope that is used as the input for the plugin that follows. The `env.concatData` helper merges a list of Sugarcube units into an existing envelope and returns the new envelope. It merges units of data that are equal based on the `_sc_id_hash` field.
+
+One last step is required before we can try our new plugin. You have to export the plugin in the entry point of the package. Edit `src/index.js` and add the new plugin the exports.
+
+```js
+const helloWorld = require("./plugins/hello");
+const timeMap = require("./plugins/timemap");
+
+module.exports.plugins = {
+  hello_world: helloWorld,
+  memento_timemap: timeMap,
+};
+```
+
+Lets give the new plugin a try. We will print the data to the screen using the `tap_printf` plugin but limit the number of units to 1 to not fill up the screen. We lookup Mementos for `https://syrianarchive.org` and `https://yemeniarchive.org`.
+
+```shell
+$(npm bin)/sugarcube -p memento_timemap,tap_printf \
+                     -Q http_url:'https://syrianarchive.org' \
+                     -Q http_url:'https://yemeniarchive.org' \
+                     --tap.limit 1
+```
+
+<br />
+
+<img src="../assets/plugin-dev-memento-timemap.svg" alt="terminal sugarcube memento timemap plugin" />
+
+In our case `https://syrianarchive.org` expanded into 218 Mementos, while `https://yemeniarchive.org` yielded none. In the output you see that Sugarcube prints a warning because we used `stats.fail` to register the failure. Any metrics collected using `stats.count` are printed at the end of the pipeline run.
+
+The `tap_printf` prints one unit of data to the screen. Let's look at it more closely.
+
+```json
+[ { _sc_pubdates:
+     { fetch: 2019-11-09T15:53:46.253Z,
+       source: 2015-05-12T16:14:39.000Z },
+    _sc_markers: [ '76e80eee1ab68b37e4de0b2f8df1f09663de9639' ],
+    _sc_media:
+     [ { type: 'url',
+         term:
+          'https://web.archive.org/web/20150512161439/https://syrianarchive.org/',
+         _sc_id_hash:
+          '6ccef00314e04711833d3d10204a5d271dd3ac1520df3ac14c55435479be24d7' } ],
+    _sc_downloads: [],
+    _sc_queries:
+     [ { type: 'http_url',
+         term: 'https://syrianarchive.org',
+         _sc_id_hash:
+          'f5e7232862d4c5671519b5070e7e55201d63f44f60db80ea97c832d5f8b40655' } ],
+    _sc_locations: [],
+    _sc_id_hash:
+     '79cc527a01812eb7f92ea4b6c9394c8a145f91a2c7e490692ab33ad41e3e1144',
+    _sc_id_fields: [ 'uri' ],
+    uri:
+     'https://web.archive.org/web/20150512161439/https://syrianarchive.org/',
+    createdAt: 2015-05-12T16:14:39.000Z,
+    _sc_content_hash:
+     '4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945',
+    _sc_source: 'memento_timemap' } ]
+```
+
+Sugarcube automatically calculates the `_sc_id_hash` for each unit of data if it doesn't exist yet. It also calculates hashes for every entry in `_sc_media` and `_sc_queries`. It uses the `type` and `term` field as inputs to determine the id hash.
+
+You can also see that the runner automatically added the `fetch` date to the `_sc_pubdates` object.
+
+ Additionally Sugarcube stores the marker of the run in `_sc_markers` and the plugin name that generated the data in `_sc_source`.
+
+## Plugin configuration
+
+We can use the `plugin.argv` object to expose any configuration options the plugin might require. We can for example add an option that will only retrieve the oldest Memento for a give resource URI. Sugarcube uses the [option format that the Yargs parser uses](https://github.com/yargs/yargs/blob/HEAD/docs/api.md#optionskey-opt). It is the convention that plugin configuration options are named like `<package>.<option>`. Modify the `plugin.argv` object to look like this.
+
+```js
+plugin.argv = {
+  "memento.oldest_only": {
+    type: "boolean",
+    desc: "Only fetch the oldest Memento.",
+    default: false,
+  }
+};
+```
+
+The configuration option becomes now available to the `sugarcube` CLI command and can be configured using a JSON config file as well.
+
+```shell
+$(npm bin)/sugarcube -H memento_timemap
+```
+
+```json
+{
+  "memento": {
+    "oldest_only": true
+  }
+}
+```
+
+To access the configuration options inside of your plugin use the `cfg` object of the `environment`.
+
+```js
+const plugin = async (envelope, {log, cfg, stats}) => {
+  const oldestOnly = cfg.memento.oldest_only;
+
+  // ... The rest of the plugin
+};
+```
+
+In our `memento_timemap` plugin we assume that the TimeMap API always returns the oldest Memento as the first element in the `json.memento.list` array. To only fetch the oldest Memento in our plugin change line 46 to look like this:
+
+```js
+return (
+  oldestOnly
+    ? json.mementos.list.slice(0, 1)
+    : json.mementos.list
+).map(({datetime, uri}) => { ... }
+```
+## Summary
+
+
+Writing plugins for Sugarcube doesn't get more complicated than that. Each plugin is a function that takes an `envelope` and an `environment` and returns an `envelope` again. A plugin can decide what to do with the data it receives. It is free to either removes data, adds new data, transforms the data, extend the data or take an action on the data (any sort of side effect). The `memento_timemap` plugin generates new data and merges it into the envelope of the current pipeline. Here are links to some example plugins that instead of generating new data extend or operate on the data in the pipeline.
+
+- The [`media_warc`](https://github.com/critocrito/sugarcube/blob/master/packages/plugin-media/lib/plugins/warc.js) plugin archives any media of type `url` in `_sc_media` as a Webarchive.
+- The [`csv_export`](https://github.com/critocrito/sugarcube/blob/master/packages/plugin-csv/lib/plugins/export.js) plugin writes the data of the envelope into a CSV file.

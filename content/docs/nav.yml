@@ -7,4 +7,5 @@
     - slug: glossary
 - title: Development
   items:
+    - slug: prerequisites
     - slug: plugin-development

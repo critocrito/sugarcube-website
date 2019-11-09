@@ -1,13 +1,13 @@
-const replacePath = require('./utils')
-const path = require('path')
+const replacePath = require("./utils");
+const path = require("path");
 
-module.exports = exports.createPages = ({ actions, graphql }) => {
-  const { createPage } = actions
+module.exports = exports.createPages = async ({actions, graphql}) => {
+  const {createPage} = actions;
 
   const Template = path.resolve("src/templates/Template.tsx");
   const TemplateSimple = path.resolve("src/templates/TemplateSimple.tsx")
 
-  return graphql(`
+  const result = await graphql(`
     {
       allMdx {
         edges {
@@ -25,17 +25,15 @@ module.exports = exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors)
-    }
-    result.data.allMdx.edges.forEach(({ node }) => {
-      console.log(node.fields.slug);
-      createPage({
-        path: replacePath(node.fields.slug),
-        component: node.fields.slug.startsWith("/docs") ? Template : TemplateSimple,
-        context: { id: node.id },
-      })
-    })
-  })
-}
+  `);
+
+  if (result.errors) return Promise.reject(result.errors);
+
+  result.data.allMdx.edges.forEach(({node}) => {
+    createPage({
+      path: replacePath(node.fields.slug),
+      component: node.fields.slug.startsWith("/docs") ? Template : TemplateSimple,
+      context: { id: node.id },
+    });
+  });
+};

@@ -55,7 +55,12 @@ const CodeBlock = ({className, children}) => {
             </Media>
           </div>
         </div>
-        <SyntaxHighlighter className="mt0 mb0 bw0 f6-ns f7" language={language} style={nord}>
+        <SyntaxHighlighter
+          className="mt0 mb0 bw0 f6-ns f7"
+          language={language}
+          style={nord}
+          showLineNumbers={language === "js" ? true : false}
+        >
           {children}
         </SyntaxHighlighter>
       </div>
