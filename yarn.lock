@@ -5136,7 +5136,7 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
     assign-symbols "^1.0.0"
     is-extendable "^1.0.1"
 
-extend@^3.0.0, extend@~3.0.2:
+extend@^3.0.0, extend@^3.0.2, extend@~3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
@@ -5915,6 +5915,14 @@ gatsby-remark-images@^3.1.28:
     slash "^3.0.0"
     unist-util-select "^1.5.0"
     unist-util-visit-parents "^2.1.2"
+
+gatsby-remark-table-of-contents@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-table-of-contents/-/gatsby-remark-table-of-contents-0.0.7.tgz#5dc38fd47506b3099c5f2a6bfa4d1d03b9f77a59"
+  integrity sha512-OPN+4zONJVZfj9gxkd0vwUKji9YOpxV8YF+c3DaOopsLyqFKzBpFeLbPZi17aQQDAU4hNA5aH5JvuNkUbeqHrw==
+  dependencies:
+    js-yaml "^3.13.1"
+    mdast-util-toc "^4.2.0"
 
 gatsby-source-filesystem@^2.1.35:
   version "2.1.35"
@@ -8908,6 +8916,17 @@ mdast-util-toc@^3.1.0:
     github-slugger "^1.2.1"
     mdast-util-to-string "^1.0.5"
     unist-util-is "^2.1.2"
+    unist-util-visit "^1.1.0"
+
+mdast-util-toc@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/mdast-util-toc/-/mdast-util-toc-4.2.0.tgz#9085c4313359c981e4c1d22efe02f8ce01072da4"
+  integrity sha512-BEbxg3GtAsvswmV9bMAV/WJA7v0CsG5tYk90xnTlIeCnnBKD6Cof3KEg/K3xQ1O2FRyJKMWkgKZB2mpnOjA0tg==
+  dependencies:
+    extend "^3.0.2"
+    github-slugger "^1.2.1"
+    mdast-util-to-string "^1.0.5"
+    unist-util-is "^3.0.0"
     unist-util-visit "^1.1.0"
 
 mdn-data@2.0.4:

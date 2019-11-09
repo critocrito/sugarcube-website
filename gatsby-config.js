@@ -31,6 +31,7 @@ module.exports = {
           "gatsby-remark-autolink-headers",
           "gatsby-remark-images",
           "gatsby-remark-copy-linked-files",
+          "gatsby-remark-table-of-contents",
         ],
         gatsbyRemarkPlugins: [
           {
@@ -42,6 +43,14 @@ module.exports = {
         },
           "gatsby-remark-copy-linked-files",
           "gatsby-remark-autolink-headers",
+          {
+            resolve: `gatsby-remark-table-of-contents`,
+            options: {
+              exclude: "Table of Contents",
+              fromHeading: 2,
+              toHeading: 3
+            },
+          }
         ],
       },
     },

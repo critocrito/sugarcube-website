@@ -6,417 +6,183 @@ prev: "installation"
 next: "glossary"
 ---
 
+import Synopsis from "../../src/components/Synopsis";
 import Warning from "../../src/components/Warning";
+import Note from "../../src/components/Note";
+
+<Synopsis>
+<li>This tutorial takes you from running your first Sugarcube pipeline right through to setting up more complicated data processes.</li>
+</Synopsis>
+
+# Tutorial
 
 <Warning>
 This tutorial is currently under development. The content in here might be outdated. Please check back in soon to see any updates.
 </Warning>
 
-# Ultimately Sugarcube
+This tutorial assumes that you succesfully installed Sugarcube. If this is not the case please go back to the installation guide.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
 
-
-- [Simply Sugarcube](#simply-sugarcube)
-- [Intermezzo 1: Using files](#intermezzo-1-using-files)
-- [Plugins](#plugins)
-- [Intermezzo 2: Examples](#intermezzo-2-examples)
-  - [Search for content from The Guardian](#search-for-content-from-the-guardian)
-  - [Download videos from Youtube](#download-videos-from-youtube)
-  - [Query Twitter and deal with media](#query-twitter-and-deal-with-media)
-  - [Read tweets in Telegram](#read-tweets-in-telegram)
-- [Advancedly Sugarcube](#advancedly-sugarcube)
-  - [Use Sugarcube on the TOR network](#use-sugarcube-on-the-tor-network)
-  - [Best practices](#best-practices)
-- [Intermezzo 3: Data](#intermezzo-3-data)
-- [TODO: Persist data with MongoDB](#todo-persist-data-with-mongodb)
-- [TODO: Sugarcube on UNIX](#todo-sugarcube-on-unix)
-- [Look at this, look at that ...](#look-at-this-look-at-that-)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-## Simply Sugarcube
-
-We will run Sugarcube now. We want to make a search on DuckDuckGo for the
-term `Keith Johnstone` and print the results on the screen.
-
-```shell
-$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -p ddg_search,tap_printf
+```toc
+# This code block gets replaced with the TOC
 ```
 
-This prints up to 30 search results on the screen.
+## Introduction
 
-Using the `-Q` option, we specified a query, the `-p` defines which
-plugins should be run. The order of the plugins matters. You can't print
-results to the screen, if you haven't fetched any results yet. We run two plugins,
-first the `ddg_search` plugin, which queries the search engine, and after that
-we run the `tap_printf` plugin, which prints the results, queries and
-configuration to the screen.
-
-There is not much more to Sugarcube than that.
-
-Some plugins offer configuration options, that allow to control aspects of
-their behaviour. If you look at the output of `$(npm bin)/sugarcube -h`, you
-will see the `--tap.limit` argument. We can use it to print less results on
-the screen.
+Let's jump right in. Open your terminal and change into your Sugarcube project directory that you created during installation.
 
 ```shell
-$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone \
-                     -p ddg_search,tap_printf \
-                     --tap.limit 1
+cd sugarcube-project
 ```
 
-## Intermezzo 1: Using files
+Our first Sugarcube pipeline will fetch the contents and meta data of a website and print the results to the screen. We use the `http_import` plugin to fetch the website and the `tap_printf` plugin to print the data to the screen.
 
-As you start to define more complicated data pipelines, the size of the
-command will grow. To make life easier, but also to make pipeline runs
-repeatable, is it possible, to store configuration in text files. The
-format of those files is JSON. The previous example would look like this:
+```shell
+$(npm bin)/sugarcube -p http_import,tap_printf \
+                     -Q http_url:'https://mwatana.org/en/airstrike-on-detention-center/'
+```
+
+This should print the contents of `https://mwatana.org/en/airstrike-on-detention-center/` with additional meta data. We will explain the meaning of all fields later. Since we print the full text of the website to the screen you might want to scroll to see the beginning of the Sugarcube run.
+
+<img src="../assets/tutorial-first-pipeline.svg" alt="Sugarcube tutorial first pipeline" />
+
+- Using the `-p` option, you defined which plugins should be run (in this case, `http_import` and `tap_printf`). Note: _The order of the plugins matters_. You can't print results to the screen if you haven't fetched any results yet.
+- Using the `-Q` option in your pipeline above, you specified the query for your website import.
+
+There is not much more to SugarCube than that (though of course this is a very simple example - you can use Sugarcube for a lot more!). Lets dive in a little deeper.
+
+## Queries
+
+A lot of plugins that fetch data from somewhere else use queries. They tell plugins where to look for data. Each query is of a certain type, so that different plugins know which queries are relevant for them. The `http_import` plugin looks for queries of type `http_url`. When calling Sugarcube one way to provide queries is by using the `-Q` option. You can specify this option multiple times in order to supply multiple queries for a single run.
+
+```shell
+$(npm bin)/sugarcube -p http_import \
+                     -Q http_url:'https://mwatana.org/en/airstrike-on-detention-center/' \
+                     -Q http_url:'https://yemeniarchive.org'
+```
+
+This repeats the same pipeline but this time we fetch two websites in one go. For this example we omitted the `tap_printf` plugin so it's easier to read the log output of Sugarcube.
+
+<img src="../assets/tutorial-multiple-queries.svg" alt="Sugarcube tutorial multiple queries" />
+
+Using the `-Q` option is only one way to supply queries to a Sugarcube pipeline. Especially if there are many queries it is useful to manage queries differently. One way to manage different queries is to collect them in a dedicated text file. Use a text editor to create a file called `queries.json` inside your project directory. The format of this file is [JSON](https://en.wikipedia.org/wiki/JSON). It contains a list of queries. Each query has a `type` (in this case `http_url` but there are different types that Sugarcube can understand) and a `term`, which contains the actual query.
+
+```json
+[
+  {
+    "type": "http_url",
+    "term": "https://mwatana.org/en/airstrike-on-detention-center/"
+  },
+  {
+    "type": "http_url",
+    "term": "https://yemeniarchive.org"
+  }
+]
+```
+
+After you saved this file you can tell Sugarcube to use this file to look up queries using the `-q` option.
+
+```shell
+$(npm bin)/sugarcube -p http_import -q queries.json
+```
+
+It is possible to maintain multiple queries, and of different type, in one file.
+
+## Configuration options
+
+Some plugins offer configuration options that allow you to control how they function. You can always look up all available options by supplying the `--help` option to the `sugarcube` command.
+
+```shell
+$(npm bin)/sugarcube -h
+```
+
+Since this output can be quite long there is also an option to print configuration options for a specific plugin only.
+
+```shell
+$(npm bin)/sugarcube -H tap_printf
+```
+
+If you look again at the output of the above command you will see the line `--tap.select  Specify what to log: data,queries,cfg,stats,cache,plugins`. As a default the tap_printf command prints the data of the pipeline to the screen. But we can also tell it to print the e.g. queries instead.
+
+So, for example, if we wanted to run our pipeline again that imports websites and then print the queries of the pipeline to the screen, we would type the following command:
+
+```shell
+$(npm bin)/sugarcube -p http_import,tap_printf \
+                     -q queries.json \
+                     --tap.select queries
+```
+
+You will see that the queries specified in `queries.json` are printed to the screen.
+
+<img src="../assets/tutorial-configuration-options.svg" alt="Sugarcube tutorial configuration options" />
+
+The two tasks Sugarcube performed above (importing websites and printing to the screen) form a very simple pipeline. As you start to define more complicated data pipelines, the size of the command will grow. When the pipeline starts to get too big, Sugarcube allows for the possibility of storing your pipeline configuration in a text file, similar to storing queries in text files. This will not only make life easier, but it will also allow you to make pipeline runs repeatable.
+
+To show how this works, we'll just take our simple pipeline from before. For this pipeline, your configuration file (let's name it "web-import.json") would look like this:
 
 ```json
 {
-  "plugins": "ddg_search,tap_printf",
+  "name": "Web Imports",
+  "plugins": [
+    "http_import",
+    "tap_printf"
+  ],
   "tap": {
-    "limit": 1
+    "select": "queries"
   }
 }
 ```
 
-Use the `-c` argument to specify the file location:
+If you go back once again to the output of `$(npm bin)/sugarcube -h` (the list of Options), you'll see `-c  - Path to JSON config file`. This is telling us that we can use `-c` to specify the location of our configuration file, which in this case is `web-import.json`.
+
+So to make use of your pipeline configuration file type the following command:
 
 ```shell
-$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json
+$(npm bin)/sugarcube -c web-import.json -q queries.json
 ```
 
-Options provided by the command line will take precedence over the
-configuration file. This allows it to override options for a one off pipeline
-run.
+<Note>
+If you specify an option in the command line, this will take precedence over any options specified in your pipeline configuration file. This gives you the ability to override configuration options for a one-off pipeline run.
+</Note>
 
-```shell
-$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json --tap.limit 10
+## Log output
+
+Let's look a little closer to the log output. The `sugarcube` command executes plugins one after another. Sugarcube will always write when one plugin starts, and when it finishes. Each plugin communicates what it is doing. This is the log output that the `http_import` plugin generated in our previous example.
+
+```text
+2019-11-09T17:19:49.719Z - info: Starting the http_import plugin.
+2019-11-09T17:19:56.944Z - info: Imported url https://mwatana.org/en/airstrike-on-detention-center/ as media type "url".
+2019-11-09T17:19:58.330Z - info: Imported url https://yemeniarchive.org as media type "url".
+2019-11-09T17:19:58.336Z - info: Finished the http_import plugin.
 ```
 
-It is also possible to store queries in files, similar to configuration
-options.
+We can see that the plugin imported two websites *as media type "url"*. We will see later what this means exactly.
 
-```json
-[{
-  "type": "ddg_search",
-  "term": "Keith Johnstone"
-}]
+At the end of each pipeline run Sugarcube prints more detailed statistics on how it did.
+
+```text
+2019-11-09T17:19:58.337Z - info: Plugin http_import took less than a minute
+2019-11-09T17:19:58.337Z - info:   counts: total=2, success=2
 ```
 
-We can use the `-q` argument to tell Sugarcube to look for queries in a file.
-
-```shell
-$(npm bin)/sugarcube -q queries.json -c searches.json
-```
-
-It is possible to maintain multiple queries and of different type in one
-file. Query files like the following are not uncommon:
-
-```json
-[{
-  "type": "ddg_search",
-  "term": "Keith Johnstone"
-}, {
-  "type": "ddg_search",
-  "term": "Machinocene"
-}, {
-  "type": "guardian_search",
-  "term": "Aleppo"
-}]
-```
+This shows us that the `http_import` plugin fetched in total 2 websites and both of them succeeded.
 
 ## Plugins
 
-The list of plugins form a sort of pipeline, in which data is pushed through,
-always having the plugin receive the output of the previous plugin. We can
-form chains of transformation like this. Each plugin receives the current
-version of the data, can add to it or do something with the existing data, and
-returns data again.
+As already briefly described, Sugarcube works by stringing together separate plugins to form a pipeline, through which data is pushed. Each plugin transforms or adds to the data in some way, and then passes it along to the next plugin, which transforms or adds to what it has received, and so on.
 
-Using the CSV plugin, we can convert our data to CSV and write it to a
-file. Edit your `searches.json` and add another plugin. The file should look
-like this:
+We will extend our example pipeline from before to use some additional plugins.
 
-```json
-{
-  "plugins": "ddg_search,tap_printf,csv_export",
-  "tap": {
-    "limit": 1
-  }
-}
-```
+- `media_warc` to create proper [web archives](https://iipc.github.io/warc-specifications/) using the same format as the [Internet Archive](https://archive.org/) does.
+- `media_screenshot` to take a screenshot of each website.
+- `csv_export` to write the data into a CSV file. This is one way we can use to share the data.
 
 ```shell
-npm install -S @sugarcube/plugin-csv
-$(npm bin)/sugarcube -Q ddg_search:Keith\ Johnstone -c searches.json
+$(npm bin)/sugarcube -p http_import,media_warc,media_screenshot,csv_export \
+                     -Q http_url:'https://mwatana.org/en/airstrike-on-detention-center/' \
+                     -Q http_url:'https://yemeniarchive.org' \
+                     --csv.filename web-import-results.csv
 ```
 
-Our pipeline consists now of three plugins. The `csv_export` plugin
-transforms the search results into CSV and writes it to the `out.csv` file in
-the same directory, but you can change the file name with the `--csv.filename`
-plugin.
-
-To see other configuration options, run `$(npm bin)/sugarcube -h`.
-
-## Intermezzo 2: Examples
-
-### Search for content from The Guardian
-
-The `guardian_content` plugin allows to search the archive of the Guardian. In
-order to use this plugin, you have to obtain an API key. Find
-instructions [here](https://gitlab.com/sugarcube/@sugarcube/plugin-guardian).
-
-Install the guardian plugin into your project.
-
-```shell
-npm install -S @sugarcube/plugin-guardian
-```
-
-Lets do a quick search:
-
-```shell
-$(npm bin)/sugarcube -Q guardian_search:Aleppo \
-                     -p guardian_content,tap_printf \
-                     --guardian.key <your API key>
-```
-
-### Download videos from Youtube
-
-```shell
-npm install -S @sugarcube/plugin-youtube
-```
-
-This plugin requires an API key.
-
-TODO: How to get this key?
-
-The `youtube_channel` plugin lists the contents of a channel, a list of
-videos. The `youtube_download` plugin uses
-[`youtube-dl`](https://rg3.github.io/youtube-dl/) to fetch the videos. Set a
-custom download target with the `--youtube.download_dir` option. The default
-download target is in `downloads` of the project directory.
-
-```shell
-$(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
-                     -p youtube_channel,youtube_download \
-                     --youtube.api_key <your API key>
-```
-
-### Query Twitter and deal with media
-
-In order to use the Twitter plugin, you need four different API keys.
-
-- A consumer secret
-- A consumer key
-- An access token key
-- An access token secret
-
-First create a new Twitter account. Then go to
-[apps.twitter.com](https://apps.twitter.com) and log in. Create a new app.
-
-In this example we will use the plugin for twitter, the HTTP plugin to
-download images and the media plugin to extract EXIF data.
-
-```shell
-npm install -S @sugarcube/plugin-twitter \
-               @sugarcube/plugin-http \
-               @sugarcube/plugin-media
-```
-
-```shell
-$(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro -Q twitter_query:Jair\ Bolsonaro \
-                     -p twitter_search,twitter_feed,http_get,media_exif \
-                     --twitter.consumer_key <your key here> \
-                     --twitter.consumer_secret <your key here> \
-                     --twitter.access_token_key <your key here> \
-                     --twitter.access_token_secret <your key here>
-```
-
-Or use a config file:
-
-```json
-{
-  "plugins": "twitter_search,twitter_feed,http_get,media_exif",
-  "twitter": {
-    "consumer_key": "<your key here>",
-    "consumer_secret": "<your key here>",
-    "access_token_key": "<your key here>",
-    "access_token_secret": "<your key here>"
-  }
-}
-
-```
-
-### Read tweets in Telegram
-
-Start off by installing the Telegram plugin:
-
-```shell
-npm install -S @sugarcube/plugin-telegram
-```
-
-We will need a bot key and channel ID to use the Telegram
-plugin. See [here](https://gitlab.com/sugarcube/@sugarcube/plugin-telegram)
-for more information.
-
-The Telegram packages has one plugin, which can send units of data to a chat
-channel. It will construct a string out of the fields listed in
-`_sc_content_fields`. Using it is quite simple:
-
-```shell
-$(npm bin)/sugarcube -Q twitter_user:@jairbolsonaro \
-                     -p twitter_feed,telegram_send_message \
-                     --twitter.consumer_key <your key here> \
-                     --twitter.consumer_secret <your key here> \
-                     --twitter.access_token_key <your key here> \
-                     --twitter.access_token_secret <your key here> \
-                     --telegram.bot_key <your key here> \
-                     --telegram.chat_id <your id here>
-```
-
-## Advancedly Sugarcube
-
-### Use Sugarcube on the TOR network
-
-It is possible to anonymize sugarcube using
-[torsock](https://github.com/dgoulet/torsocks). But since torsocks prevents
-requests to `localhost`, the MongoDB plugin is likely failing. This has to be
-worked.
-
-There is a `tor_check` plugin, that allows to test if requests are made over
-TOR.
-
-```shell
-npm install -S @sugarcube/plugin-tor
-```
-
-```shell
-$(npm bin)/sugarcube -p tor_check
-torsocks $(npm bin)/sugarcube -p tor_check
-torsocks $(npm bin)/sugarcube -Q guardian_search:Aleppo \
-                              -p tor_check,guardian_content,tap_printf \
-                              --guardian.key <your API key>
-torsocks $(npm bin)/sugarcube -Q youtube_channel:UC1NpRGow8m-yrWo0Mqp6DOg \
-                              -p tor_check,youtube_channel,youtube_download \
-                              --youtube.api_key <your API key>
-
-```
-
-### Best practices
-
-#### Sugarcube projects
-
-
-#### TODO: Group queries and configs in files
-
-#### TODO: Make pipeline runs repeatable with config files
-
-## Intermezzo 3: Data
-
-Sugarcube organizes data as a set of units. A unit is an atomic piece of
-data, such as a single tweet or a single article from the guardian. Every
-plugin can decide what constitutes an unit. Every plugin receives the complete
-set of data at once. Sugarcube cares about the form of data, not the
-content. This allows to treat Youtube videos and search engine results the
-same.
-
-Every unit of data has a set of keys and values. `tweet` and `tweet_time`
-would be such keys, and the values are the actual tweet, and the time when the
-tweet occurred.
-
-There is a series of extra fields that are added to every unit by
-Sugarcube. Their keys usually start with `_sc`. These extra fields often
-convey an additional semantic meaning in a plugin independent manner. It
-allows plugins to operate on data in an independent manner, e.g. `_sc_media`
-holds all links, that a data unit might contain. Now any plugin that wants to
-operate on links (such as `http_get` or `http_wget`) don't need to know
-anything about the specific plugin that generate the data in the first place.
-
-This is an example, how such a unit of data looks like.
-
-```json
-{
-  "_sc_media" : [{
-    "type" : "url",
-    "href" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-    "_sc_id_hash" : "3e4ec721a206f46c1b1d30c958be6355e8f3665fe26ec51302dad565c5449096"
-  }],
-  "_sc_pubdates" : {
-    "fetch" : "2017-03-21T23:22:35.426Z",
-    "source" : "2016-08-14T12:00:35Z",
-  },
-  "_sc_relations" : [{
-    "type" : "url",
-    "term" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-    "_sc_id_hash" : "ed7a6bc7c6694fa4879e4e1f956db03d61fb327ab1a70a9dbe1c5020f8291245"
-  }, {
-    "type" : "url",
-    "term" : "https://content.guardianapis.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-    "_sc_id_hash" : "e3895a0e1ce5a3d44f23fc759d34c9da96e859604b30713817c40bb99314d6f1"
-  }],
-  "_sc_downloads" : [{
-    "type" : "url",
-    "term" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-    "_sc_id_hash" : "172f6d9f96f85f976267f4ceeebd48e9049ee1427ca4b1a7d80026b40ce04211"
-  }, {
-    "type" : "json",
-    "term" : "https://content.guardianapis.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-    "_sc_id_hash" : "eda10207ffe39ce48c4883c2cd982c98275fafa6bddcdd2aa0fb4e9f37baa254"
-  }],
-  "id" : "us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-  "type" : "article",
-  "sectionId" : "us-news",
-  "sectionName" : "US news",
-  "webPublicationDate" : "2016-08-14T12:00:35Z",
-  "webTitle" : "Third-party presidential candidates fight for 15% in polls – and a spot in debates",
-  "webUrl" : "https://www.theguardian.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-  "apiUrl" : "https://content.guardianapis.com/us-news/2016/aug/14/third-party-candidates-johnson-stein-mcmullin-debate-polling-percentage",
-  "isHosted" : false,
-  "_sc_id_fields" : ["id"],
-  "_sc_content_fields" : ["webTitle"],
-  "_sc_id_hash" : "7c4e094182ad5369dec90910463c587a50e2c5125b1685c784488c05b2a3f2c8",
-  "_sc_content_hash" : "1306025b72901b844a134a9bd7eb9f76d4d4aa3909fddccbb7b131260da71367",
-  "_sc_markers" : ["B1QarNJ2x", "S1l0B41nx"]
-}
-
-```
-
-The `_sc_id_hash` is the unique identifier of that unit of data. It is a
-SHA256 hash sum of the identifying fields of the unit. If Sugarcube fetches a
-unit of data, it calculates the `_sc_id_hash` and can so determine if a unit
-is new or already known.
-
-Similar the `_sc_content_hash` is a hash sum of the content of a unit of
-data. This can be the actual tweet, or the contents of an article. If a unit
-is already know to Sugarcube (same `_sc_id_hash`) but the content changed
-(different `_sc_content_hash`), then we have a revision of a unit of data.
-
-Units can form relations. If two separate articles link to the same image,
-then that image becomes a relation. If two tweets use the same hashtag, then
-that hashtag becomes a relation between those two tweets.
-
-## TODO: Persist data with MongoDB
-
-- `mongodb_store`
-- `mongodb_fetch_*`
-- `mongodb_query`
-
-## TODO: Sugarcube on UNIX
-
-- Use pipes to connect Sugarcube to other UNIX tools
-- Quiet mode to redirect output on stdout
-- pipe csv into awk
-- post json data to a web service
-- Run pipelines using GNU Parallel
-
-## Look at this, look at that ...
-
-```shell
-$(npm bin)/sugarcube -q queries.json
-                     -p youtube_channel,twitter_search,twitter_feed,youtube_download,http_get,media_exif,mongodb_store,csv_export,tap_printf \
-                     -c config.json
-```
+<img src="../assets/tutorial-plugins.svg" alt="Sugarcube tutorial plugins" />
