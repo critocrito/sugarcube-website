@@ -186,3 +186,23 @@ $(npm bin)/sugarcube -p http_import,media_warc,media_screenshot,csv_export \
 ```
 
 <img src="../assets/tutorial-plugins.svg" alt="Sugarcube tutorial plugins" />
+
+Both, the `media_warc` and `media_screenshot` plugin generate files in you `./data` directory. For every unit of data it creates a directory and stores any files based on what the file is. This is how the directory structure looks like.
+
+```text
+data
+├── 7748f388df6b711d588bc17bd24878aaeb0692a4885f3e8dbc5b88cebc5f4cab
+│   ├── image
+│   │   └── cb7cccffc75fbed1cd4342b3fa59561fe2b714788f71b09b2b5cedbe94dd471b.screenshot.jpg
+│   └── warc
+│       └── cb7cccffc75fbed1cd4342b3fa59561fe2b714788f71b09b2b5cedbe94dd471b.warc.gz
+└── b6a76260b11ce95edb4a2e90e1f87fb49fc679d317b9e5afe93cf578db17329a
+    ├── image
+    │   └── 06407f93bcb49f9080269a9f1637261335562b2dafc3d00db6fbfcea1f83c0f8.screenshot.jpg
+    └── warc
+        └── 06407f93bcb49f9080269a9f1637261335562b2dafc3d00db6fbfcea1f83c0f8.warc.gz
+```
+
+You can change the default download location to anything else using the `--media.data_dir` option, although the default is mostly fine.
+
+The data was exported to CSV as well using the `csv_export` plugin. The `--csv.filename` option was used to specify the name of the file to store the data in. In your project directory you can find the `web-import-results.csv` file that contains the complete data generated during the pipeline run.
