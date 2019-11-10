@@ -2,7 +2,7 @@
 root: "/docs"
 title: Prerequisites
 parents: ["Development"]
-next: "plugin-development"
+next: "creating-plugins"
 ---
 
 # Prerequisites

@@ -1,6 +1,6 @@
 ---
 root: "/docs"
-title: Writing a plugin
+title: Authoring Plugins
 parents: ["Development"]
 prev: "prerequisites"
 ---
@@ -273,32 +273,41 @@ In our case `https://syrianarchive.org` expanded into 218 Mementos, while `https
 The `tap_printf` prints one unit of data to the screen. Let's look at it more closely.
 
 ```json
-[ { _sc_pubdates:
-     { fetch: 2019-11-09T15:53:46.253Z,
-       source: 2015-05-12T16:14:39.000Z },
-    _sc_markers: [ '76e80eee1ab68b37e4de0b2f8df1f09663de9639' ],
-    _sc_media:
-     [ { type: 'url',
-         term:
-          'https://web.archive.org/web/20150512161439/https://syrianarchive.org/',
-         _sc_id_hash:
-          '6ccef00314e04711833d3d10204a5d271dd3ac1520df3ac14c55435479be24d7' } ],
-    _sc_downloads: [],
-    _sc_queries:
-     [ { type: 'http_url',
-         term: 'https://syrianarchive.org',
-         _sc_id_hash:
-          'f5e7232862d4c5671519b5070e7e55201d63f44f60db80ea97c832d5f8b40655' } ],
-    _sc_locations: [],
-    _sc_id_hash:
-     '79cc527a01812eb7f92ea4b6c9394c8a145f91a2c7e490692ab33ad41e3e1144',
-    _sc_id_fields: [ 'uri' ],
-    uri:
-     'https://web.archive.org/web/20150512161439/https://syrianarchive.org/',
-    createdAt: 2015-05-12T16:14:39.000Z,
-    _sc_content_hash:
-     '4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945',
-    _sc_source: 'memento_timemap' } ]
+[
+  {
+    "_sc_source": "memento_timemap",
+    "_sc_content_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "createdAt": "2015-05-12T16:14:39.000Z",
+    "uri": "https://web.archive.org/web/20150512161439/https://syrianarchive.org/",
+    "_sc_id_fields": [
+      "uri"
+    ],
+    "_sc_id_hash": "79cc527a01812eb7f92ea4b6c9394c8a145f91a2c7e490692ab33ad41e3e1144",
+    "_sc_locations": [],
+    "_sc_queries": [
+      {
+        "_sc_id_hash": "f5e7232862d4c5671519b5070e7e55201d63f44f60db80ea97c832d5f8b40655",
+        "term": "https://syrianarchive.org",
+        "type": "http_url"
+      }
+    ],
+    "_sc_downloads": [],
+    "_sc_media": [
+      {
+        "_sc_id_hash": "6ccef00314e04711833d3d10204a5d271dd3ac1520df3ac14c55435479be24d7",
+        "term": "https://web.archive.org/web/20150512161439/https://syrianarchive.org/",
+        "type": "url"
+      }
+    ],
+    "_sc_markers": [
+      "76e80eee1ab68b37e4de0b2f8df1f09663de9639"
+    ],
+    "_sc_pubdates": {
+      "source": "2015-05-12T16:14:39.000Z",
+      "fetch": "2019-11-09T15:53:46.253Z"
+    }
+  }
+]
 ```
 
 Sugarcube automatically calculates the `_sc_id_hash` for each unit of data if it doesn't exist yet. It also calculates hashes for every entry in `_sc_media` and `_sc_queries`. It uses the `type` and `term` field as inputs to determine the id hash.
@@ -354,6 +363,7 @@ return (
     : json.mementos.list
 ).map(({datetime, uri}) => { ... }
 ```
+
 ## Summary
 
 

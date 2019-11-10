@@ -1,52 +1,38 @@
 import "../styles.css";
 
-import React from "react";
+import React, {useState} from "react";
 import {Location} from "@reach/router";
+import {GitHub} from "react-feather";
 
 import IntroCard from "../components/IntroCard";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-
-const sugarCubeDescription = `
-SugarCube is a tool to preserve and monitor data.
-`;
-
-const nCubeDescription = `
-N-Cube is a set of components to build custom data interfaces for investigators that use SugarCube.
-`;
-
-const browserExtensionDescription = `
-Imrpove the discovery process of an investigation using this browser extension.
-`;
+import BillBoard from "../components/BillBoard";
+import Complementary from "../components/Complementary";
+import Meet from "../components/Meet";
 
 const Index = () => {
+  const [details, setDetails] = useState("sugarcube");
+
+  const clickHandler = (name: string) => {
+    setDetails(name);
+  };
+
   return (
-    <div>
-      <Location>{({location}) => <Header location={location} />}</Location>
-      <section className="cf ph2-ns pt5 pb5 w-100 flex flex-column items-center justify-around negative">
-        <div className="w-80-ns tc center">
-          <h1 className="w-100 center">Data pipelines for human rights.</h1>
-        </div>
-        <p>Helping human rights investigators work with data.</p>
+    <div className="">
+      <div className="bb bw1 b--negative">
+        <Location>{({location}) => <Header location={location} />}</Location>
+      </div>
+      <section className="ph2-ns pt5 pb5 bb bw1 b--negative negative">
+        <BillBoard />
       </section>
-      <section className="w-100 flex-ns justify-between-ns mt2 mw8 center">
-        <div className="w-third-ns">
-          <IntroCard
-            title="SugarCube"
-            description={sugarCubeDescription}
-            path="/sugarcube"
-          />
-        </div>
-        <div className="w-third-ns">
-          <IntroCard title="N-Cube" description={nCubeDescription} />
-        </div>
-        <div className="w-third-ns">
-          <IntroCard
-            title="Browser Extension"
-            description={browserExtensionDescription}
-          />
-        </div>
+      <section className="mt3-ns mw8 center pa1">
+        <Complementary active={details} handler={clickHandler} />
       </section>
+      <section className="mw8 center pa1">
+        <Meet active={details} />
+      </section>
+      <div className="bg-elevated mt3 h4" />
       <Footer />
     </div>
   );

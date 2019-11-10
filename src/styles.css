@@ -5,6 +5,7 @@
   --bg-main: var(--nord6);
   --bg-main-neg: var(--nord0);
   --bg-elevated: var(--nord4);
+  --bg-passive: var(--nord3);
   --bg-elevated-neg: var(--nord0);
 
   --color-main: var(--nord0);
@@ -82,6 +83,10 @@ a:hover {
 
 .bg-elevated {
   background-color: var(--bg-elevated);
+}
+
+.bg-passive {
+  background-color: var(--bg-passive);
 }
 
 .bg-passive-negative {

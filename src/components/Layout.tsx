@@ -39,7 +39,7 @@ const Layout = ({next, prev, children}: LayoutProps) => {
 
   return (
     <div>
-      <div>
+      <div className="bb bw1 b--negative">
         <Location>{({location}) => <Header location={location} />}</Location>
       </div>
       <div className="mw8 center pa2">

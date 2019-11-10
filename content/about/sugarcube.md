@@ -24,7 +24,7 @@ Sugarcube is a modular tool. It is made up of lots of individual tasks, carried 
 
 Each task in the Pipeline pruduces information, or data (e.g. a list of search results or screenshots of tweets), which is then sent to the next Plugin in the Pipeline, and so on. What comes out at each stage depends on how you have set up the pipeline - search results, for example, could be automatically put into a  text file, a csv file, or a Google spreadsheet. Thiscould then be put into a database, or compared against previous results, etc.
 
-[plugin1] -> output -> [plugin2] output -> [plugin3] -> output
+[plugin1] -> output -> [plugin2] -> output -> [plugin3] -> output
 
 Once you've configured your Pipeline, it becomes an automated, repeatable workflow. One command sets the whole thing in motion.
 
@@ -69,12 +69,12 @@ Example of a simple Twitter-based pipeline:
 
 1. Collect tweets with x keyword in x area from x dates
 2. Take screenshots of collected tweets and store them in a folder
-3. Put tweet texts into a spreadsheet with (which info?
+3. Put tweet texts into a spreadsheet
 
 Rinse and Repeat (Sugarcube will make sure there are no duplicated entries).
 
 Example of a simple search-based pipeline:
 
-- Create a spreadsheet of the top 20 results of searches on 5 specific keywords.
-- From those links, download the text of each page of the text results.
-- Now you have a specific pool of content that you can run different searches on to fnd what you need.
+1. Create a spreadsheet of the top 20 results of searches on 5 specific keywords.
+2. From those links, download the text of each page of the text results.
+3. Now you have a specific pool of content that you can run different searches on to fnd what you need.

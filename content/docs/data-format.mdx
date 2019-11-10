@@ -22,13 +22,21 @@ Every unit of data in Sugarcube is a simple object with names and values. Sugarc
 
 - `_sc_id_fields` - A list of one or more field names, that specify the significant fields to form an identifier for this unit. Sugarcube will take the values for those fields to calculate a unique identifier.
 
-  `_sc_id_fields: ['tweet_id']`
+  ```json
+  {
+    "_sc_id_fields": ["tweet_id"]
+  }
+  ```
 
 - `_sc_content_hash` - A SHA256 hash of the content of the data unit. Sugarcube uses this field to see if a particular piece of data changed. If the `_sc_content_fields` field is et, the Sugarcube core automatically calculates the `_sc_content_hash` for every unit. This is the recommended way. Otherwise the plugin has to provide the hash by itself.
 
 - `_sc_content_fields` - A list of field names, that specify the significant fields to form the content for this unit. Sugarcube will take the values for those fields to calculate content integrity.
 
-  `_sc_content_fields: ['tweet']`
+  ```json
+  {
+    "_sc_content_fields": ["tweet"]
+  }
+  ```
 
 - `_sc_pubdates` - An object, that contains various dates around this unit. Possible date types are `fetch`, the date and time when the unit was fetched, and `source`, the date and time that the unit was created. In the future more types of dates can be added. The dates should be JavaScript `Date` objects.
 

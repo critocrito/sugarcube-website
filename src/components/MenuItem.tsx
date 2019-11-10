@@ -10,7 +10,7 @@ interface MenuItemProps {
 
 const MenuItem = ({isActive, menuText, toPath}: MenuItem) => {
   const style = classNames(
-    "nowrap ma2 pa2 ma3-ns pa3-ns b",
+    "nowrap ma1 pa1 ma3-ns pa3-ns b",
     isActive ? "bg-elevated" : false
   );
 
