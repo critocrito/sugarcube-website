@@ -4,7 +4,7 @@ import {GitHub} from "react-feather";
 
 const Footer = () => {
   return (
-    <footer className="negative pt5">
+    <footer className="negative pt3">
       <div className="mw8 center">
         <div className="cf">
           <div className="fl w-100 w-third-ns pa2">
@@ -46,20 +46,28 @@ const Footer = () => {
                 </h3>
                 <ul className="list pl0">
                   <li className="pt2">
+                    <Link className="link-negative" to="/plugins-instruments">Plugins & Instruments</Link>
+                  </li>
+                  <li className="pt2">
                     <Link className="link-negative" to="/docs/data-format">Data Format</Link>
                   </li>
                   <li className="pt2">
                     <Link className="link-negative" to="/docs/glossary">Glossary</Link>
                   </li>
-                  <li className="pt2">
-                    <Link className="link-negative" to="/docs/prerequisites">Development</Link>
-                  </li>
                 </ul>
               </div>
               <div className="w-third-ns">
                 <h3 className="bb b--negative pb1">
-                  Plugins
+                  Development
                 </h3>
+                <ul className="list pl0">
+                  <li className="pt2">
+                    <Link className="link-negative" to="/docs/prerequisites">Prerequisites</Link>
+                  </li>
+                  <li className="pt2">
+                    <Link className="link-negative" to="/docs/creating-plugins">Authoring Plugins</Link>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

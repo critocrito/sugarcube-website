@@ -18,19 +18,19 @@ const Header = ({location}: HeaderProps) => {
       <nav className="w-100 ttu w-60-ns">
         <ul className="list pl0 fr-ns">
           <MenuItem
-            isActive={/\/get-started/.test(location.pathname)}
-            menuText="Get Started"
-            toPath="/docs/installation"
+            isActive={/\/sugarcube/.test(location.pathname)}
+            menuText="About"
+            toPath="/sugarcube"
           />
           <MenuItem
-            isActive={/\/guides/.test(location.pathname)}
-            menuText="Docs"
-            toPath="/docs/glossary"
+            isActive={/\/docs/.test(location.pathname)}
+            menuText="Guides"
+            toPath="/docs/data-format"
           />
           <MenuItem
-            isActive={/\/plugins/.test(location.pathname)}
-            menuText="Plugins"
-            toPath="/plugins"
+            isActive={/\/plugins/.test(location.pathname) || /\/instruments/.test(location.pathname)}
+            menuText="Plugins & Instruments"
+            toPath="/plugins-instruments"
           />
         </ul>
       </nav>

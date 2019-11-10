@@ -57,7 +57,7 @@ const CodeBlock = ({className, children}) => {
         </div>
         <SyntaxHighlighter
           className="mt0 mb0 bw0 f6-ns f7"
-          language={language}
+          language={language || "text"}
           style={nord}
           showLineNumbers={language === "js" ? true : false}
         >
