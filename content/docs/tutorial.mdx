@@ -47,8 +47,8 @@ This should print the contents of `https://mwatana.org/en/airstrike-on-detention
 
 <img src="../assets/tutorial-first-pipeline.svg" alt="Sugarcube tutorial first pipeline" />
 
-- Using the `-p` option, you defined which plugins should be run (in this case, `http_import` and `tap_printf`). Note: _The order of the plugins matters_. You can't print results to the screen if you haven't fetched any results yet.
-- Using the `-Q` option in your pipeline above, you specified the query for your website import.
+- Using the `-p` option, you defined which plugins should be run (in this case, `http_import` and `tap_printf`). Note: _The order of the plugins matters_. You can't print results to the screen if you haven't fetched any results yet. The combinations of plugins tell Sugarcube **what** and **how** to do something.
+- Using the `-Q` option in your pipeline above, you specified the query for your website import. Queries tell Sugarcube the data you are interested in. A query always has a type, what the query is about, in this case `http_url`, and the actual content of the query, called the `term` of a query, in this case a URL of a website. We wrap the term of the query in single quotes to avoid parsing errors on the terminal.
 
 There is not much more to SugarCube than that (though of course this is a very simple example - you can use Sugarcube for a lot more!). Lets dive in a little deeper.
 
