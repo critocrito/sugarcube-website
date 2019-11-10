@@ -52,6 +52,9 @@ const Footer = () => {
                     <Link className="link-negative" to="/docs/data-format">Data Format</Link>
                   </li>
                   <li className="pt2">
+                    <Link className="link-negative" to="/docs/databases">Persisting Data</Link>
+                  </li>
+                  <li className="pt2">
                     <Link className="link-negative" to="/docs/glossary">Glossary</Link>
                   </li>
                 </ul>

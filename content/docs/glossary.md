@@ -2,7 +2,7 @@
 root: "/docs"
 title: "Glossary"
 parents: ["Guides"]
-prev: "data-format"
+prev: "databases"
 ---
 
 # Glossary
