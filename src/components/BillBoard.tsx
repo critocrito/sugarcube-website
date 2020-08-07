@@ -3,15 +3,15 @@ import {Link} from "gatsby";
 
 const BillBoard = () => {
   return (
-    <div className="flex flex-column justify-around">
-      <div className="w-80-ns tc center">
-        <h1 className="w-100 center">Data pipelines for human rights.</h1>
+    <div className="flex flex-column justify-around mw8 center pl4">
+      <div className="fl">
+        <h2 className="w-100 mt0 header2-neg">Data pipelines for human rights.</h2>
       </div>
-      <div className="center w30 flex">
-        <Link className="ma2 pa2 ttu ba br3 link-negative" to="/docs/installation">
+      <div className="fl  flex">
+        <Link className="btn btn-large btn-bittersweet mr3" to="/docs/installation">
           Get Started
         </Link>
-        <Link className="ma2 pa2 ttu ba br3 link-negative" to="/docs/tutorial">
+        <Link className="btn btn-large btn-out" to="/docs/tutorial">
           Tutorial
         </Link>
       </div>

@@ -1,5 +1,6 @@
 import {Link} from "gatsby";
 import React from "react";
+import sugarcubetoolsLogo from "../../content/assets/Logo_sugarcube_tools.svg";
 
 import MenuItem from "./MenuItem";
 
@@ -7,14 +8,18 @@ interface HeaderProps {
   location: Location;
 }
 
+
+
 const Header = ({location}: HeaderProps) => {
   return (
     <header className="flex-ns justify-between items-center mw8 center">
-      <h1 className="ttu w-100 w-40-ns pa2-ns pa1">
-        <Link className="nowrap ma2 b hover-bg-transparent" to="/">
+      <div className="flex ml4">
+      <img alt="Sugarcube tools Logo" className="logo" src={sugarcubetoolsLogo} />
+      <p className=" w-100 w-40-ns header4">
+        <Link className="nowrap ma2 hover-bg-transparent" to="/">
           Sugarcube Tools
         </Link>
-      </h1>
+      </p></div>
       <nav className="w-100 ttu w-60-ns">
         <ul className="list pl0 fr-ns">
           <MenuItem

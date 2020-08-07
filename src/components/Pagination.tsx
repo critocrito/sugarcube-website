@@ -20,7 +20,7 @@ const Pagination = ({prev, next}: PaginationProps) => {
                       <Link className="f4" to={next.slug}>{next.title}</Link>
                     </div>;
 
-  return <div className="flex justify-between items-center h4 mr5-ns pr5-ns">
+  return <div className="flex justify-between ph3 items-center h4 mr5-ns pr5-ns">
     <div>{prevArticle}</div>
     <div>{nextArticle}</div>
   </div>

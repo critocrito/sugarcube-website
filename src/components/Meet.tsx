@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from "react";
 import MeetSugarcube from "./MeetSugarcube";
 import sugarcubeLogo from "../../content/assets/sugarcube-logo.png";
-import ncubeLogo from "../../content/assets/ncube-logo.png";
+import ncubeLogo from "../../content/assets/Logo_Ncube.svg";
 import browserLogo from "../../content/assets/browser-extension-logo.png";
 
 interface MeetProps {

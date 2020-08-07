@@ -5,8 +5,8 @@ interface SynopsisProps {
 }
 
 const Synopsis = ({children}: SynopsisProps) => {
-  return <div className="synopsis fw6">
-    <ul className="list pl0">{children}</ul>
+  return <div className="synopsis bg-white pa4 mv4">
+    <ul className="list pl3">{children}</ul>
   </div>;
 };
 

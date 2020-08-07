@@ -21,7 +21,7 @@ const LayoutSimple = ({children}: LayoutSimpleProps) => {
           </div>
         </div>
       </div>
-      <div className="bg-elevated mt3 h4">
+      <div className="bg-canvas mt3 h4">
       </div>
       <Footer />
     </div>

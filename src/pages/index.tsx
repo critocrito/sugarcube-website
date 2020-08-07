@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import BillBoard from "../components/BillBoard";
 import Complementary from "../components/Complementary";
 import Meet from "../components/Meet";
+import Card from "../components/Card";
 
 const Index = () => {
   const [details, setDetails] = useState("sugarcube");
@@ -26,13 +27,21 @@ const Index = () => {
       <section className="ph2-ns pt5 pb5 bb bw1 b--negative negative">
         <BillBoard />
       </section>
+
+      <section className="mw8 ma4 center pa1">
+        <Card active={details} />
+      </section>
+
       <section className="mt3-ns mw8 center pa1">
         <Complementary active={details} handler={clickHandler} />
       </section>
+
+
+
       <section className="mw8 center pa1">
         <Meet active={details} />
       </section>
-      <div className="bg-elevated mt3 h4" />
+      <div className="bg-canvas mt3 h4" />
       <Footer />
     </div>
   );

@@ -12,19 +12,19 @@ const Complementary = ({active, handler}: ComplementaryProps) => {
   return (
     <nav className="flex pa3-ns pa1">
       <a
-        className={c(navItemClass, active === "sugarcube" ? "bg-elevated" : "" )}
+        className={c(navItemClass, active === "sugarcube" ? "bg-canvas" : "" )}
         onClick={() => handler("sugarcube")}
       >
         Sugarcube
       </a>
       <a
-        className={c(navItemClass, active === "ncube" ? "bg-elevated" : "" )}
+        className={c(navItemClass, active === "ncube" ? "bg-canvas" : "" )}
         onClick={() => handler("ncube")}
       >
         N-Cube
       </a>
       <a
-        className={c(navItemClass, active === "browser" ? "bg-elevated" : "" )}
+        className={c(navItemClass, active === "browser" ? "bg-canvas" : "" )}
         onClick={() => handler("browser")}
       >
         Browser Extension

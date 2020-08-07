@@ -67,7 +67,7 @@ const Layout = ({next, prev, children}: LayoutProps) => {
           </Location>
         </div>
       </div>
-      <div className="bg-elevated mt3 h4">
+      <div className="bg-canvas mt3 h4">
         <div className="mw8 w-100 w-75-ns pa2 center">
           <Pagination
             prev={prevDoc == null ? null : {slug: prevDoc.node.fields.slug, title: prevDoc.node.frontmatter.title}}

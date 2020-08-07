@@ -32,9 +32,9 @@ const CodeBlock = ({className, children}) => {
   return (
     <div>
       <div className="flex flex-column">
-        <div className="pa1 ba br--top br3 b--negative bg-main ">
+        <div className="pa1 ba br--top br3 b--negative bg-main bg-solitude ">
           <div className="flex items-center justify-between color-main mr1 ml1 pr2 pl2">
-            <span className="pl1 pr1 ttu f6 bg-transparent shadow-0 ba bw1 b--negative">{language}</span>
+            <span className="pl1 pr1 ttu f6 bg-transparent shadow-0 ba bw1 b--solitude b">{language}</span>
             <Media queries={{
               big: "(min-width: 30rem)",
             }}>
@@ -44,7 +44,7 @@ const CodeBlock = ({className, children}) => {
                     <CopyToClipboard text={children} onCopy={clickHandler}>
                       <div className="flex items-center">
                         <span className={copyLabelStyle}>Copied!</span>
-                        <button className="shadow-1 bg-transparent ba br2 bw0 ml2">
+                        <button className="bg-transparent ba br2 bw0 ml2">
                           <Copy />
                         </button>
                       </div>
