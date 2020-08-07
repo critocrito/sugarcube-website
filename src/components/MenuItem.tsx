@@ -9,7 +9,7 @@ interface MenuItemProps {
 }
 
 const MenuItem = ({ isActive, menuText, toPath }: MenuItem) => {
-  const style = classNames("nowrap ma2 pa2", isActive ? "bg-canvas" : false);
+  const style = classNames("nowrap ma2 pa2", isActive ? "bg-solitude" : false);
 
   return (
     <li className="dib mb0">
