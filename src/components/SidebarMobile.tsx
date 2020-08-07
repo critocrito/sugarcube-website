@@ -1,5 +1,5 @@
-import React, {Fragment, useState} from "react";
-import {Menu, X} from "react-feather";
+import React, { Fragment, useState } from "react";
+import { Menu, X } from "react-feather";
 
 import SidebarContent from "./SidebarContent";
 
@@ -7,7 +7,7 @@ interface SidebarMobileProps {
   location: Location;
 }
 
-const SidebarMobile = ({location}: SidebarMobileProps) => {
+const SidebarMobile = ({ location }: SidebarMobileProps) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
   const clickHandler = () => setSidebarExpanded(!sidebarExpanded);
@@ -15,13 +15,14 @@ const SidebarMobile = ({location}: SidebarMobileProps) => {
   const menuButton = (
     <div
       className="shadow-1 ba br-100 b--negative negative pa3 flex flex-column items-center"
-      onClick={clickHandler}>
+      onClick={clickHandler}
+    >
       {sidebarExpanded ? <X /> : <Menu />}
     </div>
   );
 
   const sidebar = (
-    <div className="fixed top-0 left-0 h-100 w-100 bg-main">
+    <div className="fixed top-0 left-0 h-100 w-100 bg-canvas">
       <SidebarContent location={location} />
     </div>
   );
@@ -29,9 +30,7 @@ const SidebarMobile = ({location}: SidebarMobileProps) => {
   return (
     <Fragment>
       {sidebarExpanded ? sidebar : ""}
-      <div className="fixed right-1 bottom-2">
-        {menuButton}
-      </div>
+      <div className="fixed right-1 bottom-2">{menuButton}</div>
     </Fragment>
   );
 };

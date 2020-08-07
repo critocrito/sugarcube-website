@@ -1,4 +1,3 @@
-@import "./nord.css";
 @import "tachyons";
 
 :root {
@@ -10,15 +9,7 @@
   --color-notify: #ecd47d;
   --color-warning: #c94d07;
 
-
-  --bg-canvas: var(--nord4);
-  --bg-passive: var(--nord3);
-  --bg-canvas-neg: var(--nord0);
   --color-sapphire-neg: var(--nord4);
-  --color-passive: var(--nord3);
-  --color-passive-neg: var(--nord3);
-  --color-elevated: var(--nord10);
-  --color-elevated-neg: var(--nord9);
   --color-warning: var(--nord11);
 
   --color-synopsis: var(--nord15);
@@ -48,7 +39,6 @@ pre {
   font-weight: 300;
 }
 
-
 .header2 {
   font-size: 2.441em;
   color: var(--color-sapphire);
@@ -73,20 +63,21 @@ a {
   text-decoration: none;
 }
 
- a:hover {
+a:hover {
   /* color: var(--color-elevated-neg); */
   background-color: var(--color-solitude);
   text-decoration: none;
 }
 
-footer a:hover {
- /* color: var(--color-elevated-neg); */
- background-color: var(--color-solitude);
- opacity: .3;
- color: black;
- text-decoration: none;
+footer a {
+  @insert .o-70;
+  color: var(--color-solitude);
 }
 
+footer a:hover {
+  @insert .bg-white .o-100;
+  color: var(--color-sapphire);
+}
 
 .main {
   color: var(--color-sapphire);
@@ -102,7 +93,7 @@ footer a:hover {
 }
 
 .negative {
-  color:white;
+  color: white;
   background-color: var(--color-sapphire);
 }
 
@@ -132,49 +123,26 @@ footer a:hover {
   color: var(--color-warning);
 }
 
-.bg-main {
-  background-color: var(--color-canvas);
-}
-
 .bg-canvas {
-  background-color: var(--bg-canvas);
-}
-
-.bg-passive {
-  background-color: var(--bg-passive);
-}
-
-.bg-passive-negative {
-  background-color: var(--bg-canvas);
+  background-color: var(--color-canvas);
 }
 
 .bg-negative {
   background-color: var(--color-sapphire);
 }
 
-.bg-warning{
+.bg-warning {
   background-color: var(--color-warning);
-}
-
-.link-negative {
-  @insert .link .pa1;
-  color: var(--color-elevated-neg);
-}
-
-.link-negative:hover {
-  @insert .link;
-  color: var(--color-elevated);
-  background-color: var(--color-canvas);
 }
 
 .link-reset-negative {
   @insert .link .pa0;
-  color: var(--color-elevated-neg);
+  color: var(--color-solitude);
 }
 
 .link-reset-negative:hover {
   @insert .link;
-  color: var(--color-elevated-neg);
+  color: var(--color-solitude);
   background-color: var(--color-sapphire);
 }
 
@@ -204,7 +172,6 @@ footer a:hover {
   opacity: 0;
   transition: visibility 0s 1s, opacity 1s ease;
 }
-
 
 /* From Ncube*/
 
@@ -360,7 +327,6 @@ button:focus {
 .btn {
   @insert .white .link .pa2 .ttu .br2 .tc .b .nowrap;
   border-radius: 3px;
-  border: none;
   font-weight: 300;
   cursor: pointer;
 }
@@ -369,7 +335,6 @@ button:focus {
   @insert .btn;
   cursor: pointer;
 }
-
 
 .btn-disabled {
   @insert .btn .gray-75 .bg-white .b--gray-75 .o-50;
@@ -383,6 +348,17 @@ button:focus {
 .btn-bittersweet {
   @insert .bg-bittersweet .b--bittersweet;
 }
+
+.btn-billboard {
+  @insert .bg-sapphire .b--bittersweet;
+  border: 1px solid var(--color-bittersweet);
+}
+
+.btn-more {
+  @insert .bg-white .b--bittersweet .sapphire;
+  border: 1px solid var(--color-bittersweet);
+}
+
 .btn:hover {
   background-color: black;
   color: white;
@@ -390,17 +366,15 @@ button:focus {
 
 .btn-out {
   border: 1px solid white;
-
 }
 
 .btn-out:hover {
-border: 1px solid black;
+  border: 1px solid black;
   cursor: pointer;
 }
 
 .btn-black {
   @insert .bg-black .b--black;
-
 }
 
 .btn-large {

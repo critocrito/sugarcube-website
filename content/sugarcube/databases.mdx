@@ -1,0 +1,154 @@
+---
+root: "/sugarcube"
+title: "Persisting Data"
+parents: ["Guides"]
+prev: "data-format"
+next: "glossary"
+---
+
+import Synopsis from "../../src/components/Synopsis";
+import Note from "../../src/components/Note";
+
+<Synopsis>
+<li>In this guide you learn how to use databases to persist data you preserve</li>
+</Synopsis>
+
+# Storing data in a database
+
+When you run a Sugarcube pipeline data gets generated and transformed while the pipeline is running but is lost as soon as the pipeline finishes. A database is required to store data permanently. Sugarcube currently supports two databases, [MongoDB](https://www.mongodb.com/) and [Elasticsearch](https://www.elastic.co/products/elasticsearch).
+
+<Note>
+There is ongoing work to support <a href="https://www.postgresql.org/">PostgreSQL</a> and <a href="https://sqlite.org/index.html">SQLite</a>. They will eventually replace MongoDB as the first choice to persist data.
+</Note>
+
+```toc
+```
+
+## MongoDB
+
+### Setup
+
+MongoDB can be installed on all platforms. You can find [installation instructions](https://docs.mongodb.com/manual/administration/install-community/) in the official documentation of MongoDB. Once you installed the MongoDB server you can use the `mongo` client to connect to the database.
+
+```shell
+mongo
+```
+
+Once connected to the database we will create a new database. We name the database `sugarcube-project` but you can use any name that makes more sense for you. MongoDB stores data in collections. Sugarcube uses `units` as the collection name to store its data. We will also create an index on the `_sc_id_hash` field to ensure better performance.
+
+```text
+use sugarcube-project
+db.createCollection("units")
+db.units.createIndex({_sc_id_hash: 1})
+```
+
+You can exit the `mongo` client by pressing `CTRL-D`.
+
+### Storing data
+
+To store any data in MongoDB we can use the [`mongodb_store`](/plugins/mongodb_store) plugin. You only have to point the plugin to the right server and database using the `--mongodb.uri` option. A MongoDB URI starts with `mongodb://` to define that it is targeting Mongodb, followed by the host name of the server (if you run MongoDB on your local computer it is `localhost`) and the name of the database (in this case `sugarcube-project`).
+
+```shell
+$(npm bin)/sugarcube -p http_import,mongodb_store \
+                     -Q http_url:'https://yemeniarchive.org' \
+                     --mongodb.uri mongodb://localhost/sugarcube-project
+```
+
+We now stored our first unit of data in MongoDB. You can verify it by connecting to the database using the `mongo` client.
+
+```shell
+mongo
+```
+
+<br />
+
+```text
+use sugarcube-project
+db.units.find().pretty()
+```
+
+If you look a little closer to the log output you will see that Sugarcube stored 1 unit.
+
+```text
+2019-11-10T12:01:51.149Z - info: Starting the mongodb_store plugin.
+2019-11-10T12:01:51.308Z - info: Matched 0 units as existing.
+2019-11-10T12:01:51.339Z - info: Updating 0 units.
+2019-11-10T12:01:51.339Z - info: Storing 1 units.
+2019-11-10T12:01:51.344Z - info: Finished the mongodb_store plugin.
+```
+
+When storing data in a database Sugarcube is smart enough to detect which data is new and which already exists in the database. If you run the same pipeline again it will update the record in the database rather than creating a new one. You can also see that in the log output of the second run. It sored 0 units but updated 1.
+
+```text
+2019-11-10T12:03:22.245Z - info: Starting the mongodb_store plugin.
+2019-11-10T12:03:22.321Z - info: Matched 1 units as existing.
+2019-11-10T12:03:22.389Z - info: Updating 1 units.
+2019-11-10T12:03:22.389Z - info: Storing 0 units.
+2019-11-10T12:03:22.393Z - info: Finished the mongodb_store plugin.
+```
+
+This is all you have to do in order to preserve data in a MongoDB database.
+
+### Complementing data
+
+ Complementing data allows you to merge data in the pipeline with the records in the database if such a record exists. There are two plugins that allow you to sync data between the database and the data in your running pipeline.
+
+- [`mongodb_complement`](/plugins/mongodb_complement)
+- [`mongodb_supplement`](/plugins/mongodb_supplement)
+
+The two plugins are quite similar but differ in one important aspect:
+
+- If you want the data in the database to take precedent use the `mongodb_complement` plugin. Any field that is different in the pipeline will be overwritten by the value that is stored in the database.
+- If you want the data in the pipeline to take precedent use the `mongodb_supplement` plugin. Any field that is different in the pipeline will overwrite the value that is stored in the database.
+
+The following pipeline fetches the contents of a website, looks up in the database if this piece of data already exists and merges the two units of data and then stores the merged version back to the database. If the data fetched `http_import` has any field that is different to the version in the database those changes are lost.
+
+If you want to rather store the new version of the data us the `mongodb_supplement` plugin instead.
+
+```shell
+$(npm bin)/sugarcube -p http_import,mongodb_complement,mongodb_store \
+                     -Q http_url:'https://yemeniarchive.org' \
+                     --mongodb.uri mongodb://localhost/sugarcube-project
+```
+
+### Fetching data
+
+The data stored in the MongoDB database can also be the source for data in the pipeline. There are two plugins that fetch data from MongoDB.
+
+- [`mongodb_fetch_units`](/plugins/mongodb_fetch_units)
+- [`mongodb_query_units`](/plugins/mongodb_query_units)
+
+The first of those two, `mongodb_fetch_units`, can be used to fetch data from MongoDB by the `_sc_id_hash`. This plugin is useful if you know exactly which units of data you are interested in. It uses the `mongodb_unit` query type to specify which units to fetch.
+
+In our example the website we fetched earlier has the `_sc_id_hash` of `7748f388df6b711d588bc17bd24878aaeb0692a4885f3e8dbc5b88cebc5f4cab`.
+
+```shell
+$(npm bin)/sugarcube -p mongodb_fetch_units,tap_printf \
+                     -Q mongodb_unit:7748f388df6b711d588bc17bd24878aaeb0692a4885f3e8dbc5b88cebc5f4cab \
+                     --mongodb.uri mongodb://localhost/sugarcube-project
+```
+
+The second of those plugins, `mongodb_query_units`, can be used to fetch data from MongoDB using a more complex query. MongoDB provides a JSON based query language and this plugin allows to fetch data using such a query. Since it is very hard to write JSON correctly in the terminal, we will store our query in a text file and use that one as the input for our pipeline. This is the recommended approach if you want to use this plugin.
+
+Open a text file called `queries.json` and add the following content.
+
+```json
+[
+  {
+    "type": "mongodb_query_units",
+    "term": {"_sc_source": "http_import"}
+  }
+]
+```
+
+Set the query type to `mongodb_query_units`. The query will fetch all data that was generated by the `http_import` plugin. We can now run our pioeline using this MongoDB queries.
+
+```shell
+$(npm bin)/sugarcube -p mongodb_query_units,tap_printf \
+                     -q queries.json \
+                     --mongodb.uri mongodb://localhost/sugarcube-project
+```
+
+## Elasticsearch
+
+TBD
