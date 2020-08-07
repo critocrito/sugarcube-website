@@ -17,11 +17,11 @@ const Header = ({ location }: HeaderProps) => {
           className="logo"
           src={sugarcubetoolsLogo}
         />
-        <p className="w-100 w-40-ns header4">
+        <h4 className="w-100 w-40-ns header4">
           <Link className="nowrap ma2 hover-bg-transparent" to="/">
             Sugarcube Tools
           </Link>
-        </p>
+        </h4>
       </div>
       <nav className="ttu flex flex-column items-center justify-around fr">
         <ul className="list pl0">

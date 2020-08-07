@@ -27,11 +27,11 @@ const Card = ({
             <div className="flex items-center">
               <img alt={`${title} logo.`} src={logo} />
 
-              <p className="header4">
+              <h4 className="header4">
                 <Link className="nowrap ma2 hover-bg-transparent" to="/">
                   {title}
                 </Link>
-              </p>
+              </h4>
               {isBeta && (
                 <div className="ttu bg-solitude pv1 ph2 br2">Beta</div>
               )}

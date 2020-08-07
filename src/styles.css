@@ -55,6 +55,7 @@ pre {
   font-size: 1.563em;
   color: var(--color-sapphire);
   line-height: 1em;
+  font-weight: unset;
 }
 
 a {
@@ -67,6 +68,10 @@ a:hover {
   /* color: var(--color-elevated-neg); */
   background-color: var(--color-solitude);
   text-decoration: none;
+}
+
+p a {
+  background-color: var(--color-solitude);
 }
 
 footer a {
