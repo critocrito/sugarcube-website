@@ -24,6 +24,13 @@ const Card = ({
       <div className="card flex flex-column">
         <div className="pa1 ba br3 ">
           <div className="flex items-center justify-between color-main mr1 ml1 pr2 pl2">
+
+
+          </div>
+
+          <div className="cf ph2-ns">
+            <div className="fl w-100 w-70-ns pa2">
+
             <div className="flex items-center">
               <img alt={`${title} logo.`} src={logo} />
 
@@ -37,22 +44,34 @@ const Card = ({
               )}
             </div>
 
-            <Link
-              className="btn btn-large btn-bittersweet mr3"
-              to={installLink}
-            >
-              Install
-            </Link>
+
+            </div>
+            <div className="fl w-100 w-30-ns pa2">
+                <div className="flex items-center justify-between mr1 ml1 pr2 pl2 fr">
+                <Link
+                  className="btn btn-large btn-bittersweet ml3 mt4"
+                  to={installLink}
+                >
+                  Install
+                </Link>
+                </div>
+            </div>
           </div>
 
-          <div className="flex items-center justify-between color-main mr1 ml1 pr2 pl2">
-            {children}
-          </div>
 
-          <div className="flex items-center justify-between mr1 ml1 pr2 pl2 fr">
-            <Link className="btn btn-large btn-more mr3" to={readmoreLink}>
-              Read More
-            </Link>
+          <div className="cf ph2-ns">
+            <div className="fl w-100 w-70-ns pa2">
+                <div className="flex items-center justify-between color-main mr1 ml1 pr2 pl2">
+                  {children}
+                </div>
+            </div>
+            <div className="fl w-100 w-30-ns pa2">
+                <div className="flex items-center justify-between mr1 ml1 pr2 pl2 fr">
+                  <Link className="btn btn-large btn-more ml3 mt4" to={readmoreLink}>
+                    Read More
+                  </Link>
+                </div>
+            </div>
           </div>
         </div>
       </div>

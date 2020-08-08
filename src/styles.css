@@ -383,9 +383,13 @@ button:focus {
 }
 
 .btn-large {
-  width: 10rem;
+  width: 8rem;
 }
 
 .btn-regular {
   width: 6rem;
+}
+
+.margin-negative{
+  margin-top:-60px;
 }
