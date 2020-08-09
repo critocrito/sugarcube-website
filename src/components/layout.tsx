@@ -1,13 +1,15 @@
-import React, { Fragment } from "react";
-import { Location } from "@reach/router";
-import { useStaticQuery, graphql } from "gatsby";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {Location} from "@reach/router";
+import {graphql, useStaticQuery} from "gatsby";
+import React from "react";
 import Media from "react-media";
 
-import Footer from "./Footer";
-import Header from "./Header";
-import Pagination from "./Pagination";
-import SidebarContent from "./SidebarContent";
-import SidebarMobile from "./SidebarMobile";
+import {MdxPages} from "../types";
+import Footer from "./footer";
+import Header from "./header";
+import Pagination from "./pagination";
+import SidebarContent from "./sidebar-content";
+import SidebarMobile from "./sidebar-mobile";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,10 +17,10 @@ interface LayoutProps {
   next?: string;
 }
 
-const Layout = ({ next, prev, children }: LayoutProps) => {
+const Layout = ({next, prev, children}: LayoutProps) => {
   const {
-    allMdx: { edges }
-  } = useStaticQuery(graphql`
+    allMdx: {edges: pages},
+  } = useStaticQuery<MdxPages>(graphql`
     query nextDocQuery {
       allMdx {
         edges {
@@ -37,31 +39,31 @@ const Layout = ({ next, prev, children }: LayoutProps) => {
   `);
 
   const nextDoc =
-    next == null
-      ? null
-      : edges.find(({ node }) => new RegExp(next, "i").test(node.fields.slug));
+    next === undefined
+      ? undefined
+      : pages.find(({node}) => new RegExp(next, "i").test(node.fields.slug));
   const prevDoc =
-    prev == null
-      ? null
-      : edges.find(({ node }) => new RegExp(prev, "i").test(node.fields.slug));
+    prev === undefined
+      ? undefined
+      : pages.find(({node}) => new RegExp(prev, "i").test(node.fields.slug));
 
   return (
     <div>
       <div className="bb bw1 b--negative">
-        <Location>{({ location }) => <Header location={location} />}</Location>
+        <Location>{({location}) => <Header location={location} />}</Location>
       </div>
       <div className="mw8 center pa2">
         <div className="flex">
           <Location>
-            {({ location }) => (
+            {({location}) => (
               <Media
                 queries={{
                   small: "(max-width: 30rem)",
-                  big: "(min-width: 30rem)"
+                  big: "(min-width: 30rem)",
                 }}
               >
-                {matches => (
-                  <Fragment>
+                {(matches) => (
+                  <>
                     {matches.small && (
                       <div>
                         <SidebarMobile location={location} />
@@ -72,7 +74,7 @@ const Layout = ({ next, prev, children }: LayoutProps) => {
                         <SidebarContent location={location} />
                       </div>
                     )}
-                  </Fragment>
+                  </>
                 )}
               </Media>
             )}
@@ -85,19 +87,19 @@ const Layout = ({ next, prev, children }: LayoutProps) => {
         <div className="mw8 w-100 w-75-ns pa2 center">
           <Pagination
             prev={
-              prevDoc == null
-                ? null
+              prevDoc === undefined
+                ? undefined
                 : {
                     slug: prevDoc.node.fields.slug,
-                    title: prevDoc.node.frontmatter.title
+                    title: prevDoc.node.frontmatter.title,
                   }
             }
             next={
-              nextDoc == null
-                ? null
+              nextDoc === undefined
+                ? undefined
                 : {
                     slug: nextDoc.node.fields.slug,
-                    title: nextDoc.node.frontmatter.title
+                    title: nextDoc.node.frontmatter.title,
                   }
             }
           />

@@ -1,5 +1,20 @@
+!.keep
+
+# annoying mac artifacts
+.DS_Store
+
+# NodeJS
 node_modules
+yarn*.log
+npm*.log
+.node_repl_history
+
+# Typescript
+.log
+
+# Eslint
 .eslintcache
+
+# Gatsby
 .cache
-*.log*
 public

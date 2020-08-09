@@ -5,9 +5,11 @@ interface SynopsisProps {
 }
 
 const Synopsis = ({children}: SynopsisProps) => {
-  return <div className="synopsis bg-white pa4 mv4">
-    <ul className="list pl3">{children}</ul>
-  </div>;
+  return (
+    <div className="synopsis bg-white pa4 mv4">
+      <ul className="list pl3">{children}</ul>
+    </div>
+  );
 };
 
 export default Synopsis;

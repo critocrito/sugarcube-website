@@ -1,14 +1,14 @@
-import { Link } from "gatsby";
+import {Link} from "gatsby";
 import React from "react";
-import sugarcubetoolsLogo from "../../content/assets/Logo_sugarcube_tools.svg";
 
-import MenuItem from "./MenuItem";
+import sugarcubetoolsLogo from "../../content/assets/Logo_sugarcube_tools.svg";
+import MenuItem from "./menu-item";
 
 interface HeaderProps {
   location: Location;
 }
 
-const Header = ({ location }: HeaderProps) => {
+const Header = ({location}: HeaderProps) => {
   return (
     <header className="flex-ns justify-between mw8 center">
       <div className="flex ml4">

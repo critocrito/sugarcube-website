@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "gatsby";
 import classNames from "classnames";
+import {Link} from "gatsby";
+import React from "react";
 
 interface MenuItemProps {
   isActive: boolean;
@@ -8,7 +8,7 @@ interface MenuItemProps {
   toPath: string;
 }
 
-const MenuItem = ({ isActive, menuText, toPath }: MenuItem) => {
+const MenuItem = ({isActive, menuText, toPath}: MenuItemProps) => {
   const style = classNames("nowrap ma2 pa2", isActive ? "bg-solitude" : false);
 
   return (

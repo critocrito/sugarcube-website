@@ -1,4 +1,3 @@
-import {Link, graphql, useStaticQuery} from "gatsby";
 import React from "react";
 
 const PluginsList = () => {

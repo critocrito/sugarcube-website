@@ -1,16 +1,22 @@
 {
   "compilerOptions": {
     "strict": true,
+    "lib": ["es2018", "dom"],
+    "target": "es2018",
     "esModuleInterop": true,
     "sourceMap": true,
+    "moduleResolution": "node",
     "jsx": "react",
     "strictNullChecks": true,
-    "target": "esnext",
     "module": "commonjs",
-    "lib": ["DOM", "ES2017"],
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
     "noEmit": true,
-    "skipLibCheck": true
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*"],
-  "exclude": []
+  "include": ["src/**/*", "custom.d.ts", "gatsby/**/*"],
+  "exclude": ["node_modules", "public"]
 }

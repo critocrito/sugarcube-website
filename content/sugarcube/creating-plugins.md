@@ -5,8 +5,8 @@ parents: ["Development"]
 prev: "prerequisites"
 ---
 
-import Synopsis from "../../src/components/Synopsis"
-import Note from "../../src/components/Note"
+import Synopsis from "../../src/components/synopsis"
+import Note from "../../src/components/note"
 
 <Synopsis>
 <li>This tutorial takes you through the process of developing a new plugin for Sugarcube.</li>
@@ -82,7 +82,7 @@ A Sugarcube plugin has to fulfill the following requirements:
 In your project directory edit a file called `src/plugins/hello.js` and add the following code.
 
 ```js
-const plugin = (envelope, { log }) => {
+const plugin = (envelope, {log}) => {
   log.info("Hello World");
 
   return envelope;
@@ -109,7 +109,7 @@ Before we can use our `hello_world` plugin we need to export it on the package l
 const helloWorld = require("./plugins/hello");
 
 module.exports.plugins = {
-  hello_world: helloWorld
+  hello_world: helloWorld,
 };
 ```
 
@@ -145,17 +145,17 @@ npm install -D @sugarcube/plugin-tap
 Edit a file in `src/plugins/timemap.js` and add the following code.
 
 ```js
-const { flatmapP } = require("dashp");
+const {flatmapP} = require("dashp");
 const fetch = require("node-fetch");
-const { parseISO } = require("date-fns");
-const { envelope: env } = require("@sugarcube/core");
+const {parseISO} = require("date-fns");
+const {envelope: env} = require("@sugarcube/core");
 
 const querySource = "http_url";
 
-const plugin = async (envelope, { log, stats }) => {
+const plugin = async (envelope, {log, stats}) => {
   const queries = env.queriesByType(querySource, envelope);
 
-  const data = await flatmapP(async query => {
+  const data = await flatmapP(async (query) => {
     stats.count("total");
 
     const url = `http://labs.mementoweb.org/timemap/json/${query}`;
@@ -166,14 +166,14 @@ const plugin = async (envelope, { log, stats }) => {
     try {
       resp = await fetch(url);
     } catch (e) {
-      stats.fail({ term: query, reason: e.message });
+      stats.fail({term: query, reason: e.message});
       return [];
     }
 
     try {
       json = await resp.json();
     } catch (e) {
-      stats.fail({ term: query, reason: "No Mementos found." });
+      stats.fail({term: query, reason: "No Mementos found."});
       return [];
     }
 
@@ -182,7 +182,7 @@ const plugin = async (envelope, { log, stats }) => {
       json.mementos.list == null ||
       !Array.isArray(json.mementos.list)
     ) {
-      stats.fail({ term: query, reason: "TimeMap data format mismatch." });
+      stats.fail({term: query, reason: "TimeMap data format mismatch."});
       return [];
     }
 
@@ -190,16 +190,16 @@ const plugin = async (envelope, { log, stats }) => {
 
     log.info(`Expanding ${query} into ${json.mementos.list.length} Mementos.`);
 
-    return json.mementos.list.map(({ datetime, uri }) => {
+    return json.mementos.list.map(({datetime, uri}) => {
       const createdAt = parseISO(datetime);
 
       return {
         _sc_id_fields: ["uri"],
-        _sc_media: [{ type: "url", term: uri }],
-        _sc_pubdates: { source: createdAt },
-        _sc_queries: [{ type: querySource, term: query }],
+        _sc_media: [{type: "url", term: uri}],
+        _sc_pubdates: {source: createdAt},
+        _sc_queries: [{type: querySource, term: query}],
         created_at: createdAt,
-        uri
+        uri,
       };
     });
   }, queries);
@@ -251,7 +251,7 @@ const timeMap = require("./plugins/timemap");
 
 module.exports.plugins = {
   hello_world: helloWorld,
-  memento_timemap: timeMap
+  memento_timemap: timeMap,
 };
 ```
 
@@ -321,8 +321,8 @@ plugin.argv = {
   "memento.oldest_only": {
     type: "boolean",
     desc: "Only fetch the oldest Memento.",
-    default: false
-  }
+    default: false,
+  },
 };
 ```
 
@@ -343,7 +343,7 @@ $(npm bin)/sugarcube -H memento_timemap
 To access the configuration options inside of your plugin use the `cfg` object of the `environment`.
 
 ```js
-const plugin = async (envelope, { log, cfg, stats }) => {
+const plugin = async (envelope, {log, cfg, stats}) => {
   const oldestOnly = cfg.memento.oldest_only;
 
   // ... The rest of the plugin

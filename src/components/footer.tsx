@@ -1,6 +1,6 @@
+import {Link} from "gatsby";
 import React from "react";
-import { Link } from "gatsby";
-import { GitHub } from "react-feather";
+import {GitHub} from "react-feather";
 
 const Footer = () => {
   return (
@@ -17,6 +17,7 @@ const Footer = () => {
                       className="link-reset-negative"
                       href="https://github.com/critocrito/sugarcube"
                       target="_blank"
+                      rel="noreferrer"
                     >
                       <GitHub size={20} />
                     </a>

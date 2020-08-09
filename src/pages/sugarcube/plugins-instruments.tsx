@@ -1,17 +1,20 @@
 import "../../styles.css";
 
+import {graphql, Link, useStaticQuery} from "gatsby";
 import React from "react";
-import { Link, useStaticQuery, graphql } from "gatsby";
 
-import LayoutSimple from "../../components/LayoutSimple";
-import PluginsList from "../../components/PluginsList";
+import LayoutSimple from "../../components/layout-simple";
+import {MdxPluginsInstruments} from "../../types";
 
 const Plugins = () => {
-  const data = useStaticQuery(graphql`
+  const {
+    plugins: {edges: plugins},
+    instruments: {edges: instruments},
+  } = useStaticQuery<MdxPluginsInstruments>(graphql`
     query PluginsAndInstruments {
       plugins: allMdx(
-        filter: { fields: { slug: { regex: "/^/sugarcube/plugins/" } } }
-        sort: { order: ASC, fields: fields___slug }
+        filter: {fields: {slug: {regex: "/^/sugarcube/plugins/"}}}
+        sort: {order: ASC, fields: fields___slug}
       ) {
         edges {
           node {
@@ -27,8 +30,8 @@ const Plugins = () => {
         }
       }
       instruments: allMdx(
-        filter: { fields: { slug: { regex: "/^/sugarcube/instruments/" } } }
-        sort: { order: ASC, fields: fields___slug }
+        filter: {fields: {slug: {regex: "/^/sugarcube/instruments/"}}}
+        sort: {order: ASC, fields: fields___slug}
       ) {
         edges {
           node {
@@ -52,7 +55,7 @@ const Plugins = () => {
         <div className="w-two-thirds-ns">
           <h2>Plugins</h2>
           <ul className="list pl0">
-            {data.plugins.edges.map(({ node }) => {
+            {plugins.map(({node}) => {
               return (
                 <li key={node.id}>
                   <Link to={node.fields.slug}>{node.frontmatter.title}</Link>
@@ -62,7 +65,7 @@ const Plugins = () => {
           </ul>
           <h2>Instruments</h2>
           <ul className="list pl0">
-            {data.instruments.edges.map(({ node }) => {
+            {instruments.map(({node}) => {
               return (
                 <li key={node.id}>
                   <Link to={node.fields.slug}>{node.frontmatter.title}</Link>

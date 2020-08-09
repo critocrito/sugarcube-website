@@ -1,26 +1,18 @@
-import React, { Fragment, useState } from "react";
-import { Copy } from "react-feather";
-import Media from "react-media";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import shell from "react-syntax-highlighter/dist/esm/languages/hljs/shell";
-import json from "react-syntax-highlighter/dist/esm/languages/hljs/json";
-import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
-import { nord } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import classNames from "classnames";
+import React, {useState} from "react";
+import CopyToClipboard from "react-copy-to-clipboard";
+import {Copy} from "react-feather";
+import Media from "react-media";
+import {Light as SyntaxHighlighter} from "react-syntax-highlighter";
+import {dark} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
-SyntaxHighlighter.registerLanguage("shell", shell);
-SyntaxHighlighter.registerLanguage("json", json);
-SyntaxHighlighter.registerLanguage("javascript", js);
-
-interface CodeBlockProps {
-  className: string;
+export interface CodeBlockProps {
+  language: string;
   children: React.ReactNode;
 }
 
-const CodeBlock = ({ className, children }) => {
+const CodeBlock = ({language, children}: CodeBlockProps) => {
   const [isCopied, setIsCopied] = useState(false);
-  const language = className.replace(/language-/, "");
 
   const clickHandler = () => {
     setIsCopied(true);
@@ -29,7 +21,7 @@ const CodeBlock = ({ className, children }) => {
 
   const copyLabelStyle = classNames(
     "ttu f7",
-    isCopied ? "visible" : "fade-out"
+    isCopied ? "visible" : "fade-out",
   );
 
   return (
@@ -42,13 +34,16 @@ const CodeBlock = ({ className, children }) => {
             </span>
             <Media
               queries={{
-                big: "(min-width: 30rem)"
+                big: "(min-width: 30rem)",
               }}
             >
-              {matches => (
-                <Fragment>
+              {(matches) => (
+                <>
                   {matches.big && (
-                    <CopyToClipboard text={children} onCopy={clickHandler}>
+                    <CopyToClipboard
+                      text={children as string}
+                      onCopy={clickHandler}
+                    >
                       <div className="flex items-center">
                         <span className={copyLabelStyle}>Copied!</span>
                         <button className="bg-transparent ba br2 bw0 ml2">
@@ -57,16 +52,16 @@ const CodeBlock = ({ className, children }) => {
                       </div>
                     </CopyToClipboard>
                   )}
-                </Fragment>
+                </>
               )}
             </Media>
           </div>
         </div>
         <SyntaxHighlighter
           className="mt0 mb0 bw0 f6-ns f7"
-          language={language || "text"}
-          style={nord}
-          showLineNumbers={language === "js" ? true : false}
+          language={language}
+          style={dark}
+          showLineNumbers={language === "js"}
         >
           {children}
         </SyntaxHighlighter>

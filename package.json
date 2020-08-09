@@ -1,10 +1,10 @@
 {
   "private": true,
   "name": "sugarcube-website",
+  "license": "GPL-3.0",
+  "author": "Christo <christo@cryptodrunks.net>",
   "version": "0.30.0",
   "main": "index.js",
-  "author": "Christo <christo@cryptodrunks.net>",
-  "license": "GPL-3.0",
   "scripts": {
     "build": "gatsby build",
     "clean": "rimraf public .cache",
@@ -12,72 +12,226 @@
     "fix": "yarn lint:js --fix",
     "lint": "yarn lint:css && yarn lint:js",
     "lint:css": "stylelint src/**/*.css",
-    "lint:js": "eslint --cache gatsby-config.js src/**/*.tsx",
+    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx src",
     "start": "gatsby develop",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "verify": "yarn lint:js && yarn type-check"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^1.6.16",
+    "@mdx-js/react": "^1.6.16",
+    "@mdx-js/tag": "^0.20.3",
+    "classnames": "^2.2.6",
+    "feather-icons": "^4.24.1",
+    "gatsby": "^2.24.37",
+    "gatsby-plugin-mdx": "^1.2.34",
+    "gatsby-plugin-sharp": "^2.6.25",
+    "gatsby-plugin-typescript": "^2.4.17",
+    "gatsby-remark-autolink-headers": "^2.3.11",
+    "gatsby-remark-copy-linked-files": "^2.3.12",
+    "gatsby-remark-images": "^3.3.25",
+    "gatsby-remark-table-of-contents": "^0.0.9",
+    "gatsby-source-filesystem": "^2.3.24",
+    "gatsby-transformer-remark": "^2.8.28",
+    "gatsby-transformer-sharp": "^2.5.12",
+    "react": "^16.13.1",
+    "react-copy-to-clipboard": "^5.0.2",
+    "react-dom": "^16.13.1",
+    "react-feather": "^2.0.3",
+    "react-media": "^1.10.0",
+    "react-syntax-highlighter": "^13.3.1",
+    "tachyons": "^4.12.0"
   },
   "devDependencies": {
-    "@types/classnames": "^2.2.9",
+    "@types/classnames": "^2.2.10",
     "@types/node": "^12.12.5",
     "@types/react": "^16.9.11",
     "@types/react-copy-to-clipboard": "^4.3.0",
     "@types/react-dom": "^16.9.3",
-    "@types/react-syntax-highlighter": "^11.0.1",
-    "@typescript-eslint/eslint-plugin": "^2.6.0",
-    "@typescript-eslint/parser": "^2.6.0",
-    "eslint": "^6.6.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-prettier": "^6.5.0",
-    "eslint-plugin-filenames": "^1.3.2",
-    "eslint-plugin-import": "^2.18.2",
+    "@types/react-syntax-highlighter": "^11.0.4",
+    "@typescript-eslint/eslint-plugin": "^3.3.0",
+    "@typescript-eslint/parser": "^3.3.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "eslint-plugin-unicorn": "^20.1.0",
     "gatsby-plugin-postcss": "^2.1.13",
-    "husky": "^3.0.9",
-    "jsonlint": "^1.6.3",
-    "lint-staged": "^9.4.2",
-    "postcss": "^7.0.21",
-    "postcss-cli": "^6.1.3",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.10",
+    "postcss": "^7.0.27",
+    "postcss-cli": "^7.1.0",
     "postcss-custom-properties": "^9.0.2",
     "postcss-import": "^12.0.1",
     "postcss-insert": "^1.0.0",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
     "postcss-svg": "^3.0.0",
-    "prettier": "^1.18.2",
-    "prettier-package-json": "^2.1.0",
+    "postcss-url": "^8.0.0",
+    "prettier": "^2.0.5",
+    "prettier-package-json": "^2.1.3",
     "rimraf": "^3.0.0",
     "stylelint": "^11.1.1",
     "stylelint-config-recommended": "^3.0.0",
-    "typescript": "^3.6.4",
+    "typescript": "^3.9.5",
     "typescript-language-server": "^0.4.0"
   },
-  "dependencies": {
-    "@mdx-js/mdx": "^1.5.1",
-    "@mdx-js/react": "^1.5.1",
-    "@mdx-js/tag": "^0.20.3",
-    "classnames": "^2.2.6",
-    "feather-icons": "^4.24.1",
-    "gatsby": "^2.17.7",
-    "gatsby-plugin-mdx": "^1.0.55",
-    "gatsby-plugin-sharp": "^2.2.36",
-    "gatsby-plugin-typescript": "^2.1.15",
-    "gatsby-remark-autolink-headers": "^2.1.16",
-    "gatsby-remark-copy-linked-files": "^2.1.28",
-    "gatsby-remark-images": "^3.1.28",
-    "gatsby-remark-table-of-contents": "^0.0.7",
-    "gatsby-source-filesystem": "^2.1.35",
-    "gatsby-transformer-remark": "^2.6.32",
-    "gatsby-transformer-sharp": "^2.3.2",
-    "react": "^16.11.0",
-    "react-copy-to-clipboard": "^5.0.1",
-    "react-dom": "^16.11.0",
-    "react-feather": "^2.0.3",
-    "react-media": "^1.10.0",
-    "react-syntax-highlighter": "^11.0.2",
-    "tachyons": "^4.11.1"
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": "2018",
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "project": "./tsconfig.json"
+    },
+    "env": {
+      "browser": true,
+      "es6": true,
+      "webextensions": true
+    },
+    "settings": {
+      "react": {
+        "pragma": "React",
+        "version": "detect"
+      }
+    },
+    "extends": [
+      "airbnb-typescript",
+      "airbnb/hooks",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:promise/recommended",
+      "plugin:unicorn/recommended",
+      "plugin:prettier/recommended",
+      "prettier/react",
+      "prettier/@typescript-eslint"
+    ],
+    "plugins": [
+      "@typescript-eslint",
+      "simple-import-sort",
+      "promise",
+      "unicorn",
+      "prettier"
+    ],
+    "rules": {
+      "object-curly-spacing": "off",
+      "no-console": [
+        "warn",
+        {
+          "allow": [
+            "warn",
+            "error"
+          ]
+        }
+      ],
+      "no-constant-condition": [
+        "error",
+        {
+          "checkLoops": false
+        }
+      ],
+      "no-use-before-define": [
+        "error",
+        {
+          "functions": false,
+          "classes": true,
+          "variables": true
+        }
+      ],
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-use-before-define": [
+        "error",
+        {
+          "functions": false,
+          "classes": true,
+          "variables": true,
+          "typedefs": true
+        }
+      ],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ],
+      "import/prefer-default-export": "off",
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          "devDependencies": [
+            "webpack.*.js",
+            "test/ts/**/*.ts",
+            "test/test-setup.js",
+            "scripts/**/*.js",
+            "src/ts/__fixtures__/**/*.tsx"
+          ]
+        }
+      ],
+      "simple-import-sort/sort": "error",
+      "react/button-has-type": "off",
+      "react/require-default-props": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "unicorn/prevent-abbreviations": "off",
+      "unicorn/no-useless-undefined": "off",
+      "unicorn/no-reduce": "off"
+    },
+    "overrides": [
+      {
+        "files": [
+          "*.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/explicit-function-return-type": "error"
+        }
+      }
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "! git rev-parse --abbrev-ref HEAD | grep -q master || (yarn verify && lint-staged)"
+    }
+  },
+  "lint-staged": {
+    "{*.json,*rc}": [
+      "prettier --parser json --write"
+    ],
+    "**/package.json": [
+      "prettier-package-json --write"
+    ],
+    "src/{*.js,*.ts,*.tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "postcss": {
+    "plugins": {
+      "postcss-import": {},
+      "postcss-insert": {},
+      "postcss-custom-properties": {
+        "preserve": false
+      },
+      "postcss-preset-env": {
+        "browsers": "> 0.2%"
+      },
+      "autoprefixer": {},
+      "postcss-url": {
+        "url": "inline"
+      }
+    }
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "bracketSpacing": false,
+    "arrowParens": "always",
+    "tabWidth": 2
   }
 }

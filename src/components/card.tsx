@@ -1,12 +1,11 @@
+import {Link} from "gatsby";
 import React from "react";
-import { Link } from "gatsby";
 
 interface CardProps {
   logo: string;
   title: string;
   installLink: string;
   readmoreLink: string;
-  moreLink: string;
   isBeta?: boolean;
   children: React.ReactNode;
 }
@@ -17,7 +16,7 @@ const Card = ({
   installLink,
   readmoreLink,
   children,
-  isBeta = false
+  isBeta = false,
 }: CardProps) => {
   return (
     <div className="">

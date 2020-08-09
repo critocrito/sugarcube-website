@@ -1,11 +1,11 @@
 const replacePath = require("./utils");
 const path = require("path");
 
-module.exports = exports.createPages = async ({ actions, graphql }) => {
-  const { createPage } = actions;
+module.exports = exports.createPages = async ({actions, graphql}) => {
+  const {createPage} = actions;
 
-  const Template = path.resolve("src/templates/Template.tsx");
-  const TemplateSimple = path.resolve("src/templates/TemplateSimple.tsx");
+  const Template = path.resolve("src/templates/template.tsx");
+  const TemplateSimple = path.resolve("src/templates/template-simple.tsx");
 
   const result = await graphql(`
     {
@@ -29,13 +29,13 @@ module.exports = exports.createPages = async ({ actions, graphql }) => {
 
   if (result.errors) return Promise.reject(result.errors);
 
-  result.data.allMdx.edges.forEach(({ node }) => {
+  result.data.allMdx.edges.forEach(({node}) => {
     createPage({
       path: replacePath(node.fields.slug),
       component: node.fields.slug.startsWith("/sugarcube")
         ? Template
         : TemplateSimple,
-      context: { id: node.id }
+      context: {id: node.id},
     });
   });
 };

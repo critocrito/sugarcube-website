@@ -1,31 +1,22 @@
 import "../styles.css";
 
-import React, { useState } from "react";
-import { Location } from "@reach/router";
-import { GitHub } from "react-feather";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {Location} from "@reach/router";
+import React from "react";
 
-import IntroCard from "../components/IntroCard";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import BillBoard from "../components/BillBoard";
-import Complementary from "../components/Complementary";
-import Meet from "../components/Meet";
-import Card from "../components/Card";
-import sugarcubeLogo from "../../content/assets/Logo_Sugarcube.svg";
-import ncubeLogo from "../../content/assets/Logo_Ncube.svg";
 import discoveryLogo from "../../content/assets/Logo_Discovery.svg";
+import ncubeLogo from "../../content/assets/Logo_Ncube.svg";
+import sugarcubeLogo from "../../content/assets/Logo_Sugarcube.svg";
+import BillBoard from "../components/bill-board";
+import Card from "../components/card";
+import Footer from "../components/footer";
+import Header from "../components/header";
 
 const Index = () => {
-  const [details, setDetails] = useState("sugarcube");
-
-  const clickHandler = (name: string) => {
-    setDetails(name);
-  };
-
   return (
     <div className="">
       <div className="bb bw1 b--negative">
-        <Location>{({ location }) => <Header location={location} />}</Location>
+        <Location>{({location}) => <Header location={location} />}</Location>
       </div>
       <section className="ph2-ns pt5 pb5 bb bw1 b--negative negative">
         <BillBoard />
@@ -33,7 +24,6 @@ const Index = () => {
 
       <section className="mw8 ma4 center pa1">
         <Card
-          active={details}
           logo={sugarcubeLogo}
           title="Sugarcube"
           installLink="/sugarcube/installation"
@@ -50,7 +40,6 @@ const Index = () => {
 
       <section className="mw8 ma4 center pa1">
         <Card
-          active={details}
           logo={ncubeLogo}
           title="Ncube"
           installLink="/ncube/installation"
@@ -60,7 +49,7 @@ const Index = () => {
           <p className="w-100">
             Ncube is a graphical desktop and cross-platform application that
             turns quantitative data into qualitative data. All the features of
-            Ncube have one purpose: produce a set of verified data. Ncube's
+            Ncube have one purpose: produce a set of verified data. Ncube&apos;s
             features around the preservation, exploration and verification of
             data all serve this single goal.
           </p>
@@ -69,7 +58,6 @@ const Index = () => {
 
       <section className="mw8 ma4 center pa1">
         <Card
-          active={details}
           logo={discoveryLogo}
           title="Discovery Extension"
           installLink="/discovery/installation"
@@ -80,8 +68,8 @@ const Index = () => {
             Arguably browsers are one of the most important research tools that
             investigators use every day. The Discovery browser extension
             accompanies Ncube for source discovery. While browsing the web
-            investigators can send URL's of interest to Ncube with the click of
-            one button without having to leave the browser environment.
+            investigators can send URL&apos;s of interest to Ncube with the
+            click of one button without having to leave the browser environment.
           </p>
         </Card>
       </section>
