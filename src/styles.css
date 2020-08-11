@@ -93,8 +93,6 @@ footer a:hover {
   color: white;
   width: 100%;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
-  margin: 2rem auto;
-  padding: 1.5rem;
 }
 
 .negative {
@@ -390,6 +388,6 @@ button:focus {
   width: 6rem;
 }
 
-.margin-negative{
-  margin-top:-60px;
+.margin-negative {
+  margin-top: -60px;
 }

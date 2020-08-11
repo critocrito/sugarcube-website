@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import c from "classnames";
 import {Location} from "@reach/router";
 import {graphql, useStaticQuery} from "gatsby";
 import React from "react";
@@ -53,56 +54,59 @@ const Layout = ({next, prev, children}: LayoutProps) => {
         <Location>{({location}) => <Header location={location} />}</Location>
       </div>
 
-      <div className="pa2 mw8-ns center-ns">
-        <div className="flex-ns">
-          <Location>
-            {({location}) => (
-              <Media
-                queries={{
-                  small: "(max-width: 30rem)",
-                  big: "(min-width: 30rem)",
-                }}
-              >
-                {(matches) => (
-                  <>
-                    {matches.small && (
-                      <div className="bg-white z-999">
-                        <SidebarMobile location={location} />
-                      </div>
-                    )}
-                    {matches.big && (
-                      <div className="w-25 br b--negative mr4 sidebar vh-100">
-                        <SidebarContent location={location} />
-                      </div>
-                    )}
-                  </>
-                )}
-              </Media>
-            )}
-          </Location>
+      <div className="flex-ns pa2 mw8-ns center-ns">
+        <Location>
+          {({location}) => (
+            <Media
+              queries={{
+                small: "(max-width: 30rem)",
+                big: "(min-width: 30rem)",
+              }}
+            >
+              {(matches) => (
+                <>
+                  {matches.small && (
+                    <div className="bg-white z-999">
+                      <SidebarMobile location={location} />
+                    </div>
+                  )}
+                  {matches.big && (
+                    <div className="w-25 br b--negative mr4 sidebar vh-100">
+                      <SidebarContent location={location} />
+                    </div>
+                  )}
+                </>
+              )}
+            </Media>
+          )}
+        </Location>
 
-          <div className="flex-ns flex-column-ns">
-            <div className="w-75-ns">{children}</div>
-            <div className="w-75-ns bt bw1 b--negative mt5-ns">
-              <Pagination
-                prev={
-                  prevDoc === undefined
-                    ? undefined
-                    : {
-                        slug: prevDoc.node.fields.slug,
-                        title: prevDoc.node.frontmatter.title,
-                      }
-                }
-                next={
-                  nextDoc === undefined
-                    ? undefined
-                    : {
-                        slug: nextDoc.node.fields.slug,
-                        title: nextDoc.node.frontmatter.title,
-                      }
-                }
-              />
-            </div>
+        <div className="flex-ns flex-column-ns">
+          <div className="w-100 w-75-ns">{children}</div>
+          <div
+            className={c(
+              "w-100 w-75-ns mt5-ns",
+              (prevDoc || nextDoc) && "bt bw1 b--negative",
+            )}
+          >
+            <Pagination
+              prev={
+                prevDoc === undefined
+                  ? undefined
+                  : {
+                      slug: prevDoc.node.fields.slug,
+                      title: prevDoc.node.frontmatter.title,
+                    }
+              }
+              next={
+                nextDoc === undefined
+                  ? undefined
+                  : {
+                      slug: nextDoc.node.fields.slug,
+                      title: nextDoc.node.frontmatter.title,
+                    }
+              }
+            />
           </div>
         </div>
       </div>

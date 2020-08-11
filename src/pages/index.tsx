@@ -14,8 +14,8 @@ import Header from "../components/header";
 
 const Index = () => {
   return (
-    <div className="">
-      <div className="mw8-ns center-ns">
+    <div>
+      <div>
         <Location>{({location}) => <Header location={location} />}</Location>
       </div>
 
@@ -75,7 +75,6 @@ const Index = () => {
         </Card>
       </section>
 
-      <div className="bg-canvas mt3 h4" />
       <Footer />
     </div>
   );
