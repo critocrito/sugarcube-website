@@ -1,3 +1,4 @@
+/* eslint react/jsx-props-no-spreading: off, jsx-a11y/heading-has-content: off, @typescript-eslint/no-unused-vars: off */
 import "../styles.css";
 
 import {MDXProvider} from "@mdx-js/react";
@@ -10,8 +11,22 @@ import Layout from "../components/layout";
 import {Frontmatter} from "../types";
 
 const components = {
+  // Headers are rendered with a `position: relative` style attribute. This
+  // breaks the mobile sidebar. This fixes the problem.
+  h1: ({
+    style,
+    ...props
+  }: React.PropsWithoutRef<JSX.IntrinsicElements["h1"]>) => <h1 {...props} />,
+  h2: ({
+    style,
+    ...props
+  }: React.PropsWithoutRef<JSX.IntrinsicElements["h2"]>) => <h2 {...props} />,
+  h3: ({
+    style,
+    ...props
+  }: React.PropsWithoutRef<JSX.IntrinsicElements["h3"]>) => <h3 {...props} />,
+
   pre: (props: React.PropsWithoutRef<JSX.IntrinsicElements["div"]>) => (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <div {...props} />
   ),
   code: ({
@@ -22,7 +37,6 @@ const components = {
     const language = className ? className.replace(/language-/, "") : "text";
 
     return (
-      // eslint-disable-next-line react/jsx-props-no-spreading
       <div {...props}>
         <CodeBlock language={language}>{children}</CodeBlock>
       </div>
