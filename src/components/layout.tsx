@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import c from "classnames";
 import {Location} from "@reach/router";
 import c from "classnames";
 import {graphql, useStaticQuery} from "gatsby";
@@ -49,6 +48,8 @@ const Layout = ({next, prev, children}: LayoutProps) => {
       ? undefined
       : pages.find(({node}) => new RegExp(prev, "i").test(node.fields.slug));
 
+  const hasPager = prevDoc || nextDoc;
+
   return (
     <div>
       <div className="bb bw1 b--negative">
@@ -87,7 +88,7 @@ const Layout = ({next, prev, children}: LayoutProps) => {
           <div
             className={c(
               "w-100 w-75-ns mt5-ns",
-              (prevDoc || nextDoc) && "bt bw1 b--negative",
+              hasPager ? "bt bw1 b--negative" : undefined,
             )}
           >
             <Pagination
