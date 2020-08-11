@@ -3,7 +3,7 @@ import React from "react";
 
 const BillBoard = () => {
   return (
-    <div className="flex flex-column justify-around mw8 center pl4">
+    <div className="flex flex-column justify-around mw8-ns center-ns pl2 pl4-ns">
       <div className="fl">
         <h2 className="w-100 mt0 header2-neg">
           Data pipelines for human rights.
@@ -15,7 +15,7 @@ const BillBoard = () => {
           and human rights abuses.
         </p>
       </div>
-      <div className="fl flex mt3">
+      <div className="fl flex mt3 mb3">
         <Link
           className="btn btn-large btn-billboard mr3 flex flex-column justify-around"
           to="/get-in-touch"

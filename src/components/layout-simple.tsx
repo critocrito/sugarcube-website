@@ -15,12 +15,9 @@ const LayoutSimple = ({children}: LayoutSimpleProps) => {
       <div className="bb bw1 b--negative">
         <Location>{({location}) => <Header location={location} />}</Location>
       </div>
-      <div className="mw8 center pa2">
-        <div className="flex">
-          <div className="w-100 w-75-ns">{children}</div>
-        </div>
+      <div className="mw8-ns center-ns pa2">
+        <div className="w-75-ns">{children}</div>
       </div>
-      <div className="bg-canvas mt3 h4" />
       <Footer />
     </div>
   );

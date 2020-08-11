@@ -52,8 +52,9 @@ const Layout = ({next, prev, children}: LayoutProps) => {
       <div className="bb bw1 b--negative">
         <Location>{({location}) => <Header location={location} />}</Location>
       </div>
-      <div className="mw8 center pa2">
-        <div className="flex">
+
+      <div className="pa2 mw8-ns center-ns">
+        <div className="flex-ns">
           <Location>
             {({location}) => (
               <Media
@@ -65,7 +66,7 @@ const Layout = ({next, prev, children}: LayoutProps) => {
                 {(matches) => (
                   <>
                     {matches.small && (
-                      <div>
+                      <div className="bg-white z-999">
                         <SidebarMobile location={location} />
                       </div>
                     )}
@@ -80,29 +81,29 @@ const Layout = ({next, prev, children}: LayoutProps) => {
             )}
           </Location>
 
-          <div className="w-100 w-75-ns">{children}</div>
-        </div>
-      </div>
-      <div className="bg-canvas mt3 h4">
-        <div className="mw8 w-100 w-75-ns pa2 center">
-          <Pagination
-            prev={
-              prevDoc === undefined
-                ? undefined
-                : {
-                    slug: prevDoc.node.fields.slug,
-                    title: prevDoc.node.frontmatter.title,
-                  }
-            }
-            next={
-              nextDoc === undefined
-                ? undefined
-                : {
-                    slug: nextDoc.node.fields.slug,
-                    title: nextDoc.node.frontmatter.title,
-                  }
-            }
-          />
+          <div className="flex-ns flex-column-ns">
+            <div className="w-75-ns">{children}</div>
+            <div className="w-75-ns bt bw1 b--negative mt5-ns">
+              <Pagination
+                prev={
+                  prevDoc === undefined
+                    ? undefined
+                    : {
+                        slug: prevDoc.node.fields.slug,
+                        title: prevDoc.node.frontmatter.title,
+                      }
+                }
+                next={
+                  nextDoc === undefined
+                    ? undefined
+                    : {
+                        slug: nextDoc.node.fields.slug,
+                        title: nextDoc.node.frontmatter.title,
+                      }
+                }
+              />
+            </div>
+          </div>
         </div>
       </div>
       <Footer />

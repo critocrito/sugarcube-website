@@ -11,9 +11,9 @@ const Pagination = ({prev, next}: PaginationProps) => {
     prev === undefined ? (
       ""
     ) : (
-      <div className="flex flex-column fl">
-        <span className="ml1">Previous article</span>
-        <Link className="f4" to={prev.slug}>
+      <div className="flex flex-column">
+        <span>Previous article</span>
+        <Link className="f4 pl0" to={prev.slug}>
           {prev.title}
         </Link>
       </div>
@@ -24,14 +24,14 @@ const Pagination = ({prev, next}: PaginationProps) => {
     ) : (
       <div className="flex flex-column">
         <span>Next article</span>
-        <Link className="f4" to={next.slug}>
+        <Link className="f4 pl0" to={next.slug}>
           {next.title}
         </Link>
       </div>
     );
 
   return (
-    <div className="flex justify-between ph3 items-center h4 mr5-ns pr5-ns">
+    <div className="flex justify-between items-center ph4-ns mt4">
       <div>{prevArticle}</div>
       <div>{nextArticle}</div>
     </div>

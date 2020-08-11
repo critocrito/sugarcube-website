@@ -12,7 +12,7 @@ const MenuItem = ({isActive, menuText, toPath}: MenuItemProps) => {
   const style = classNames("nowrap ma2 pa2", isActive ? "bg-solitude" : false);
 
   return (
-    <li className="dib mb0">
+    <li className="dib mb0-ns pb0">
       <Link className={style} to={toPath}>
         {menuText}
       </Link>

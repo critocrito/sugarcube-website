@@ -4,7 +4,7 @@ import {GitHub} from "react-feather";
 
 const Footer = () => {
   return (
-    <footer className="negative pt3">
+    <footer className="negative pt3-ns mt4-ns">
       <div className="mw8 center">
         <div className="cf">
           <div className="fl w-100 w-third-ns pa2">

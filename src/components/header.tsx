@@ -10,20 +10,24 @@ interface HeaderProps {
 
 const Header = ({location}: HeaderProps) => {
   return (
-    <header className="flex-ns justify-between mw8 center">
-      <div className="flex ml4">
-        <img
-          alt="Sugarcube tools Logo"
-          className="logo"
-          src={sugarcubetoolsLogo}
-        />
-        <h4 className="w-100 w-40-ns header4">
-          <Link className="nowrap ma2 hover-bg-transparent" to="/">
+    <header className="flex-ns justify-between-ns mv3-ns ml0-ns mw8-ns center-ns">
+      <div className="flex justify-around">
+        <Link
+          className="hover-bg-transparent ma0 pa0 flex items-center center"
+          to="/"
+        >
+          <img
+            alt="Sugarcube tools Logo"
+            className="logo"
+            src={sugarcubetoolsLogo}
+          />
+          <h4 className="w-100 w-40-ns ml2 mv0 pv0 nowrap header4">
             Sugarcube Tools
-          </Link>
-        </h4>
+          </h4>
+        </Link>
       </div>
-      <nav className="ttu flex flex-column items-center justify-around fr">
+
+      <nav className="ttu flex flex-column items-center fr-ns">
         <ul className="list pl0">
           <MenuItem
             isActive={/^\/sugarcube/.test(location.pathname)}

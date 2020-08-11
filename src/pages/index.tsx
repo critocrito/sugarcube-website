@@ -15,14 +15,15 @@ import Header from "../components/header";
 const Index = () => {
   return (
     <div className="">
-      <div className="bb bw1 b--negative">
+      <div className="mw8-ns center-ns">
         <Location>{({location}) => <Header location={location} />}</Location>
       </div>
-      <section className="ph2-ns pt5 pb5 bb bw1 b--negative negative">
+
+      <section className="ph2-ns pv5-ns negative">
         <BillBoard />
       </section>
 
-      <section className="mw8 ma4 center pa1">
+      <section className="mw8-ns ma4 center-ns pa1">
         <Card
           logo={sugarcubeLogo}
           title="Sugarcube"
@@ -38,7 +39,7 @@ const Index = () => {
         </Card>
       </section>
 
-      <section className="mw8 ma4 center pa1">
+      <section className="mw8-ns ma4 center-ns pa1">
         <Card
           logo={ncubeLogo}
           title="Ncube"
@@ -56,7 +57,7 @@ const Index = () => {
         </Card>
       </section>
 
-      <section className="mw8 ma4 center pa1">
+      <section className="mw8-ns ma4 center-ns pa1">
         <Card
           logo={discoveryLogo}
           title="Discovery Extension"
