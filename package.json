@@ -43,6 +43,7 @@
     "tachyons": "^4.12.0"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.122",
     "@types/classnames": "^2.2.10",
     "@types/node": "^12.12.5",
     "@types/react": "^16.9.11",
