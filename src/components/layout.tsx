@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import c from "classnames";
 import {Location} from "@reach/router";
+import c from "classnames";
 import {graphql, useStaticQuery} from "gatsby";
 import React from "react";
 import Media from "react-media";
