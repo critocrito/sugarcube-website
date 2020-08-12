@@ -32,7 +32,7 @@ const Card = ({
           {isBeta && <div className="ttu bg-solitude pv1 ph2 br2">Beta</div>}
         </div>
 
-        <div className="flex items-center justify-between color-main mr1 ml1 pr2 pl2">
+        <div className="flex items-center justify-between color-main mv1 ph2">
           {children}
         </div>
       </div>

@@ -19,11 +19,11 @@ const Index = () => {
         <Location>{({location}) => <Header location={location} />}</Location>
       </div>
 
-      <section className="ph2-ns pv5-ns negative">
+      <section className="ph2-ns pv5-ns pv3 negative">
         <BillBoard />
       </section>
 
-      <section className="mw8-ns ma4 center-ns pa1">
+      <section className="mw8-ns ma4-ns ma2 center-ns pa1">
         <Card
           logo={sugarcubeLogo}
           title="Sugarcube"
@@ -39,7 +39,7 @@ const Index = () => {
         </Card>
       </section>
 
-      <section className="mw8-ns ma4 center-ns pa1">
+      <section className="mw8-ns ma4-ns ma2 center-ns pa1">
         <Card
           logo={ncubeLogo}
           title="Ncube"
@@ -57,7 +57,7 @@ const Index = () => {
         </Card>
       </section>
 
-      <section className="mw8-ns ma4 center-ns pa1">
+      <section className="mw8-ns ma4-ns ma2 center-ns pa1">
         <Card
           logo={discoveryLogo}
           title="Discovery Extension"
