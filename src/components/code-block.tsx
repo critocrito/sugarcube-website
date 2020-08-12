@@ -26,7 +26,7 @@ const CodeBlock = ({language, children}: CodeBlockProps) => {
 
   return (
     <div className="flex flex-column">
-      <div className="pa1 ba br--top br3 b--negative bg-canvas bg-solitude ">
+      <div className="pa1 ba br--top br3 b--sapphire bg-canvas bg-solitude ">
         <div className="flex items-center justify-between color-main mr1 ml1 pr2 pl2">
           <span className="pl1 pr1 ttu f6 bg-transparent shadow-0 ba bw1 b--solitude b">
             {language}

@@ -12,7 +12,7 @@ interface LayoutSimpleProps {
 const LayoutSimple = ({children}: LayoutSimpleProps) => {
   return (
     <div>
-      <div className="bb bw1 b--negative">
+      <div className="bb bw1 b--sapphire">
         <Location>{({location}) => <Header location={location} />}</Location>
       </div>
       <div className="mw8-ns center-ns pa2">

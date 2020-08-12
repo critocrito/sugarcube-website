@@ -55,7 +55,7 @@ const Footer = () => {
           <div className="fl dn db-ns w-two-thirds-ns pa2">
             <div className="flex justify-between">
               <div className="w-third-ns">
-                <h3 className="bb b--negative pb1">Get Started</h3>
+                <h3 className="bb pb1">Get Started</h3>
                 <ul className="list pl0">
                   <li className="pt2">
                     <Link to="/sugarcube/installation">Installation</Link>
@@ -66,7 +66,7 @@ const Footer = () => {
                 </ul>
               </div>
               <div className="w-third-ns">
-                <h3 className="bb b--negative pb1">Guides</h3>
+                <h3 className="bb pb1">Guides</h3>
                 <ul className="list pl0">
                   <li className="pt2">
                     <Link to="/sugarcube/plugins-instruments">
@@ -85,7 +85,7 @@ const Footer = () => {
                 </ul>
               </div>
               <div className="w-third-ns">
-                <h3 className="bb b--negative pb1">Development</h3>
+                <h3 className="bb pb1">Development</h3>
                 <ul className="list pl0">
                   <li className="pt2">
                     <Link to="/sugarcube/prerequisites">Prerequisites</Link>

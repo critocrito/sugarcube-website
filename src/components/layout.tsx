@@ -52,7 +52,7 @@ const Layout = ({next, prev, children}: LayoutProps) => {
 
   return (
     <div>
-      <div className="bb bw1 b--negative">
+      <div className="bb bw1 b--sapphire">
         <Location>{({location}) => <Header location={location} />}</Location>
       </div>
 
@@ -73,7 +73,7 @@ const Layout = ({next, prev, children}: LayoutProps) => {
                     </div>
                   )}
                   {matches.big && (
-                    <div className="w-25-ns br b--negative mr4 sidebar vh-100">
+                    <div className="w-25-ns br b--sapphire mr4 sidebar vh-100">
                       <SidebarContent location={location} />
                     </div>
                   )}
@@ -86,7 +86,7 @@ const Layout = ({next, prev, children}: LayoutProps) => {
         <div className="flex-ns flex-column-ns w-100 w-75-ns">
           <div>{children}</div>
           <div
-            className={c("mt5-ns", hasPager ? "bt bw1 b--negative" : undefined)}
+            className={c("mt5-ns", hasPager ? "bt bw1 b--sapphire" : undefined)}
           >
             <Pagination
               prev={

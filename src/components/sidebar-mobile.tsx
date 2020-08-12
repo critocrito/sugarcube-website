@@ -14,7 +14,7 @@ const SidebarMobile = ({location}: SidebarMobileProps) => {
 
   const menuButton = (
     <div
-      className="shadow-1 ba br-100 b--negative negative pa3 flex flex-column items-center"
+      className="shadow-1 ba br-100 b--white negative pa3 flex flex-column items-center"
       onClick={clickHandler}
       onKeyPress={clickHandler}
       role="button"

@@ -8,11 +8,6 @@
   --color-solitude: #dfe2ec;
   --color-notify: #ecd47d;
   --color-warning: #c94d07;
-
-  --color-sapphire-neg: var(--nord4);
-  --color-warning: var(--nord11);
-
-  --color-synopsis: var(--nord15);
 }
 
 body {
@@ -110,10 +105,6 @@ footer a:hover {
   color: var(--color-sapphire);
 }
 
-.color-main-negative {
-  color: var(--color-sapphire-neg);
-}
-
 .synopsis {
   color: var(--color-sapphire);
 }
@@ -147,22 +138,6 @@ footer a:hover {
   @insert .link;
   color: var(--color-solitude);
   background-color: var(--color-sapphire);
-}
-
-.b--main {
-  border-color: var(--color-sapphire);
-}
-
-.b--negative {
-  border-color: var(--color-sapphire-neg);
-}
-
-.b--notification {
-  border-color: var(--color-notify);
-}
-
-.b--warning {
-  border-color: var(--color-warning);
 }
 
 .fade-in {
@@ -271,6 +246,10 @@ footer a:hover {
 
 /* Borders */
 
+.b--main {
+  border-color: var(--color-sapphire);
+}
+
 .b--canvas {
   border-color: var(--color-canvas);
 }
@@ -297,6 +276,14 @@ footer a:hover {
 
 .b--gray-75 {
   border-color: var(--color-gray-75);
+}
+
+.b--notification {
+  border-color: var(--color-notify);
+}
+
+.b--warning {
+  border-color: var(--color-warning);
 }
 
 .b--error {
