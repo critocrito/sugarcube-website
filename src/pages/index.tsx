@@ -63,7 +63,6 @@ const Index = () => {
           title="Discovery Extension"
           installLink="/discovery/installation"
           readmoreLink="/discovery"
-          isBeta
         >
           <p className="w-100">
             Arguably browsers are one of the most important research tools that
