@@ -64,16 +64,7 @@ const SidebarContent = ({location}: SidebarContentProps) => {
   });
 
   const entries = toc.map(({title, subSections}) => {
-    const expanded = subSections.some(({isCurrent}) => isCurrent);
-
-    return (
-      <SidebarSection
-        key={title}
-        title={title}
-        items={subSections}
-        expanded={expanded}
-      />
-    );
+    return <SidebarSection key={title} title={title} items={subSections} />;
   });
 
   return <ul className="list pl2">{entries}</ul>;
