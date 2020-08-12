@@ -24,6 +24,7 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
+
               <div className="f6">
                 © 2017-2020{" "}
                 <a href="mailto:christo@cryptodrunks.net">critocrito</a>
@@ -52,22 +53,27 @@ const Footer = () => {
               </div>
             </div>
           </div>
+
           <div className="fl dn db-ns w-two-thirds-ns pa2">
             <div className="flex justify-between">
               <div className="w-third-ns">
                 <h3 className="bb pb1">Get Started</h3>
-                <ul className="list pl0">
-                  <li className="pt2">
+                <ul className="list pl0 text-medium solitude">
+                  <li className="pt2 flex items-center">
+                    <span>Sugarcube:</span>
                     <Link to="/sugarcube/installation">Installation</Link>
+                    <span>|</span>
+                    <Link to="/sugarcube/tutorial">Tutorial</Link>
                   </li>
                   <li className="pt2">
-                    <Link to="/sugarcube/tutorial">Tutorial</Link>
+                    <span>Ncube:</span>
+                    <Link to="/ncube/installation">Installation</Link>
                   </li>
                 </ul>
               </div>
               <div className="w-third-ns">
                 <h3 className="bb pb1">Guides</h3>
-                <ul className="list pl0">
+                <ul className="list pl0 text-medium solitude">
                   <li className="pt2">
                     <Link to="/sugarcube/plugins-instruments">
                       Plugins & Instruments
@@ -86,7 +92,7 @@ const Footer = () => {
               </div>
               <div className="w-third-ns">
                 <h3 className="bb pb1">Development</h3>
-                <ul className="list pl0">
+                <ul className="list pl0 text-medium solitude">
                   <li className="pt2">
                     <Link to="/sugarcube/prerequisites">Prerequisites</Link>
                   </li>

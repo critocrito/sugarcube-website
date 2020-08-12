@@ -53,6 +53,14 @@ pre {
   font-weight: unset;
 }
 
+.text-medium {
+  font-size: 0.8em;
+}
+
+.text-small {
+  font-size: 0.7em;
+}
+
 a {
   @insert .pa1 .br2;
   color: var(--color-sapphire);

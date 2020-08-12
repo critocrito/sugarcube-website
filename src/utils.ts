@@ -15,6 +15,6 @@ export const ncubeSections: NavItem[] = ncubeNav.map((item) => ({
 }));
 
 // https://stackoverflow.com/a/49328524
-export const isFirefox = typeof InstallTrigger !== "undefined";
-export const isChrome =
-  !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+// export const isFirefox = typeof InstallTrigger !== "undefined";
+// export const isChrome =
+//   !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
