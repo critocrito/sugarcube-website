@@ -1,5 +1,8 @@
 ---
-title: "Ncube"
+title: "About"
+root: "/ncube"
+parents: ["Get Started"]
+next: "installation"
 ---
 
 # Ncube

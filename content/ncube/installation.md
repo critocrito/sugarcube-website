@@ -1,8 +1,12 @@
 ---
-title: "Ncube Installation"
+title: "Installation"
+root: "/ncube"
+parents: ["Get Started"]
+prev: "about"
+next: "tutorial"
 ---
 
-# Ncube Installation
+# Installation
 
 ## Linux
 

@@ -1,5 +1,8 @@
 ---
-title: "Sugarcube"
+title: "About"
+root: "/sugarcube"
+parents: ["Get Started"]
+next: "installation"
 ---
 
 # Sugarcube

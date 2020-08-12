@@ -1,8 +1,8 @@
 import {graphql, useStaticQuery} from "gatsby";
 import React from "react";
 
-import {MdxSidebar} from "../types";
-import {sectionListDocs} from "../utils/section-list";
+import {MdxSidebar, NavItem} from "../types";
+import {ncubeSections, sugarcubeSections} from "../utils";
 import SidebarSection from "./sidebar-section";
 
 interface SidebarContentProps {
@@ -18,6 +18,21 @@ type SubSection = {
 type SidebarSection = {title: string; subSections: SubSection[]};
 
 const SidebarContent = ({location}: SidebarContentProps) => {
+  let root: "sugarcube" | "ncube";
+  let sections: NavItem[] = [];
+
+  switch (true) {
+    case location.pathname.startsWith("/ncube"): {
+      root = "ncube";
+      sections = ncubeSections;
+      break;
+    }
+    default: {
+      root = "sugarcube";
+      sections = sugarcubeSections;
+    }
+  }
+
   const {
     allMdx: {edges: pages},
   } = useStaticQuery<MdxSidebar>(graphql`
@@ -40,10 +55,11 @@ const SidebarContent = ({location}: SidebarContentProps) => {
       }
     }
   `);
-  const toc: SidebarSection[] = sectionListDocs.map(({title, items}) => {
+
+  const toc: SidebarSection[] = sections.map(({title, items}) => {
     const subSections = items.reduce((memo, {slug}) => {
       const node = pages.find((page) => {
-        const path = `/sugarcube/${slug}`;
+        const path = `/${root}/${slug}`;
         return page.node.fields.slug === path;
       });
 

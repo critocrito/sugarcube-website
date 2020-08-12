@@ -42,7 +42,7 @@ export type MdxSidebar = MdxResult<MdxSidebarPage>;
 export type MdxPluginsInstruments = MdxPluginsInstrumentsResult<MdxPluginPage>;
 
 export type NavItem = {
-  directory: "sugarcube";
+  directory: "sugarcube" | "ncube";
   title: string;
   items: Array<{slug: string}>;
 };
