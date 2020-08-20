@@ -6,6 +6,7 @@
   "version": "0.30.0",
   "main": "index.js",
   "scripts": {
+    "prebuild": "yarn clean",
     "build": "gatsby build",
     "clean": "rimraf public .cache",
     "develop": "gatsby develop",
