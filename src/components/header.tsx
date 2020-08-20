@@ -42,7 +42,7 @@ const Header = ({location}: HeaderProps) => {
           <MenuItem
             isActive={/^\/discovery/.test(location.pathname)}
             menuText="Discovery"
-            toPath="/discovery"
+            toPath="/discovery/installation"
           />
           <MenuItem
             isActive={/^\/community/.test(location.pathname)}
