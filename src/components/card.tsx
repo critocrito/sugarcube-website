@@ -5,7 +5,7 @@ interface CardProps {
   logo: string;
   title: string;
   installLink: string;
-  readmoreLink: string;
+  readmoreLink?: string;
   isBeta?: boolean;
   children: React.ReactNode;
 }
@@ -47,11 +47,13 @@ const Card = ({
           </Link>
         </div>
 
-        <div className="mb2-ns">
-          <Link className="btn btn-large btn-more fr-ns" to={readmoreLink}>
-            Read More
-          </Link>
-        </div>
+        {readmoreLink && (
+          <div className="mb2-ns">
+            <Link className="btn btn-large btn-more fr-ns" to={readmoreLink}>
+              Read More
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
