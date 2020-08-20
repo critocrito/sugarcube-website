@@ -2,7 +2,8 @@
   items:
     - slug: about
     - slug: installation
+    - slug: tutorial
 - title: Guides
   items:
-    - slug: twitter-api
     - slug: youtube-api
+    - slug: twitter-api
