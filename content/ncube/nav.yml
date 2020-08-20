@@ -2,3 +2,6 @@
   items:
     - slug: about
     - slug: installation
+- title: Guides
+  items:
+    - slug: twitter-api
