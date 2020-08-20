@@ -65,28 +65,45 @@ const Footer = () => {
                     <span>|</span>
                     <Link to="/sugarcube/tutorial">Tutorial</Link>
                   </li>
+
                   <li className="pt2">
                     <span>Ncube:</span>
                     <Link to="/ncube/installation">Installation</Link>
+                  </li>
+
+                  <li className="pt2">
+                    <span>Discovery:</span>
+                    <Link to="/discovery/installation">Installation</Link>
                   </li>
                 </ul>
               </div>
               <div className="w-third-ns">
                 <h3 className="bb pb1">Guides</h3>
                 <ul className="list pl0 text-medium solitude">
+                  <li className="pt2 flex items-center">
+                    <span>API keys:</span>
+                    <Link to="/ncube/youtube-api">Youtube</Link>
+                    <span>|</span>
+                    <Link to="/ncube/twitter-api">Twitter</Link>
+                  </li>
+
                   <li className="pt2">
+                    <span>Data:</span>
+                    <Link to="/sugarcube/data-format">Format</Link>
+                    <span>|</span>
+                    <Link to="/sugarcube/databases">Persistence</Link>
+                  </li>
+
+                  <li className="pt2">
+                    <span>Sugarcube:</span>
                     <Link to="/sugarcube/plugins-instruments">
                       Plugins & Instruments
                     </Link>
                   </li>
+
                   <li className="pt2">
-                    <Link to="/sugarcube/data-format">Data Format</Link>
-                  </li>
-                  <li className="pt2">
-                    <Link to="/sugarcube/databases">Persisting Data</Link>
-                  </li>
-                  <li className="pt2">
-                    <Link to="/sugarcube/glossary">Glossary</Link>
+                    <span>Glossary:</span>
+                    <Link to="/sugarcube/glossary">Sugarcube</Link>
                   </li>
                 </ul>
               </div>
