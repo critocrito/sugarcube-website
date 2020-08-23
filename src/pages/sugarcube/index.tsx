@@ -21,7 +21,7 @@ const Index = () => {
           logo={sugarcubeLogo}
           title="Sugarcube"
           installLink="/sugarcube/installation"
-          readmoreLink="/sugarcube"
+          readmoreLink="/sugarcube/about"
         >
           <p className="w-100">
             Sugarcube preserves and monitors a wide variety of online sources

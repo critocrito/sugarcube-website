@@ -21,7 +21,7 @@ const Index = () => {
           logo={ncubeLogo}
           title="Ncube"
           installLink="/ncube/installation"
-          readmoreLink="/ncube"
+          readmoreLink="/ncube/about"
           isBeta
         >
           <p className="w-100">
