@@ -85,3 +85,33 @@ The search mechanism is the primary tool for exploring the data. You can filter 
 Remember the source tag you created when configuring the source? The data unit was tagged using the same source tag. For this tutorial, we will select all data units that are tagged with "Police Brutality" by using the `tag:"Police Brutality"` search phrase. We group the results into a segment by clicking `Save Segment`.
 
 <img src="../assets/ncube-tutorial/search.gif" alt="Search the data." />
+
+## Investigation methodology
+
+You now have a predefined segment of the database that you would like to verify. You can send a segment to an investigation to verify.
+
+To do that we need to create an investigation first. Each investigation has a single verification methodology which consists of
+
+- A verification process, i.e. the stages of verification each piece of data has to pass through,
+- And an annotation schema describing additional insights about some data.
+
+Think of annotations as questions that need answering, and the verification process are steps you have to take to reach a goal. This structural approach to verification helps to focus and improves accuracy.
+
+At the moment, Ncube provides only a single methodology that was created for this tutorial. With this methodology, we should be able to define
+
+- Location
+- Time and date of the events
+- Few observation points.
+- Visible aggressions to civilians
+
+Each investigation should be able to define their own methodology that works for them. Future iterations of Ncube will include this feature.
+
+<img src="../assets/ncube-tutorial/investigation.gif" alt="Create an investigation." />
+
+## Verification
+
+The verification process resembles a Kanban board. Units of data are placed in columns and can be dragged between them. A column represents a stage of the verification process. By moving units of data between the different columns, progress can be made. Data can not be moved between different columns at will. Whether data can progress from one column to the other is defined by the investigation methodology. For example, data can not be moved into the "Sign off" stage without passing through "Desk Research" first. Or data has to be signed off before it can be declared as verified.
+
+But moving data units between columns is only half the story. Along each stage, or column, of the verification process, data can be annotated. Annotations are additional insights, classifications or comments. Again, the investigation methodology defines which annotations can be added for each stage. When a unit of data is placed in a column, you can click the card to see the original content and fill in any annotations. You will see the details of the data itself and any annotations that can be filled in. When you're done filling in the additional information you can move the card to the next stage.
+
+<img src="../assets/ncube-tutorial/verification.gif" alt="Verify the data." />
