@@ -32,12 +32,12 @@ const Header = ({location}: HeaderProps) => {
           <MenuItem
             isActive={/^\/sugarcube/.test(location.pathname)}
             menuText="Sugarcube"
-            toPath="/sugarcube"
+            toPath="/sugarcube/about"
           />
           <MenuItem
             isActive={/^\/ncube/.test(location.pathname)}
             menuText="Ncube"
-            toPath="/ncube"
+            toPath="/ncube/about"
           />
           <MenuItem
             isActive={/^\/discovery/.test(location.pathname)}
