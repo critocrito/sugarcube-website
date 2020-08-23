@@ -1,3 +1,4 @@
+import c from "classnames";
 import {Link} from "gatsby";
 import React from "react";
 
@@ -44,11 +45,17 @@ const Header = ({location}: HeaderProps) => {
             menuText="Discovery"
             toPath="/discovery/installation"
           />
-          <MenuItem
-            isActive={/^\/community/.test(location.pathname)}
-            menuText="Community"
-            toPath="/community"
-          />
+          <li className="dib mb0-ns pb0">
+            <a
+              className={c(
+                "nowrap ma2 pa2",
+                /^\/community/.test(location.pathname) ? "bg-solitude" : false,
+              )}
+              href="https://users.sugarcubetools.net"
+            >
+              Community
+            </a>
+          </li>
         </ul>
       </nav>
     </header>

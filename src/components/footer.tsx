@@ -13,13 +13,27 @@ const Footer = () => {
               <div className="f6">
                 <ul className="list pa0">
                   <li>
+                    <Link to="/get-in-touch">Get in Touch</Link>
+                  </li>
+
+                  <li className="flex items-center">
+                    <GitHub size={20} />
                     <a
-                      className="link-reset-negative"
+                      className="link-reset-negative ml2"
                       href="https://github.com/critocrito/sugarcube"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <GitHub size={20} />
+                      Sugarcube
+                    </a>
+                    <span className="mh2">|</span>
+                    <a
+                      className="link-reset-negative"
+                      href="https://github.com/critocrito/ncube"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Ncube
                     </a>
                   </li>
                 </ul>
@@ -27,7 +41,9 @@ const Footer = () => {
 
               <div className="f6">
                 © 2017-2020{" "}
-                <a href="mailto:christo@cryptodrunks.net">critocrito</a>
+                <a href="mailto:sugarcubetools@protonmail.com">
+                  sugarcubetools@protonmail.com
+                </a>
                 <br />
                 <a
                   className="link-reset-negative"
