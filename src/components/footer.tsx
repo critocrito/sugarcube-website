@@ -104,6 +104,8 @@ const Footer = () => {
                   <li className="pt2">
                     <span>Glossary:</span>
                     <Link to="/sugarcube/glossary">Sugarcube</Link>
+                    <span>|</span>
+                    <Link to="/ncube/glossary">Ncube</Link>
                   </li>
                 </ul>
               </div>
