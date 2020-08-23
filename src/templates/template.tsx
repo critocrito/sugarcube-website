@@ -47,6 +47,10 @@ const components = {
 const PageTemplate = ({
   data: {mdx},
 }: PageProps<{mdx: {body: string; frontmatter: Frontmatter}}>) => {
+  // This is a workaround described here: https://github.com/gatsbyjs/gatsby/issues/17891#issuecomment-548660698
+  // without it the pages renders really crooked when visited on a direct link.
+  if (typeof window === "undefined") return undefined;
+
   const {body, frontmatter} = mdx;
 
   const next =
