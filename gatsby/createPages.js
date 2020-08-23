@@ -2,7 +2,7 @@ const replacePath = require("./utils");
 const path = require("path");
 
 module.exports = exports.createPages = async ({actions, graphql}) => {
-  const {createPage, createRedirect} = actions;
+  const {createPage} = actions;
 
   const Template = path.resolve("src/templates/template.tsx");
   const TemplateSimple = path.resolve("src/templates/template-simple.tsx");
@@ -39,26 +39,5 @@ module.exports = exports.createPages = async ({actions, graphql}) => {
       component: hasSidebar ? Template : TemplateSimple,
       context: {id: node.id},
     });
-  });
-
-  createRedirect({
-    fromPath: "/sugarcube",
-    toPath: "/sugarcube/about",
-    redirectInBrowser: true,
-    isPermanent: false,
-  });
-
-  createRedirect({
-    fromPath: "/ncube",
-    toPath: "/ncube/about",
-    redirectInBrowser: true,
-    isPermanent: false,
-  });
-
-  createRedirect({
-    fromPath: "/discovery",
-    toPath: "/discovery/about",
-    redirectInBrowser: true,
-    isPermanent: false,
   });
 };
