@@ -13,11 +13,11 @@ Using tools like [Sugarcube](/sugarcube) organizations like [Syrian Archive](htt
 
 Based on our past work on Sugarcube, we developed [Ncube](/ncube), a tool to turn quantitative data into qualitative data.
 
+<img src="../assets/ncube/screenshots/workspaces.png" alt="Listing Ncube workspaces." />
+
 While there are other tools in the same field each one of them focuses on a slightly different aspect of data investigation. Ncube filled in some blanks that were not covered by those tools and tried to be a more comprehensive tool. For Syrian Archive, Ncube will substitute a lot of the manual work for their verification processes. But we decided to go further than the requirements of Syrian Archive. Interviews with investigative journalists and other researchers heavily informed the design phase. We believe Ncube will become a valuable tool to organize data sources, share rich data and enhance the fact-checking process that goes beyond the immediate needs of Syrian Archive.
 
 Ncube is a graphical desktop and cross-platform application that allows human rights investigators and other researchers to **preserve**, **explore** and **verify** data. We diverged from the current trend to build every application as a web-based application. Instead, to emphasize user ownership, we designed Ncube to be _local-first software_. This direction improves the security, privacy, long-term preservation, and user control of data. While Ncube itself is a desktop application, it can connect to remote workspaces hosted on a central server to enable collaboration. More decentralized, peer-to-peer forms of cooperation will be possible in future versions of Ncube.
-
-<img src="../assets/ncube/screenshots/workspaces.png" alt="Listing Ncube workspaces." />
 
 ### Preservation
 
