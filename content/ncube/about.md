@@ -17,9 +17,13 @@ While there are other tools in the same field each one of them focuses on a slig
 
 Ncube is a graphical desktop and cross-platform application that allows human rights investigators and other researchers to **preserve**, **explore** and **verify** data. We diverged from the current trend to build every application as a web-based application. Instead, to emphasize user ownership, we designed Ncube to be _local-first software_. This direction improves the security, privacy, long-term preservation, and user control of data. While Ncube itself is a desktop application, it can connect to remote workspaces hosted on a central server to enable collaboration. More decentralized, peer-to-peer forms of cooperation will be possible in future versions of Ncube.
 
+<img src="../assets/ncube/screenshots/workspaces.png" alt="Listing Ncube workspaces." />
+
 ### Preservation
 
 Ncube provides a user interface to run Sugarcube data processes. It unifies different types and sources of data (e.g. Tweets, websites, uploads) into a shared format, and preserves text, images and videos. The data is retained by collecting and enhancing regular data to increase its forensic validity. This process allows the systematic monitoring of a wide range of data sources. Experiences at Syrian Archive show that online data tends to disappear. Therefore, Ncube makes an offline copy of any data it collects.
+
+<img src="../assets/ncube/screenshots/data_details.png" alt="Data details." />
 
 ### Exploration
 
@@ -32,6 +36,8 @@ Developing a suitable methodology is an essential aspect of every data investiga
 - a verification process, i.e. the stages of verification each piece of data has to pass through,
 - and an annotation schema describing additional insights about some data.
 
+<img src="../assets/ncube/screenshots/investigation.png" alt="Investigation." />
+
 Ncube prioritizes the ability to represent diverse verification processes and annotation schemes. Investigators should not have to compromise their methodology to accommodate the tool they are using..
 
 Once a methodology is defined, Ncube allows to apply it in a systematic and structured fashion on lots of individual pieces of data. The outcome of this process is a set of verified data.
@@ -39,6 +45,8 @@ Once a methodology is defined, Ncube allows to apply it in a systematic and stru
 ## To cube or not to cube
 
 Arguably browsers are one of the most important research tools that investigators use every day. To reduce friction for the day-to-day work of investigators, Ncube has an accompanying browser extension for source discovery. While browsing the web investigators can send URL's of interest to Ncube with the click of one button without having to leave the browser environment.
+
+<img src="../assets/ncube/screenshots/discovery.png" alt="Discovery Web Extension." />
 
 All the features of Ncube have one purpose: _produce a set of verified data_. Investigators have to be confident enough about their data to make claims and statements around a given event. These claims are stated in reports, articles and court cases and therefore have to be able to stand scrutiny. Verification is an essential tool in a post-truth world. It allows us to develop compelling stories which expose the
 misuse of power and human rights abuses.
