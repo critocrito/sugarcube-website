@@ -46,7 +46,7 @@ You can exit the `mongo` client by pressing `CTRL-D`.
 
 ### Storing data
 
-To store any data in MongoDB we can use the [`mongodb_store`](/plugins/mongodb_store) plugin. You only have to point the plugin to the right server and database using the `--mongodb.uri` option. A MongoDB URI starts with `mongodb://` to define that it is targeting Mongodb, followed by the host name of the server (if you run MongoDB on your local computer it is `localhost`) and the name of the database (in this case `sugarcube-project`).
+To store any data in MongoDB we can use the [`mongodb_store`](/sugarcube/plugins/mongodb_store) plugin. You only have to point the plugin to the right server and database using the `--mongodb.uri` option. A MongoDB URI starts with `mongodb://` to define that it is targeting Mongodb, followed by the host name of the server (if you run MongoDB on your local computer it is `localhost`) and the name of the database (in this case `sugarcube-project`).
 
 ```shell
 $(npm bin)/sugarcube -p http_import,mongodb_store \
@@ -93,8 +93,8 @@ This is all you have to do in order to preserve data in a MongoDB database.
 
  Complementing data allows you to merge data in the pipeline with the records in the database if such a record exists. There are two plugins that allow you to sync data between the database and the data in your running pipeline.
 
-- [`mongodb_complement`](/plugins/mongodb_complement)
-- [`mongodb_supplement`](/plugins/mongodb_supplement)
+- [`mongodb_complement`](/sugarcube/plugins/mongodb_complement)
+- [`mongodb_supplement`](/sugarcube/plugins/mongodb_supplement)
 
 The two plugins are quite similar but differ in one important aspect:
 
@@ -115,8 +115,8 @@ $(npm bin)/sugarcube -p http_import,mongodb_complement,mongodb_store \
 
 The data stored in the MongoDB database can also be the source for data in the pipeline. There are two plugins that fetch data from MongoDB.
 
-- [`mongodb_fetch_units`](/plugins/mongodb_fetch_units)
-- [`mongodb_query_units`](/plugins/mongodb_query_units)
+- [`mongodb_fetch_units`](/sugarcube/plugins/mongodb_fetch_units)
+- [`mongodb_query_units`](/sugarcube/plugins/mongodb_query_units)
 
 The first of those two, `mongodb_fetch_units`, can be used to fetch data from MongoDB by the `_sc_id_hash`. This plugin is useful if you know exactly which units of data you are interested in. It uses the `mongodb_unit` query type to specify which units to fetch.
 
