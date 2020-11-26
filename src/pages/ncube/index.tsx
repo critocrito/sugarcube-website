@@ -8,6 +8,7 @@ import ncubeLogo from "../../../content/assets/Logo_Ncube.svg";
 import Card from "../../components/card";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
+import NcubeSponsors from "../../components/ncube-sponsors";
 
 const Index = () => {
   return (
@@ -32,6 +33,8 @@ const Index = () => {
             data all serve this single goal.
           </p>
         </Card>
+
+        <NcubeSponsors className="mt4" />
       </section>
 
       <Footer />
