@@ -15,14 +15,14 @@ const LandingHeader = (): JSX.Element => {
             and human rights abuses.
           </p>
 
-          <div className="flex flex-col tablet:flex-row-reverse tablet:items-center text-white mt-3">
+          <div className="flex flex-col tablet:flex-row tablet:items-center text-white mt-3">
             <p className="text-white tablet:ml-3 tablet:mt-0">
               We would love to hear from you if you are interested in using data
               for your next investigation.
             </p>
 
             <Link href="/get-in-touch" passHref>
-              <a className="place-self-center whitespace-nowrap text-white text-center mt-3 tablet:mt-0 border border-bittersweet py-3 px-1.5 bg-sapphire rounded-sm hover:bg-black transition-colors duration-500">
+              <a className="place-self-center tablet:order-first whitespace-nowrap text-white text-center mt-3 tablet:mt-0 border border-bittersweet py-3 px-1.5 bg-sapphire rounded-sm hover:bg-black transition-colors duration-500">
                 Get in Touch
               </a>
             </Link>
