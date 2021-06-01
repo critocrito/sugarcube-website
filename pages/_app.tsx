@@ -5,13 +5,15 @@ import {MDXProvider} from "@mdx-js/react";
 import {AppProps} from "next/app";
 import React from "react";
 
-import Test from "$components/test";
+import Header from "$components/header";
 
-const components = {Test};
+const components = {};
 
 const App = ({Component, pageProps}: AppProps) => {
   return (
     <MDXProvider components={components}>
+      <Header />
+
       <Component {...pageProps} />
     </MDXProvider>
   );
