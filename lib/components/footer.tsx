@@ -70,7 +70,7 @@ const Footer = () => {
         Sugarcube Tools
       </h2>
 
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 laptop:py-16 laptop:px-8">
+      <div className="desktop:container mx-2.5 laptop:mx-6 desktop:mx-auto py-8 tablet:py-12 laptop:py-16">
         <div className="tablet:grid tablet:grid-cols-4 tablet:gap-6 laptop:gap-8">
           <div className="space-y-8 tablet:col-span-2 laptop:col-span-1">
             <div className="flex justify-around">

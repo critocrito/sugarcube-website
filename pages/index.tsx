@@ -19,7 +19,7 @@ const Page = ({source}: PageProps) => {
     <>
       <LandingHeader />
 
-      <main className="laptop:container laptop:mx-auto text-center">
+      <main className="desktop:container desktop:mx-auto flex flex-col">
         <MDXRemote {...source} />
       </main>
     </>
