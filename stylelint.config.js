@@ -14,5 +14,11 @@ module.exports = {
         ],
       },
     ],
+    "property-no-unknown": [
+      true,
+      {
+        ignoreProperties: ["font-named-instance"],
+      },
+    ],
   },
 };

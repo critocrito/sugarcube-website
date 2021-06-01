@@ -86,6 +86,7 @@
       }
     ],
     "simple-import-sort/imports": "error",
+    "react/require-default-props": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-props-no-spreading": [

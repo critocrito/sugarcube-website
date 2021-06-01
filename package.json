@@ -1,28 +1,33 @@
 {
   "private": true,
   "name": "sugarcube-website",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "license": "GPL-3.0",
   "author": "Christo <christo@cryptodrunks.net>",
-  "main": "index.js",
   "scripts": {
-    "build": "next build && next export",
     "clean": "rimraf out .next",
-    "dev": "yarn clean && next dev",
-    "fix": "run-s fix:*",
-    "fix:css": "yarn lint:css --fix",
-    "fix:js": "yarn lint:js --fix",
-    "fix:json": "prettier --parser json --write **/*.json",
-    "fix:package.json": "prettier-package-json --write package.json",
-    "lint": "run-s -c lint:*",
-    "lint:css": "stylelint **/*.css  --allow-empty-input",
-    "lint:js": "eslint --ignore-path .gitignore --cache --ext js,ts,jsx,tsx .",
+    "compile": "run-p --aggregate-output --continue-on-error compile:!(dev)",
+    "compile:next": "next build && next export",
+    "fix": "run-p --aggregate-output --continue-on-error lint:*:fix",
+    "lint": "run-p -l --aggregate-output --continue-on-error 'lint:!(fix)'",
+    "lint:css": "stylelint --cache --allow-empty-input **/*.css",
+    "lint:css:fix": "yarn lint:css --fix",
+    "lint:js": "eslint --ext js,ts,jsx,tsx --cache .",
+    "lint:js:fix": "yarn lint:js --fix",
+    "lint:json": "prettier --list-different --parser json **/*.json",
+    "lint:json:fix": "prettier --parser json --write **/*.json",
+    "lint:package.json": "prettier-package-json --list-different",
+    "lint:package.json:fix": "prettier-package-json --write",
     "lint:ts": "tsc --noEmit",
     "prepare": "husky install",
-    "start": "next build && next start",
-    "watch:ts": "yarn type-check -w"
+    "start": "yarn watch",
+    "watch": "run-p -l --continue-on-error watch:*",
+    "watch:next": "next dev",
+    "watch:tsc": "yarn lint:ts -w"
   },
   "dependencies": {
+    "@headlessui/react": "^1.1.1",
+    "@heroicons/react": "^1.0.1",
     "@mdx-js/react": "^1.6.22",
     "@sindresorhus/slugify": "^2.0.0",
     "clsx": "^1.1.1",
@@ -90,17 +95,9 @@
     "not op_mini all"
   ],
   "lint-staged": {
-    "*.{json,rc}": [
-      "prettier --parser json --write"
-    ],
-    "package.json": [
-      "prettier-package-json --write"
-    ],
-    "*.{js,jsx,ts,tsx}": [
-      "yarn fix:js"
-    ],
-    "*.css": [
-      "yarn fix:css"
-    ]
+    "*.{json,rc}": "prettier --parser json --write",
+    "package.json": "prettier-package-json --write",
+    "*.{js,jsx,ts,tsx}": "eslint --ext js,ts,jsx,tsx --cache --fix",
+    "*.css": "stylelint --cache --allow-empty-input"
   }
 }

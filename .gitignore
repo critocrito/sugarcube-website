@@ -38,6 +38,7 @@ yarn-error.log*
 
 # linting
 .eslintcache
+.stylelintcache
 
 # testing
 fixtures
