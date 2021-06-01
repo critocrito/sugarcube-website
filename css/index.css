@@ -81,7 +81,7 @@
   }
 
   body {
-    @apply font-sans text-base text-sapphire font-medium leading-relaxed antialiased;
+    @apply font-sans text-base text-sapphire font-medium leading-relaxed antialiased bg-canvas;
 
     font-size: 18px;
   }

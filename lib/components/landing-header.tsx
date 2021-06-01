@@ -4,7 +4,7 @@ import React from "react";
 const LandingHeader = (): JSX.Element => {
   return (
     <div className="bg-sapphire">
-      <article className="max-w-7xl mx-auto py-8 sm:py-16 px-2.5 tablet:px-10 laptop:px-12 desktop:px-0 space-y-14">
+      <article className="max-w-7xl mx-auto py-8 sm:py-16 px-2.5 tablet:px-10 laptop:px-16 desktop:px-20 desktop:px-0 space-y-14">
         <h2 className="text-white">Data pipelines for human rights.</h2>
 
         <p className="text-white max-w-4xl mt-1">
@@ -15,7 +15,7 @@ const LandingHeader = (): JSX.Element => {
         </p>
 
         <div className="flex flex-col tablet:flex-row tablet:items-center text-white mt-3">
-          <p className="text-white tablet:ml-3 tablet:mt-0">
+          <p className="text-white tablet:ml-6 tablet:mt-0">
             We would love to hear from you if you are interested in using data
             for your next investigation.
           </p>
