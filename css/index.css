@@ -36,6 +36,16 @@
   @font-face {
     font-family: "Inter";
     font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src:
+      url("../public/fonts/Inter-SemiBold.woff2") format("woff2"),
+      url("../public/fonts/Inter-SemiBold.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
     font-weight: 700;
     font-display: swap;
     src:

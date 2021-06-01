@@ -5,6 +5,7 @@ import {MDXProvider} from "@mdx-js/react";
 import {AppProps} from "next/app";
 import React from "react";
 
+import Footer from "$components/footer";
 import Header from "$components/header";
 
 const components = {};
@@ -15,6 +16,8 @@ const App = ({Component, pageProps}: AppProps) => {
       <Header />
 
       <Component {...pageProps} />
+
+      <Footer />
     </MDXProvider>
   );
 };
