@@ -10,9 +10,9 @@ const LandingHeader = (): JSX.Element => {
 
           <p className="text-white max-w-4xl mt-1">
             A collection of tools to support human rights defenders and
-            investigative journalists to conduct data based investigations. They
-            help to develop compelling stories which expose the misuse of power
-            and human rights abuses.
+            investigative journalists to conduct data-driven investigations.
+            They help to develop compelling stories which expose the misuse of
+            power and human rights abuses.
           </p>
 
           <div className="flex flex-col tablet:flex-row tablet:items-center text-white mt-3">

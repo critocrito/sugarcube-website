@@ -2,6 +2,8 @@ import {MDXRemote, MDXRemoteSerializeResult} from "next-mdx-remote";
 import {serialize} from "next-mdx-remote/serialize";
 import React from "react";
 
+import LandingHeader from "$components/landing-header";
+
 interface PageProps {
   source: MDXRemoteSerializeResult;
 }
@@ -14,9 +16,13 @@ export const getStaticProps = async () => {
 
 const Page = ({source}: PageProps) => {
   return (
-    <main className="container mx-auto text-center">
-      <MDXRemote {...source} />
-    </main>
+    <>
+      <LandingHeader />
+
+      <main className="laptop:container laptop:mx-auto text-center">
+        <MDXRemote {...source} />
+      </main>
+    </>
   );
 };
 
