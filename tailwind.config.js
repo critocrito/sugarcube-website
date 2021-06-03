@@ -31,15 +31,36 @@ module.exports = {
       },
 
       colors: {
-        canvas: "#FAF8F7",
-        bittersweet: "#FD7268",
-        sapphire: "#0A2463",
-        "fair-pink": "#F8ECE8",
-        solitude: "#DFE2EC",
-        notify: "#ECD47D",
-        warning: "#C94D07",
+        canvas: "#faf8f7",
+        bittersweet: "#fd7268",
+        sapphire: "#0a2463",
+        "fair-pink": "#f8ece8",
+        solitude: "#dfe2ec",
+        notify: "#ecd47d",
+        warning: "#c94d07",
       },
+
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.sapphire"),
+            h1: {
+              color: theme("colors.sapphire"),
+            },
+            h2: {
+              color: theme("colors.sapphire"),
+            },
+            h3: {
+              color: theme("colors.sapphire"),
+            },
+            a: {
+              color: theme("colors.sapphire"),
+            },
+          },
+        },
+      }),
     },
   },
   variants: {},
+  plugins: [require("@tailwindcss/typography")],
 };
