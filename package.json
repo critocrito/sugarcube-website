@@ -6,8 +6,7 @@
   "author": "Christo <christo@cryptodrunks.net>",
   "scripts": {
     "clean": "rimraf out .next",
-    "compile": "run-p --aggregate-output --continue-on-error compile:!(dev)",
-    "compile:next": "next build && next export",
+    "compile": "next build && next export",
     "fix": "run-p --aggregate-output --continue-on-error lint:*:fix",
     "lint": "run-p -l --aggregate-output --continue-on-error 'lint:!(fix)'",
     "lint:css": "stylelint --cache --allow-empty-input **/*.css",
