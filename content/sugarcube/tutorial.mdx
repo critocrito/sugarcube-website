@@ -1,0 +1,219 @@
+---
+title: "Tutorial"
+section: "Get Started"
+prev: "installation"
+next: "data-format"
+---
+
+import Synopsis from "../../src/components/synopsis";
+import Warning from "../../src/components/warning";
+import Note from "../../src/components/note";
+
+<Synopsis>
+<li>This tutorial takes you from running your first Sugarcube pipeline right through to setting up more complicated data processes.</li>
+</Synopsis>
+
+# Tutorial
+
+<Warning>
+This tutorial is currently under development. Please check back in soon to see any updates.
+</Warning>
+
+This tutorial assumes that you succesfully installed Sugarcube. If this is not the case please go back to the installation guide.
+
+## Table of Contents
+
+```toc
+# This code block gets replaced with the TOC
+```
+
+## Introduction
+
+Let's jump right in. Open your terminal and change into your Sugarcube project directory that you created during installation.
+
+```shell
+cd sugarcube-project
+```
+
+Our first Sugarcube pipeline will fetch the contents and meta data of a website and print the results to the screen. We use the `http_import` plugin to fetch the website and the `tap_printf` plugin to print the data to the screen.
+
+```shell
+$(npm bin)/sugarcube -p http_import,tap_printf \
+                     -Q http_url:'https://mwatana.org/en/airstrike-on-detention-center/'
+```
+
+This should print the contents of `https://mwatana.org/en/airstrike-on-detention-center/` with additional meta data. We will explain the meaning of all fields later. Since we print the full text of the website to the screen you might want to scroll to see the beginning of the Sugarcube run.
+
+<img src="../assets/tutorial-first-pipeline.svg" alt="Sugarcube tutorial first pipeline" />
+
+- Using the `-p` option, you defined which plugins should be run (in this case, `http_import` and `tap_printf`). Note: _The order of the plugins matters_. You can't print results to the screen if you haven't fetched any results yet. The combinations of plugins tell Sugarcube **what** and **how** to do something.
+- Using the `-Q` option in your pipeline above, you specified the query for your website import. Queries tell Sugarcube the data you are interested in. A query always has a type, what the query is about, in this case `http_url`, and the actual content of the query, called the `term` of a query, in this case a URL of a website. We wrap the term of the query in single quotes to avoid parsing errors on the terminal.
+
+There is not much more to SugarCube than that (though of course this is a very simple example - you can use Sugarcube for a lot more!). Lets dive in a little deeper.
+
+## Queries
+
+A lot of plugins that fetch data from somewhere else use queries. They tell plugins where to look for data. Each query is of a certain type, so that different plugins know which queries are relevant for them. The `http_import` plugin looks for queries of type `http_url`. When calling Sugarcube one way to provide queries is by using the `-Q` option. You can specify this option multiple times in order to supply multiple queries for a single run.
+
+```shell
+$(npm bin)/sugarcube -p http_import \
+                     -Q http_url:'https://mwatana.org/en/airstrike-on-detention-center/' \
+                     -Q http_url:'https://yemeniarchive.org'
+```
+
+This repeats the same pipeline but this time we fetch two websites in one go. For this example we omitted the `tap_printf` plugin so it's easier to read the log output of Sugarcube.
+
+<img src="../assets/tutorial-multiple-queries.svg" alt="Sugarcube tutorial multiple queries" />
+
+Using the `-Q` option is only one way to supply queries to a Sugarcube pipeline. Especially if there are many queries it is useful to manage queries differently. One way to manage different queries is to collect them in a dedicated text file. Use a text editor to create a file called `queries.json` inside your project directory. The format of this file is [JSON](https://en.wikipedia.org/wiki/JSON). It contains a list of queries. Each query has a `type` (in this case `http_url` but there are different types that Sugarcube can understand) and a `term`, which contains the actual query.
+
+```json
+[
+  {
+    "type": "http_url",
+    "term": "https://mwatana.org/en/airstrike-on-detention-center/"
+  },
+  {
+    "type": "http_url",
+    "term": "https://yemeniarchive.org"
+  }
+]
+```
+
+After you saved this file you can tell Sugarcube to use this file to look up queries using the `-q` option.
+
+```shell
+$(npm bin)/sugarcube -p http_import -q queries.json
+```
+
+It is possible to maintain multiple queries, and of different type, in one file.
+
+## Configuration options
+
+Some plugins offer configuration options that allow you to control how they function. You can always look up all available options by supplying the `--help` option to the `sugarcube` command.
+
+```shell
+$(npm bin)/sugarcube -h
+```
+
+Since this output can be quite long there is also an option to print configuration options for a specific plugin only.
+
+```shell
+$(npm bin)/sugarcube -H tap_printf
+```
+
+If you look again at the output of the above command you will see the line `--tap.select  Specify what to log: data,queries,cfg,stats,cache,plugins`. As a default the tap_printf command prints the data of the pipeline to the screen. But we can also tell it to print the e.g. queries instead.
+
+So, for example, if we wanted to run our pipeline again that imports websites and then print the queries of the pipeline to the screen, we would type the following command:
+
+```shell
+$(npm bin)/sugarcube -p http_import,tap_printf \
+                     -q queries.json \
+                     --tap.select queries
+```
+
+You will see that the queries specified in `queries.json` are printed to the screen.
+
+<img src="../assets/tutorial-configuration-options.svg" alt="Sugarcube tutorial configuration options" />
+
+The two tasks Sugarcube performed above (importing websites and printing to the screen) form a very simple pipeline. As you start to define more complicated data pipelines, the size of the command will grow. When the pipeline starts to get too big, Sugarcube allows for the possibility of storing your pipeline configuration in a text file, similar to storing queries in text files. This will not only make life easier, but it will also allow you to make pipeline runs repeatable.
+
+To show how this works, we'll just take our simple pipeline from before. For this pipeline, your configuration file (let's name it "web-import.json") would look like this:
+
+```json
+{
+  "name": "Web Imports",
+  "plugins": [
+    "http_import",
+    "tap_printf"
+  ],
+  "tap": {
+    "select": "queries"
+  }
+}
+```
+
+If you go back once again to the output of `$(npm bin)/sugarcube -h` (the list of Options), you'll see `-c  - Path to JSON config file`. This is telling us that we can use `-c` to specify the location of our configuration file, which in this case is `web-import.json`.
+
+So to make use of your pipeline configuration file type the following command:
+
+```shell
+$(npm bin)/sugarcube -c web-import.json -q queries.json
+```
+
+<Note>
+If you specify an option in the command line, this will take precedence over any options specified in your pipeline configuration file. This gives you the ability to override configuration options for a one-off pipeline run.
+</Note>
+
+## Log output
+
+Let's look a little closer to the log output. The `sugarcube` command executes plugins one after another. Sugarcube will always write when one plugin starts, and when it finishes. Each plugin communicates what it is doing. This is the log output that the `http_import` plugin generated in our previous example.
+
+```text
+2019-11-09T17:19:49.719Z - info: Starting the http_import plugin.
+2019-11-09T17:19:56.944Z - info: Imported url https://mwatana.org/en/airstrike-on-detention-center/ as media type "url".
+2019-11-09T17:19:58.330Z - info: Imported url https://yemeniarchive.org as media type "url".
+2019-11-09T17:19:58.336Z - info: Finished the http_import plugin.
+```
+
+We can see that the plugin imported two websites *as media type "url"*. We will see later what this means exactly.
+
+At the end of each pipeline run Sugarcube prints more detailed statistics on how it did.
+
+```text
+2019-11-09T17:19:58.337Z - info: Plugin http_import took less than a minute
+2019-11-09T17:19:58.337Z - info:   counts: total=2, success=2
+```
+
+This shows us that the `http_import` plugin fetched in total 2 websites and both of them succeeded.
+
+## Plugins
+
+As already briefly described, Sugarcube works by stringing together separate plugins to form a pipeline, through which data is pushed. Each plugin transforms or adds to the data in some way, and then passes it along to the next plugin, which transforms or adds to what it has received, and so on.
+
+We will extend our example pipeline from before to use some additional plugins.
+
+- `media_warc` to create proper [web archives](https://iipc.github.io/warc-specifications/) using the same format as the [Internet Archive](https://archive.org/) does.
+- `media_screenshot` to take a screenshot of each website.
+- `csv_export` to write the data into a CSV file. This is one way we can use to share the data.
+
+```shell
+$(npm bin)/sugarcube -p http_import,media_warc,media_screenshot,csv_export \
+                     -Q http_url:'https://mwatana.org/en/airstrike-on-detention-center/' \
+                     -Q http_url:'https://yemeniarchive.org' \
+                     --csv.filename web-import-results.csv
+```
+
+<br />
+
+<img src="../assets/tutorial-plugins.svg" alt="Sugarcube tutorial plugins" />
+
+Both, the `media_warc` and `media_screenshot` plugin generate files in you `./data` directory. For every unit of data it creates a directory and stores any files based on what the file is. This is how the directory structure looks like.
+
+```text
+data
+├── 7748f388df6b711d588bc17bd24878aaeb0692a4885f3e8dbc5b88cebc5f4cab
+│   ├── image
+│   │   └── cb7cccffc75fbed1cd4342b3fa59561fe2b714788f71b09b2b5cedbe94dd471b.screenshot.jpg
+│   └── warc
+│       └── cb7cccffc75fbed1cd4342b3fa59561fe2b714788f71b09b2b5cedbe94dd471b.warc.gz
+└── b6a76260b11ce95edb4a2e90e1f87fb49fc679d317b9e5afe93cf578db17329a
+    ├── image
+    │   └── 06407f93bcb49f9080269a9f1637261335562b2dafc3d00db6fbfcea1f83c0f8.screenshot.jpg
+    └── warc
+        └── 06407f93bcb49f9080269a9f1637261335562b2dafc3d00db6fbfcea1f83c0f8.warc.gz
+```
+
+You can change the default download location to anything else using the `--media.data_dir` option, although the default is mostly fine.
+
+The data was exported to CSV as well using the `csv_export` plugin. The `--csv.filename` option was used to specify the name of the file to store the data in. In your project directory you can find the `web-import-results.csv` file that contains the complete data generated during the pipeline run.
+
+## Summary
+
+There is not much more to Sugarcube than described in this tutorial. The goal of Sugarcube is that you can model your data process by assembling plugins in the order that they make sense to you and your investigation.
+
+To learn more about various aspects of Sugarcube look at the <a href="/sugarcube/data-format">topical guides</a> that provide more in-depth information.
+
+Head over to the <a href="/plugins-instruments">Plugins overview</a> to get an idea of the different functionalities that Sugarcube offers out of the box.
+
+If you want to develop your own plugins read the guide about <a href="/sugarcube/creating-plugins">authoring plugins</a>.
