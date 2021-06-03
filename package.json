@@ -21,7 +21,7 @@
     "prepare": "husky install",
     "start": "yarn watch",
     "watch": "run-p -l --continue-on-error watch:*",
-    "watch:next": "next dev",
+    "watch:next": "next dev -H 0.0.0.0",
     "watch:tsc": "yarn lint:ts -w"
   },
   "dependencies": {
