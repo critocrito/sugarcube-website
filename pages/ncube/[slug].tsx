@@ -1,25 +1,12 @@
-import {MDXRemote, MDXRemoteSerializeResult} from "next-mdx-remote";
 import {serialize} from "next-mdx-remote/serialize";
 import React from "react";
 
-import SidebarNav from "$components/sidebar-nav";
-import {loadMdx, slugs} from "$lib/data";
-import {MetaHeader} from "$lib/types";
-
-type Params = {
-  params: {
-    slug: string;
-  };
-};
-
-interface PageProps {
-  source: MDXRemoteSerializeResult;
-  meta: MetaHeader;
-  sections: string[];
-}
+import DocPage from "$components/doc-page";
+import {DocPageProps, DocParams} from "$lib/types";
+import {getDocPaths, getDocProps} from "$lib/utils";
 
 export const getStaticPaths = async () => {
-  const paths = (await slugs("ncube")).map((slug) => ({params: {slug}}));
+  const paths = await getDocPaths("ncube");
 
   return {
     paths,
@@ -27,24 +14,20 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({params: {slug}}: Params) => {
-  const {content, meta} = await loadMdx("ncube", slug);
-  return {props: {source: await serialize(content), meta, sections: []}};
+export const getStaticProps = async ({params: {slug}}: DocParams) => {
+  const {content, meta, navigation} = await getDocProps("ncube", slug);
+
+  return {props: {source: await serialize(content), meta, navigation}};
 };
 
-const Page = ({source, meta: _meta, sections}: PageProps) => {
+const Page = ({source, meta, navigation}: DocPageProps) => {
   return (
-    <>
-      <main className="desktop:container desktop:mx-auto flex space-x-6 py-8">
-        <aside>
-          <SidebarNav sections={sections} />
-        </aside>
-
-        <article className="prose tablet:prose-lg">
-          <MDXRemote {...source} />
-        </article>
-      </main>
-    </>
+    <DocPage
+      topic="ncube"
+      source={source}
+      meta={meta}
+      navigation={navigation}
+    />
   );
 };
 

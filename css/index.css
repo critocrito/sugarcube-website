@@ -104,3 +104,10 @@
     @apply text-lg;
   }
 }
+
+@layer utilities {
+  .svg-shadow {
+    -webkit-filter: drop-shadow(-3px 3px 2px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(-3px 3px 2px rgba(0, 0, 0, 0.2));
+  }
+}

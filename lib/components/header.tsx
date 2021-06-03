@@ -7,11 +7,11 @@ import MenuButton from "$components/menu-button";
 
 const Header = () => {
   return (
-    <Popover className="relative">
+    <Popover className="relative sticky top-0 bg-canvas z-10">
       {({open}) => (
         <>
           <div className="desktop:container mx-2.5 laptop:mx-6 desktop:mx-auto">
-            <div className="flex justify-between items-center py-6 laptop:justify-start laptop:space-x-10">
+            <div className="flex justify-between items-center py-3 laptop:py-3 laptop:justify-start laptop:space-x-10">
               <div className="flex justify-start laptop:w-0 laptop:flex-1">
                 <Logo />
               </div>
@@ -51,7 +51,7 @@ const Header = () => {
                     </div>
                   </div>
 
-                  <Menu className="mt-6 grid gap-y-2" />
+                  <Menu className="mt-6 grid gap-y-2 bg-white z-5" />
                 </div>
               </div>
             </Popover.Panel>

@@ -1,11 +1,16 @@
-import {Validation} from "io-ts";
-import reporter from "io-ts-reporters";
+import {loadMdx, loadNavigation, slugs} from "$lib/data";
+import {DocParams, MetaHeader, Navigation} from "$lib/types";
 
-export const logErrors = (
-  id: string,
-  validation: Validation<unknown>,
-): void => {
-  const errors = reporter.report(validation).map((line) => `\t${line}`);
-  console.error(`Error validating ${id}:`);
-  console.error(errors.join("\n"));
+export const getDocPaths = async (topic: string): Promise<Array<DocParams>> => {
+  return (await slugs(topic)).map((slug) => ({params: {slug}}));
+};
+
+export const getDocProps = async (
+  topic: string,
+  slug: string,
+): Promise<{content: string; meta: MetaHeader; navigation: Navigation}> => {
+  const {content, meta} = await loadMdx(topic, slug);
+  const navigation = await loadNavigation(topic);
+
+  return {content, meta, navigation};
 };
