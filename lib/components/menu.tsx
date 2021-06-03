@@ -13,18 +13,21 @@ const Menu = ({className}: MenuProps) => {
   return (
     <nav className={className}>
       <MenuItem
-        href="/sugarcube/about"
+        href="/sugarcube"
         isActive={/^\/sugarcube/.test(router.pathname)}
       >
         Sugarcube
       </MenuItem>
 
-      <MenuItem href="/ncube/about" isActive={/^\/ncube/.test(router.pathname)}>
+      <MenuItem
+        href="/ncube/get-started"
+        isActive={/^\/ncube/.test(router.pathname)}
+      >
         Ncube
       </MenuItem>
 
       <MenuItem
-        href="/discovery/installation"
+        href="/discovery/get-started"
         isActive={/^\/discovery/.test(router.pathname)}
       >
         Discovery
