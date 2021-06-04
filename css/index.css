@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src:
+      url("../public/fonts/Inter-Light.woff2") format("woff2"),
+      url("../public/fonts/Inter-Light.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src:
+      url("../public/fonts/Inter-Medium.woff2") format("woff2"),
+      url("../public/fonts/Inter-Medium.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Inter";
+    font-style: italic;
+    font-weight: 500;
+    font-display: swap;
+    src:
+      url("../public/fonts/Inter-MediumItalic.woff2") format("woff2"),
+      url("../public/fonts/Inter-MediumItalic.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src:
+      url("../public/fonts/Inter-SemiBold.woff2") format("woff2"),
+      url("../public/fonts/Inter-SemiBold.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src:
+      url("../public/fonts/Inter-Bold.woff2") format("woff2"),
+      url("../public/fonts/Inter-Bold.woff") format("woff");
+  }
+
+  @supports (font-variation-settings: normal) {
+    @font-face {
+      font-family: "Inter var";
+      font-weight: 100 900;
+      font-display: swap;
+      font-style: normal;
+      font-named-instance: "Regular";
+      src: url("../public/fonts/Inter-roman.var.woff2") format("woff2");
+    }
+
+    @font-face {
+      font-family: "Inter var";
+      font-weight: 100 900;
+      font-display: swap;
+      font-style: italic;
+      font-named-instance: "Italic";
+      src: url("../public/fonts/Inter-italic.var.woff2") format("woff2");
+    }
+
+    i,
+    em,
+    .italic {
+      /* Should be font-style: italic; */
+      font-variation-settings: "ital" 1;
+    }
+  }
+
+  body {
+    @apply font-sans text-base text-sapphire font-medium leading-relaxed antialiased bg-canvas break-words;
+
+    font-size: 18px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-light leading-tight tracking-wide;
+  }
+
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+}
+
+@layer utilities {
+  .svg-shadow {
+    -webkit-filter: drop-shadow(-3px 3px 2px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(-3px 3px 2px rgba(0, 0, 0, 0.2));
+  }
+}

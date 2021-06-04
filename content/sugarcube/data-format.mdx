@@ -1,0 +1,231 @@
+---
+title: "Data Format"
+section: "Guides"
+prev: "tutorial"
+next: "databases"
+---
+
+import Synopsis from "../../src/components/synopsis";
+import Warning from "../../src/components/warning";
+import Note from "../../src/components/note";
+
+<Synopsis>
+<li>In this guide you will learn how Sugarcube formats data and the meaning of the different fields.</li>
+</Synopsis>
+
+# Data Format
+
+Every unit of data in Sugarcube is a simple object with names and values. Sugarcube is quite liberal in its data format. Every plugin can decide for itself which fields to add and how to name those fields. To make data understood across different plugins there are some special data fields that have common meaning across different plugins. Those special fields all prefixed with `_sc`.
+
+- `_sc_id_hash` - A unique identifier for this data unit. It is usually a SHA256 hash. If the `_sc_id_fields` field is set, the Sugarcube core automatically calculates the `_sc_id_hash` for every unit. This is the recommended way. Otherwise the plugin has to provide the hash by itself.
+
+- `_sc_id_fields` - A list of one or more field names, that specify the significant fields to form an identifier for this unit. Sugarcube will take the values for those fields to calculate a unique identifier.
+
+  ```json
+  {
+    "_sc_id_fields": ["tweet_id"]
+  }
+  ```
+
+- `_sc_content_hash` - A SHA256 hash of the content of the data unit. Sugarcube uses this field to see if a particular piece of data changed. If the `_sc_content_fields` field is et, the Sugarcube core automatically calculates the `_sc_content_hash` for every unit. This is the recommended way. Otherwise the plugin has to provide the hash by itself.
+
+- `_sc_content_fields` - A list of field names, that specify the significant fields to form the content for this unit. Sugarcube will take the values for those fields to calculate content integrity.
+
+  ```json
+  {
+    "_sc_content_fields": ["tweet"]
+  }
+  ```
+
+- `_sc_pubdates` - An object, that contains various dates around this unit. Possible date types are `fetch`, the date and time when the unit was fetched, and `source`, the date and time that the unit was created. In the future more types of dates can be added. The dates should be JavaScript `Date` objects.
+
+- `_sc_queries` - This field stores any query that yielded this piece of data.
+
+- `_sc_media` - If a unit of data contains any additional media types, such as images or videos, they are placed here. This field is a list of objects, where each object represents on individual media. Each media has at least a `type` (what kind of media it si), a `term` (where to find the media) and a `_sc_id_hash` (a unique identifier for this media). The `_sc_id_hash` is calculated automatically Sugarcube based on the `type` and `term`.
+
+  There are four types of media that Sugarcube currently understands:
+
+  - `url` - A URI to a web resource, e.g. the `media_screenshot` plugin uses these media entries to know what to screenshot.
+  - `image` - This can be either a file path or a web URI. The media is always an image, e.g. the `media_fetch` plugin can be used to download images.
+  - `video` - This can either be a file path or a web URI. The media is always a video, e.g. the `media_youtubedl` plugin downloads videos of this type.
+  - `document` - This can be either a file path or a web URI. Any sort of document such as DOCX or PDF.
+
+- `_sc_downloads` - While `_sc_media` collects entries of online sources, the `_sc_downloads` field stores information about data that was downloaded and exists in the data directory of the project. Similar to `_sc_media` it contains a `type`, `term` and `_sc_id_hash` field. They are the same as from the original `_sc_media` entry. Downloads have a few additional fields:
+
+  - `location` - The path to the file in the local download directory. While the `term` specifies where the file resides online, the `location` points to the media stored on disk.
+  - `md5`, `sha256` - Two different hash sums of the file on disk.
+
+- `_sc_markers` - Each pipeline run generates a marker id that is unique. Every time a piece of data is fetched the marker id of the current run is injected.
+
+- `_sc_source` - Store the name of the plugin that generated this unit of data.
+
+- `_sc_locations` - If the data contains any geo coordinate, store it in this field. This is a list of objects, where each element represents a geo locations.
+
+  ```json
+  {
+    "location": {"lon": 32, "lat": 43},
+    "type": "tweet_location",
+    "term": [32, 43],
+    "_sc_id_hash": "<unique id>"
+  }
+  ```
+
+## Example
+
+The following example is the data that is collected from fetching a single youtube video. Additionally to the data about the youtube video any images and videos were downloaded and a mosaic image of the video was created. Any field that doesn't start with `_sc` was added by the `youtube_video` plugin and specific to that plugin.
+
+```json
+{
+  "_sc_pubdates": {
+    "fetch": "2019-11-09T21:08:45.688Z",
+    "source": "2014-05-02T16:44:55.000Z"
+  },
+  "_sc_markers": [
+    "e7e02f912b3f4360f4df505f2f9331d9a03afbf9"
+  ],
+  "_sc_relations": [],
+  "_sc_media": [
+    {
+      "type": "image",
+      "term": "https://i.ytimg.com/vi/22GXbD1-fyw/hqdefault.jpg",
+      "width": 480,
+      "height": 360,
+      "_sc_id_hash": "9bc6fac240e8274acd45214266450f77dd582c335d6d9aaa425b8d296444c449"
+    },
+    {
+      "type": "video",
+      "term": "https://www.youtube.com/watch?v=22GXbD1-fyw",
+      "_sc_id_hash": "48e15880e765988ee56a0909a3e5beea088a0f85cc93fec32ddbc3906f69c19b"
+    },
+    {
+      "type": "url",
+      "term": "https://www.youtube.com/watch?v=22GXbD1-fyw",
+      "_sc_id_hash": "164f9cf60fe97d94c995703819bf0647ad1711ed884ae9bd0bc83e7742790c28"
+    }
+  ],
+  "_sc_downloads": [
+    {
+      "location": "data/817807210423b02c2fbc81a69e468b80ec4607e6d659c4dc9bde7d0181c3cd27/youtubedl/48e15880e765988ee56a0909a3e5beea088a0f85cc93fec32ddbc3906f69c19b.mp4",
+      "md5": "61c1bd3507160c25d7b71974193010fe",
+      "sha256": "1f3337cc930ef657da68c170f3a022299d71a7255a5f86a0bfea448ebb7b6c7d",
+      "type": "video",
+      "term": "https://www.youtube.com/watch?v=22GXbD1-fyw",
+      "_sc_id_hash": "48e15880e765988ee56a0909a3e5beea088a0f85cc93fec32ddbc3906f69c19b",
+      "mosaic": "data/817807210423b02c2fbc81a69e468b80ec4607e6d659c4dc9bde7d0181c3cd27/youtubedl/48e15880e765988ee56a0909a3e5beea088a0f85cc93fec32ddbc3906f69c19b.mosaic.jpg"
+    },
+    {
+      "location": "data/817807210423b02c2fbc81a69e468b80ec4607e6d659c4dc9bde7d0181c3cd27/image/9bc6fac240e8274acd45214266450f77dd582c335d6d9aaa425b8d296444c449.jpg",
+      "md5": "b5a590ebf0fc550e2a22eb32af1dbd21",
+      "sha256": "35d5b5e559fcf31d09bb4e996115c9ec6701701231e31df42eab4919d9bb20e7",
+      "type": "image",
+      "term": "https://i.ytimg.com/vi/22GXbD1-fyw/hqdefault.jpg",
+      "_sc_id_hash": "9bc6fac240e8274acd45214266450f77dd582c335d6d9aaa425b8d296444c449"
+    }
+  ],
+  "_sc_queries": [
+    {
+      "type": "youtube_video",
+      "term": "22GXbD1-fyw",
+      "_sc_id_hash": "2d020ca0c81aa89223410da7311b5ed68b0946dd1cd22da01c37b6476fa36e51"
+    }
+  ],
+  "_sc_locations": [],
+  "_sc_id_hash": "817807210423b02c2fbc81a69e468b80ec4607e6d659c4dc9bde7d0181c3cd27",
+  "kind": "youtube#video",
+  "etag": "\"j6xRRd8dTPVVptg711_CSPADRfg/Y0t8aPnr6UpXw_5QbkFWkk9vTyU\"",
+  "id": "22GXbD1-fyw",
+  "snippet": {
+    "publishedAt": "2014-05-02T16:44:55.000Z",
+    "channelId": "UCoUs821xB8HYAXBHdDcygdg",
+    "title": "إيصال معدات للمجلس المحلي لمدينة حلب ضمن حملة بالأخضر 2014-5-2 جـ1",
+    "description": "◄◄ الموقع على شبكة الأنترنت  \nhttp://www.amc-sy.net ◄◄ صفحة الفيسبوك الرسمية \nhttps://www.facebook.com/AleppoMediaCentre4\n◄◄ تويتر  \nhttps://twitter.com/aleppomediacent\n ◄◄ البريد الالكتروني \ninfo@amc-sy.com",
+    "thumbnails": {
+      "default": {
+        "url": "https://i.ytimg.com/vi/22GXbD1-fyw/default.jpg",
+        "width": 120,
+        "height": 90
+      },
+      "medium": {
+        "url": "https://i.ytimg.com/vi/22GXbD1-fyw/mqdefault.jpg",
+        "width": 320,
+        "height": 180
+      },
+      "high": {
+        "url": "https://i.ytimg.com/vi/22GXbD1-fyw/hqdefault.jpg",
+        "width": 480,
+        "height": 360
+      },
+      "standard": {
+        "url": "https://i.ytimg.com/vi/22GXbD1-fyw/sddefault.jpg",
+        "width": 640,
+        "height": 480
+      },
+      "maxres": {
+        "url": "https://i.ytimg.com/vi/22GXbD1-fyw/maxresdefault.jpg",
+        "width": 1280,
+        "height": 720
+      }
+    },
+    "channelTitle": "مركز حلب الإعلامي AMC",
+    "tags": [
+      "مركز",
+      "حلب",
+      "الإعلامي",
+      "AMC",
+      "إيصال معدات للمجلس المحلي لمدينة حلب ضمن حملة بالأخضر 2014-5-2 جـ1"
+    ],
+    "categoryId": "25",
+    "liveBroadcastContent": "none",
+    "localized": {
+      "title": "إيصال معدات للمجلس المحلي لمدينة حلب ضمن حملة بالأخضر 2014-5-2 جـ1",
+      "description": "◄◄ الموقع على شبكة الأنترنت  \nhttp://www.amc-sy.net ◄◄ صفحة الفيسبوك الرسمية \nhttps://www.facebook.com/AleppoMediaCentre4\n◄◄ تويتر  \nhttps://twitter.com/aleppomediacent\n ◄◄ البريد الالكتروني \ninfo@amc-sy.com"
+    }
+  },
+  "contentDetails": {
+    "duration": "PT46S",
+    "dimension": "2d",
+    "definition": "hd",
+    "caption": "false",
+    "licensedContent": false,
+    "projection": "rectangular"
+  },
+  "status": {
+    "uploadStatus": "processed",
+    "privacyStatus": "public",
+    "license": "youtube",
+    "embeddable": true,
+    "publicStatsViewable": true
+  },
+  "statistics": {
+    "viewCount": "106",
+    "likeCount": "0",
+    "dislikeCount": "0",
+    "favoriteCount": "0",
+    "commentCount": "0"
+  },
+  "topicDetails": {
+    "topicIds": [
+      "/m/019_rr",
+      "/m/07yv9"
+    ],
+    "relevantTopicIds": [
+      "/m/019_rr",
+      "/m/07yv9"
+    ],
+    "topicCategories": [
+      "https://en.wikipedia.org/wiki/Lifestyle_(sociology)",
+      "https://en.wikipedia.org/wiki/Vehicle"
+    ]
+  },
+  "_sc_id_fields": [
+    "id"
+  ],
+  "_sc_content_fields": [
+    "snippet.title",
+    "snippet.description"
+  ],
+  "_sc_language": null,
+  "_sc_content_hash": "42826da841e2d5f6810b35793cd46c1425680d22f44e687489431697d9c14efd",
+  "_sc_source": "youtube_video"
+}
+```
