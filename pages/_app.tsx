@@ -6,9 +6,11 @@ import {AppProps} from "next/app";
 import React from "react";
 
 import Footer from "$components/footer";
+import Gif from "$components/gif";
 import Header from "$components/header";
+import Image from "$components/image";
 
-const components = {};
+const components = {img: Image, Gif};
 
 const App = ({Component, pageProps}: AppProps) => {
   return (

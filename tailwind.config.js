@@ -56,6 +56,18 @@ module.exports = {
             a: {
               color: theme("colors.sapphire"),
             },
+            img: {
+              marginTop: "0",
+              marginBottom: "0",
+            },
+          },
+        },
+        lg: {
+          css: {
+            img: {
+              marginTop: "0.0rem",
+              marginBottom: "0rem",
+            },
           },
         },
       }),

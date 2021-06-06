@@ -2,6 +2,7 @@ const withPlugins = require("next-compose-plugins");
 const withPreact = require("next-plugin-preact");
 const withSvgr = require("next-svgr");
 const withImages = require("next-optimized-images");
+const withVideos = require("next-videos");
 
 module.exports = withPlugins(
   [
@@ -19,6 +20,7 @@ module.exports = withPlugins(
         },
       },
     ],
+    withVideos,
   ],
   {
     async redirects() {
