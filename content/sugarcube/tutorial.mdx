@@ -20,23 +20,17 @@ This tutorial is currently under development. Please check back in soon to see a
 
 This tutorial assumes that you succesfully installed Sugarcube. If this is not the case please go back to the installation guide.
 
-## Table of Contents
-
-```toc
-# This code block gets replaced with the TOC
-```
-
 ## Introduction
 
 Let's jump right in. Open your terminal and change into your Sugarcube project directory that you created during installation.
 
-```shell
+```bash
 cd sugarcube-project
 ```
 
 Our first Sugarcube pipeline will fetch the contents and meta data of a website and print the results to the screen. We use the `http_import` plugin to fetch the website and the `tap_printf` plugin to print the data to the screen.
 
-```shell
+```bash
 $(npm bin)/sugarcube -p http_import,tap_printf \
                      -Q http_url:'https://mwatana.org/en/airstrike-on-detention-center/'
 ```
@@ -54,7 +48,7 @@ There is not much more to SugarCube than that (though of course this is a very s
 
 A lot of plugins that fetch data from somewhere else use queries. They tell plugins where to look for data. Each query is of a certain type, so that different plugins know which queries are relevant for them. The `http_import` plugin looks for queries of type `http_url`. When calling Sugarcube one way to provide queries is by using the `-Q` option. You can specify this option multiple times in order to supply multiple queries for a single run.
 
-```shell
+```bash
 $(npm bin)/sugarcube -p http_import \
                      -Q http_url:'https://mwatana.org/en/airstrike-on-detention-center/' \
                      -Q http_url:'https://yemeniarchive.org'
@@ -66,7 +60,7 @@ This repeats the same pipeline but this time we fetch two websites in one go. Fo
 
 Using the `-Q` option is only one way to supply queries to a Sugarcube pipeline. Especially if there are many queries it is useful to manage queries differently. One way to manage different queries is to collect them in a dedicated text file. Use a text editor to create a file called `queries.json` inside your project directory. The format of this file is [JSON](https://en.wikipedia.org/wiki/JSON). It contains a list of queries. Each query has a `type` (in this case `http_url` but there are different types that Sugarcube can understand) and a `term`, which contains the actual query.
 
-```json
+```javascript
 [
   {
     "type": "http_url",
@@ -81,7 +75,7 @@ Using the `-Q` option is only one way to supply queries to a Sugarcube pipeline.
 
 After you saved this file you can tell Sugarcube to use this file to look up queries using the `-q` option.
 
-```shell
+```bash
 $(npm bin)/sugarcube -p http_import -q queries.json
 ```
 
@@ -91,13 +85,13 @@ It is possible to maintain multiple queries, and of different type, in one file.
 
 Some plugins offer configuration options that allow you to control how they function. You can always look up all available options by supplying the `--help` option to the `sugarcube` command.
 
-```shell
+```bash
 $(npm bin)/sugarcube -h
 ```
 
 Since this output can be quite long there is also an option to print configuration options for a specific plugin only.
 
-```shell
+```bash
 $(npm bin)/sugarcube -H tap_printf
 ```
 
@@ -105,7 +99,7 @@ If you look again at the output of the above command you will see the line `--ta
 
 So, for example, if we wanted to run our pipeline again that imports websites and then print the queries of the pipeline to the screen, we would type the following command:
 
-```shell
+```bash
 $(npm bin)/sugarcube -p http_import,tap_printf \
                      -q queries.json \
                      --tap.select queries
@@ -119,7 +113,7 @@ The two tasks Sugarcube performed above (importing websites and printing to the 
 
 To show how this works, we'll just take our simple pipeline from before. For this pipeline, your configuration file (let's name it "web-import.json") would look like this:
 
-```json
+```javascript
 {
   "name": "Web Imports",
   "plugins": [
@@ -136,7 +130,7 @@ If you go back once again to the output of `$(npm bin)/sugarcube -h` (the list o
 
 So to make use of your pipeline configuration file type the following command:
 
-```shell
+```bash
 $(npm bin)/sugarcube -c web-import.json -q queries.json
 ```
 
@@ -148,7 +142,7 @@ If you specify an option in the command line, this will take precedence over any
 
 Let's look a little closer to the log output. The `sugarcube` command executes plugins one after another. Sugarcube will always write when one plugin starts, and when it finishes. Each plugin communicates what it is doing. This is the log output that the `http_import` plugin generated in our previous example.
 
-```text
+```
 2019-11-09T17:19:49.719Z - info: Starting the http_import plugin.
 2019-11-09T17:19:56.944Z - info: Imported url https://mwatana.org/en/airstrike-on-detention-center/ as media type "url".
 2019-11-09T17:19:58.330Z - info: Imported url https://yemeniarchive.org as media type "url".
@@ -159,7 +153,7 @@ We can see that the plugin imported two websites *as media type "url"*. We will 
 
 At the end of each pipeline run Sugarcube prints more detailed statistics on how it did.
 
-```text
+```
 2019-11-09T17:19:58.337Z - info: Plugin http_import took less than a minute
 2019-11-09T17:19:58.337Z - info:   counts: total=2, success=2
 ```
@@ -176,20 +170,18 @@ We will extend our example pipeline from before to use some additional plugins.
 - `media_screenshot` to take a screenshot of each website.
 - `csv_export` to write the data into a CSV file. This is one way we can use to share the data.
 
-```shell
+```bash
 $(npm bin)/sugarcube -p http_import,media_warc,media_screenshot,csv_export \
                      -Q http_url:'https://mwatana.org/en/airstrike-on-detention-center/' \
                      -Q http_url:'https://yemeniarchive.org' \
                      --csv.filename web-import-results.csv
 ```
 
-<br />
-
 <img src="../assets/tutorial-plugins.svg" alt="Sugarcube tutorial plugins" />
 
 Both, the `media_warc` and `media_screenshot` plugin generate files in you `./data` directory. For every unit of data it creates a directory and stores any files based on what the file is. This is how the directory structure looks like.
 
-```text
+```
 data
 ├── 7748f388df6b711d588bc17bd24878aaeb0692a4885f3e8dbc5b88cebc5f4cab
 │   ├── image

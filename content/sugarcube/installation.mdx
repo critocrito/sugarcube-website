@@ -22,7 +22,7 @@ Sugarcube is developed in [NodeJS](https://https://nodejs.org). Currently versio
 
 The following instructions are for Debian 10 (Buster). They should work on any Ubuntu as well.
 
-```shell
+```bash
 curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 sudo apt install nodejs
 ```
@@ -35,19 +35,19 @@ Check that both Node and NPM are there by typing the following commands into you
 
 Node:
 
-```shell
+```bash
 node --version
 ```
 
 Node Package Manager (NPM)
 
-```shell
+```bash
 npm --version
 ```
 
 You should see a result for each that looks something like this:
 
-<img src="../assets/node-version-check.svg" alt="terminal node npm version" />
+<img src="../assets/svg/sugarcube/installation/node-version-check.svg" title="terminal node npm version" />
 
 <Note>
 The npm command must be at least version 6.9.0. If your version of npm is below that run <i>npm install -g npm</i> to upgrade.
@@ -57,25 +57,25 @@ Some plugins run a browser in headless mode to browse websites. Sugarcube automa
 
 On Debian install `libxss1` and `libgconf-2-4`.
 
-```shell
+```bash
 sudo apt install libxss1 libgconf-2-4
 ```
 
 On Ubuntu install the `libxss1`, `libxcursor1` and `libgtk-3-0`.
 
-```shell
+```bash
 sudo apt install libxss1 libxcursor1 libgtk-3-0
 ```
 
 Sugarcube uses [Apache Tika](https://tika.apache.org/) to extract text and meta data from websites and documents. Sugarcube installs Tika, but in order to run it you need the JAVA Runtime. Tika can use [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) to extract content from images. To enable Tika to do so install it as well. Tesseract supports many languages but each language requires an additional language pack to make use of it. Install any language pack that might be needed. The example below installs the language pack for German, English and Arabic.
 
-```shell
+```bash
 sudo apt install default-jre tesseract-ocr tesseract-ocr-deu tesseract-ocr-ara tesseract-ocr-eng
 ```
 
 The following command shows you all available language packs for Tesseract.
 
-```shell
+```bash
 apt search tesseract-ocr
 ```
 
@@ -91,20 +91,18 @@ Alternatively it's possible to install Sugarcube globally using the `-g` argumen
 
 Open your Terminal and create a Sugarcube test directory using the command 'mkdir' (short for 'make directory'). To create a subdirectory in your Home folder called `sugarcube-project` using `mkdir` and move into your project directory through the 'cd' (change directory) command by typing:
 
-```shell
+```bash
 mkdir sugarcube-project
 cd sugarcube-project
 ```
 
-<br />
-
-<img src="../assets/sugarcube-project-directory.svg" alt="terminal sugarcube project directory" />
+<img src="../assets/sugarcube/installation/project-directory.svg" title="terminal sugarcube project directory" />
 
 That means that **all commands you issue from now on will apply to the `sugarcube-project` folder**. If for whatever reason you need to get out of that directory, just type `cd` - this will return you to your parent Home directory.
 
 Now that you've successfully used Terminal to first create a project folder and then to position yourself within it, you need to get things up and running.  You do this by initialising, or "kick-starting", NPM (Node Package Manager, which you intalled at the beginning).
 
-```shell
+```bash
 npm init -y
 ```
 
@@ -112,29 +110,25 @@ This adds a file called `package.json` to your directory. This file contains cod
 
 Check that this file has been added to your `sugarcube-project` directory by using a simple "list" command, which you can use any time, on any folder (directory). Type `ls` to simply list the contents of that folder.
 
-```shell
+```bash
 ls
 ```
 
-<br />
-
-<img src="../assets/npm-init.svg" alt="terminal sugarcube project init" />
+<img src="../assets/sugarcube/installation/npm-init,svg" title="terminal sugarcube project init" />
 
 You are almost done. The last thing that is left to do is to install Sugarcube itself.
 
-```shell
+```bash
 npm install @sugarcube/sugarcube
 ```
 
 Sugarcube is now installed and ready to go. You can test that all went well by printing the help page of Sugarcube.
 
-```shell
+```bash
 $(npm bin)/sugarcube -h
 ```
 
-<br />
-
-<img src="../assets/sugarcube-help.svg" alt="terminal sugarcube help" />
+<img src="../assets/sugarcube/installation/help.svg" title="terminal sugarcube help" />
 
 <Note>
 `npm` places the `sugarcube` application into the `node_modules/.bin` folder of your project directory. Using the `$(npm bin)/sugarcube` syntax makes sure to resolve to the correct path. Alternatively specify the path to the application manually: `./node_modules/bin/sugarcube`. See <a href="https://docs.npmjs.com/cli/bin.html">npm's documentation</a> for more information.
@@ -148,7 +142,7 @@ Some plugins have additional requirements. Unless those plugins are needed, ther
 - The `media_mosaic` plugin uses [`ffmpeg`](https://www.ffmpeg.org/) to generate mosaic images from videos.
 
 
-```shell
+```bash
 sudo apt install youtube-dl ffmpeg
 ```
 

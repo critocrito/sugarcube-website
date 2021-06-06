@@ -20,7 +20,7 @@ Every unit of data in Sugarcube is a simple object with names and values. Sugarc
 
 - `_sc_id_fields` - A list of one or more field names, that specify the significant fields to form an identifier for this unit. Sugarcube will take the values for those fields to calculate a unique identifier.
 
-  ```json
+  ```javascript
   {
     "_sc_id_fields": ["tweet_id"]
   }
@@ -30,7 +30,7 @@ Every unit of data in Sugarcube is a simple object with names and values. Sugarc
 
 - `_sc_content_fields` - A list of field names, that specify the significant fields to form the content for this unit. Sugarcube will take the values for those fields to calculate content integrity.
 
-  ```json
+  ```javascript
   {
     "_sc_content_fields": ["tweet"]
   }
@@ -60,7 +60,7 @@ Every unit of data in Sugarcube is a simple object with names and values. Sugarc
 
 - `_sc_locations` - If the data contains any geo coordinate, store it in this field. This is a list of objects, where each element represents a geo locations.
 
-  ```json
+  ```javascript
   {
     "location": {"lon": 32, "lat": 43},
     "type": "tweet_location",
@@ -73,7 +73,7 @@ Every unit of data in Sugarcube is a simple object with names and values. Sugarc
 
 The following example is the data that is collected from fetching a single youtube video. Additionally to the data about the youtube video any images and videos were downloaded and a mosaic image of the video was created. Any field that doesn't start with `_sc` was added by the `youtube_video` plugin and specific to that plugin.
 
-```json
+```javascript
 {
   "_sc_pubdates": {
     "fetch": "2019-11-09T21:08:45.688Z",

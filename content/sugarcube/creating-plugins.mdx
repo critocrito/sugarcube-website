@@ -23,7 +23,7 @@ All code in this guide can be found on [Github](https://github.com/critocrito/su
 
 We start by setting up a NodeJS project.
 
-```shell
+```bash
 mkdir sugarcube-plugin-memento
 cd sugarcube-plugin-memento
 npm init -y
@@ -35,7 +35,7 @@ We create a new directory named `sugarcube-plugin-memento` and change into it. T
 
 We initialize an empty NodeJS package with `npm init -y`. This will create a new `package.json` file which is used to define the package and any dependencies your package might have. Edit the `package.json` file and replace the `main` field to point to `src/index.js`. Feel free to edit any other field in `package.json` such as `author` or `license` to your liking. You can find details about it in its [documentation](https://docs.npmjs.com/files/package.json). Our `package.json` looks the following:
 
-```json
+```javascript
 {
   "name": "sugarcube-plugin-memento",
   "version": "1.0.0",
@@ -54,13 +54,13 @@ We will put the code for our plugins into `src/plugins`. Each package requires a
 
 To make it easier for us to test our plugin during development we additionally install the Sugarcube CLI command as a development dependency. This will allow us to run our new plugin right away.
 
-```shell
+```bash
 npm install -D @sugarcube/cli
 ```
 
 We can verify that Sugarcube is working and that no plugins are available.
 
-```shell
+```bash
 $(npm bin)/sugarcube --list-plugins
 ```
 
@@ -79,7 +79,7 @@ A Sugarcube plugin has to fulfill the following requirements:
 
 In your project directory edit a file called `src/plugins/hello.js` and add the following code.
 
-```js
+```javascript
 const plugin = (envelope, {log}) => {
   log.info("Hello World");
 
@@ -103,7 +103,7 @@ And finally in line 10 we export the plugin as the default export for this file.
 
 Before we can use our `hello_world` plugin we need to export it on the package level. In our main entry point `src/index.js` we export the plugin on the `plugins` object of the package. The key sets the name of the plugin, and the value is the plugin function itself. One package can export multiple plugins.
 
-```js
+```javascript
 const helloWorld = require("./plugins/hello");
 
 module.exports.plugins = {
@@ -113,7 +113,7 @@ module.exports.plugins = {
 
 We can now run our `hello_world` plugin.
 
-```shell
+```bash
 $(npm bin)/sugarcube -p hello_world
 ```
 
@@ -123,7 +123,7 @@ $(npm bin)/sugarcube -p hello_world
 
 You can also list all available plugins to verify that the description is set.
 
-```shell
+```bash
 $(npm bin)/sugarcube --list-plugins
 ```
 
@@ -135,14 +135,14 @@ The plugin will require to make HTTP requests against the API of `https://labs.m
 
 To help us debug our plugin we will additionally install the `@sugarcube/plugin-tap` package as a development dependency.
 
-```shell
+```bash
 npm install dashp node-fetch date-fns
 npm install -D @sugarcube/plugin-tap
 ```
 
 Edit a file in `src/plugins/timemap.js` and add the following code.
 
-```js
+```javascript
 const {flatmapP} = require("dashp");
 const fetch = require("node-fetch");
 const {parseISO} = require("date-fns");
@@ -243,7 +243,7 @@ module.exports = plugin;
 
 One last step is required before we can try our new plugin. You have to export the plugin in the entry point of the package. Edit `src/index.js` and add the new plugin the exports.
 
-```js
+```javascript
 const helloWorld = require("./plugins/hello");
 const timeMap = require("./plugins/timemap");
 
@@ -255,7 +255,7 @@ module.exports.plugins = {
 
 Lets give the new plugin a try. We will print the data to the screen using the `tap_printf` plugin but limit the number of units to 1 to not fill up the screen. We lookup Mementos for `https://syrianarchive.org` and `https://yemeniarchive.org`.
 
-```shell
+```bash
 $(npm bin)/sugarcube -p memento_timemap,tap_printf \
                      -Q http_url:'https://syrianarchive.org' \
                      -Q http_url:'https://yemeniarchive.org' \
@@ -270,7 +270,7 @@ In our case `https://syrianarchive.org` expanded into 218 Mementos, while `https
 
 The `tap_printf` prints one unit of data to the screen. Let's look at it more closely.
 
-```json
+```javascript
 [
   {
     "_sc_source": "memento_timemap",
@@ -314,7 +314,7 @@ Additionally Sugarcube stores the marker of the run in `_sc_markers` and the plu
 
 We can use the `plugin.argv` object to expose any configuration options the plugin might require. We can for example add an option that will only retrieve the oldest Memento for a give resource URI. Sugarcube uses the [option format that the Yargs parser uses](https://github.com/yargs/yargs/blob/HEAD/docs/api.md#optionskey-opt). It is the convention that plugin configuration options are named like `<package>.<option>`. Modify the `plugin.argv` object to look like this.
 
-```js
+```javascript
 plugin.argv = {
   "memento.oldest_only": {
     type: "boolean",
@@ -326,11 +326,11 @@ plugin.argv = {
 
 The configuration option becomes now available to the `sugarcube` CLI command and can be configured using a JSON config file as well.
 
-```shell
+```bash
 $(npm bin)/sugarcube -H memento_timemap
 ```
 
-```json
+```javascript
 {
   "memento": {
     "oldest_only": true
@@ -340,7 +340,7 @@ $(npm bin)/sugarcube -H memento_timemap
 
 To access the configuration options inside of your plugin use the `cfg` object of the `environment`.
 
-```js
+```javascript
 const plugin = async (envelope, {log, cfg, stats}) => {
   const oldestOnly = cfg.memento.oldest_only;
 
@@ -350,7 +350,7 @@ const plugin = async (envelope, {log, cfg, stats}) => {
 
 In our `memento_timemap` plugin we assume that the TimeMap API always returns the oldest Memento as the first element in the `json.memento.list` array. To only fetch the oldest Memento in our plugin change line 46 to look like this:
 
-```js
+```javascript
 return (
   oldestOnly
     ? json.mementos.list.slice(0, 1)

@@ -60,6 +60,18 @@ module.exports = {
               marginTop: "0",
               marginBottom: "0",
             },
+            pre: {
+              color: theme("colors.sapphire"),
+              backgroundColor: theme("colors.canvas"),
+            },
+            strong: {
+              color: theme("colors.sapphire"),
+              fontWeight: 700,
+            },
+            code: {
+              color: theme("colors.sapphire"),
+              fontWeight: 700,
+            },
           },
         },
         lg: {
@@ -67,6 +79,10 @@ module.exports = {
             img: {
               marginTop: "0.0rem",
               marginBottom: "0rem",
+            },
+            pre: {
+              paddingLeft: 0,
+              paddingRight: 0,
             },
           },
         },
