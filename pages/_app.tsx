@@ -9,8 +9,9 @@ import Footer from "$components/footer";
 import Gif from "$components/gif";
 import Header from "$components/header";
 import Image from "$components/image";
+import Synopsis from "$components/synopsis";
 
-const components = {img: Image, Gif};
+const components = {img: Image, Gif, Synopsis};
 
 const App = ({Component, pageProps}: AppProps) => {
   return (
