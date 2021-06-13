@@ -6,16 +6,17 @@ interface ImageProps {
   src: string;
   title?: string;
   alt?: string;
+  className?: string;
 }
 
-const Image = ({src, alt, title}: ImageProps) => {
+const Image = ({src, alt, title, className}: ImageProps) => {
   if (/.svg$/.test(src)) {
     return <img className="w-full" src={src} alt={alt} title={title} />;
   }
   const image = require(`../../assets/images/${src}?resize&sizes[]=575&sizes[]=991&sizes[]=1115&sizes[]=1400`);
 
   return (
-    <figure className={c("flex flex-col")}>
+    <figure className={c("flex flex-col", className)}>
       <picture>
         <source srcSet={image.srcSet} type="image/webp" />
 
